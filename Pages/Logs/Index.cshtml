@@ -1,0 +1,19 @@
+@page
+@model TPOT Links.Pages.Logs.IndexModel
+@{
+}
+
+<div class='flex flex-col' x-data='setup()'>
+
+   <partial name="_LogsTable" />
+
+</div>
+
+
+<script>
+    function setup() {
+        return {
+            value: "foo"
+        }
+    }
+</script>

@@ -1,0 +1,10 @@
+node_modules
+wwwroot/lib
+.rest
+bin
+obj
+.migrations
+.idea
+out
+.env
+.experimental/
