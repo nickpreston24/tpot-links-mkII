@@ -63,11 +63,11 @@ public class IndexModel : HighSpeedPageModel
 
         var records = await NeoFind(query, new {});
 
-        return Partial("_RecordsTable", records);
+        // return Partial("_RecordsTable", records);
         
         /// This can also be a template
-        // return Content(
-        //     $"<div class='alert alert-primary'><p class='text-xl text-secondary text-sh'>{query}</p></div>");
+        return Content(
+            $"<div class='alert alert-primary'><p class='text-xl text-secondary text-sh'>{query}</p></div>");
 
     }
 

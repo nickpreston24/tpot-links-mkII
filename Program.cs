@@ -15,9 +15,9 @@ new EnvLoader().Load();
 void ConfigureServices(IServiceCollection services)
 {
     var reader = new EnvReader();
-    string uri = reader.TryGetStringValue("NEO4J_URI") ?? string.Empty;
-    string user = reader.TryGetStringValue("NEO4J_USER") ?? string.Empty;
-    string password = reader.TryGetStringValue("NEO4J_PASSWORD") ?? string.Empty;
+    reader.TryGetStringValue("NEO4J_URI", out string uri );// ?? string.Empty;
+    reader.TryGetStringValue("NEO4J_USER", out string user);// ?? string.Empty;
+    reader.TryGetStringValue("NEO4J_PASSWORD", out string password);// ?? string.Empty;
 
     services.AddControllers();
     services.AddSingleton(GraphDatabase.Driver(
