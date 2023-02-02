@@ -23,8 +23,8 @@ void ConfigureServices(IServiceCollection services)
     services.AddSingleton(GraphDatabase.Driver(
         uri
         , AuthTokens.Basic(
-            user,
-            password
+            user ?? string.Empty,
+            password ?? string.Empty
         )
     ));
     
