@@ -21,7 +21,7 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddControllers();
     services.AddSingleton(GraphDatabase.Driver(
-        uri
+        uri ?? string.Empty
         , AuthTokens.Basic(
             user ?? string.Empty,
             password ?? string.Empty
