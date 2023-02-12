@@ -12,8 +12,7 @@
     <!-- The following should embed every .cypher query file into the assembly
     Credit: https://stackoverflow.com/questions/69258345/add-all-files-in-folder-including-sub-dir-as-embedded-resource
     -->
-    <!-- <EmbeddedResource Include="Pages\**\*.cypher" ></EmbeddedResource> -->
-    <EmbeddedResource Include="Pages\Sandbox\Recommendations.cypher"></EmbeddedResource>
+    <EmbeddedResource Include="Pages\**\*.cypher" ></EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
