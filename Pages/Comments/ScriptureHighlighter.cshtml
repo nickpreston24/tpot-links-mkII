@@ -4,7 +4,9 @@
   // C# vars go here!
 }
   
-<form asp-action="post"
+<form 
+x-data='setup()'
+asp-action="post"
   hx-post='@Url.Page("","ExtractedScriptures")'
   hx-target='#extracted'
 >
