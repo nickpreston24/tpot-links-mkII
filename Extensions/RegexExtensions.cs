@@ -19,44 +19,6 @@ namespace CodeMechanic.Advanced.Extensions
                    new Dictionary<Type, ICollection<PropertyInfo>>();
 
 
-        public static ICollection<PropertyInfo> TryGetProperties<T>(
-         this IDictionary<Type, ICollection<PropertyInfo>> property_cache
-            , bool ignore_case = true
-            , BindingFlags flags = BindingFlags.Default
-            , params string[] exclusions
-        )
-        {
-            ICollection<PropertyInfo> properties;
-            var objType = typeof(T);
-
-            lock (property_cache)
-            {
-                if (!property_cache.TryGetValue(objType, out properties))
-                {
-                    // $"Prop not found for {objType.Name} so running reflection".Dump();
-
-                    var type_props = objType.GetProperties();
-
-                    var lowercased_prop_names = type_props.Select(p => p.Name.ToLowerInvariant());
-
-                    var joined_names = lowercased_prop_names.Except(exclusions);
-
-                    properties = type_props
-                        .Where(
-                            property => property.CanWrite
-                            && joined_names.Contains(property.Name.ToLowerInvariant())
-                        )
-                        .ToList();
-
-                    property_cache.Add(objType, properties);
-
-                    // property_cache.Count.Dump("propcache size");
-                }
-            }
-
-            return properties;
-        }
-
         /// <summary>
         /// Takes a dictionary full of Regex patterns (or words) and swaps those values with whatever you set as the .Value.
         /// 
@@ -133,51 +95,51 @@ namespace CodeMechanic.Advanced.Extensions
         }
 
 
-        public static List<T> Extract<T>(
-            this string text,
-            string delimiter = "",
-            params Expression<Func<T, object>>[] patterns
-        )
-        {
-            var options =
-                   RegexOptions.Compiled
-                   | RegexOptions.IgnoreCase
-                   | RegexOptions.ExplicitCapture
-                   | RegexOptions.Multiline
-                   | RegexOptions.IgnorePatternWhitespace;
+        // public static List<T> Extract<T>(
+        //     this string text,
+        //     string delimiter = "",
+        //     params Expression<Func<T, object>>[] patterns
+        // )
+        // {
+        //     var options =
+        //            RegexOptions.Compiled
+        //            | RegexOptions.IgnoreCase
+        //            | RegexOptions.ExplicitCapture
+        //            | RegexOptions.Multiline
+        //            | RegexOptions.IgnorePatternWhitespace;
 
-            var dictionary = patterns
-               .GetExpressionParts()
-               .ToDictionary(kv => kv.Key, kv => kv.Value);
+        //     var dictionary = patterns
+        //        .GetExpressionParts()
+        //        .ToDictionary(kv => kv.Key, kv => kv.Value);
 
-            //dictionary.Dump("patterns");
-            StringBuilder pattern_builder = new StringBuilder();
+        //     //dictionary.Dump("patterns");
+        //     StringBuilder pattern_builder = new StringBuilder();
 
-            foreach (var kvp in dictionary)
-            {
-                string pattern = kvp.Value.ToString();
-                string propertyname = kvp.Key;
+        //     foreach (var kvp in dictionary)
+        //     {
+        //         string pattern = kvp.Value.ToString();
+        //         string propertyname = kvp.Key;
 
-                string named_group_pattern = @$"(?<{propertyname}>{pattern}){delimiter}"/*.Dump("named group")*/;
+        //         string named_group_pattern = @$"(?<{propertyname}>{pattern}){delimiter}"/*.Dump("named group")*/;
 
-                pattern_builder.Append(named_group_pattern);
+        //         pattern_builder.Append(named_group_pattern);
 
-            }
+        //     }
 
-            string full_pattern = pattern_builder
-                .RemoveFromEnd(delimiter.Length)
-                .ToString()
-               /* .Dump("full pattern")*/;
+        //     string full_pattern = pattern_builder
+        //         .RemoveFromEnd(delimiter.Length)
+        //         .ToString()
+        //        /* .Dump("full pattern")*/;
 
-            Console.WriteLine(full_pattern);
+        //     Console.WriteLine(full_pattern);
 
-            var batch = text.Extract<T>(
-                full_pattern,
-                enforce_exact_match: false,
-                options: options);
+        //     var batch = text.Extract<T>(
+        //         full_pattern,
+        //         enforce_exact_match: false,
+        //         options: options);
 
-            return batch;
-        }
+        //     return batch;
+        // }
 
         ///
         /// Extracts any class from text, given a Regex Pattern with Named Capture groups.
@@ -191,6 +153,9 @@ namespace CodeMechanic.Advanced.Extensions
         )
         {
             var collection = new List<T>();
+
+            // text.Length.Dump("Length");
+            // text.Dump("text");
 
             // If we get no text, throw if we're in devmode (debug == true)
             // If in prod, we want to probably return an empty set.
@@ -221,13 +186,13 @@ namespace CodeMechanic.Advanced.Extensions
             var regex = new Regex(regex_pattern, options, TimeSpan.FromMilliseconds(250));
 
             var matches = regex.Matches(text).Cast<Match>();
-
+            matches.ToList().Count.Dump("# of matches");
 
             matches.Aggregate(
                 collection,
                 (list, match) =>
             {
-                if (!match.Success)
+                if (!match.Success.Dump("Successful match?"))
                 {
                     errors.AppendLine(
                             $"No matches found! Could not extract a '{typeof(T).Name}' instance from regex pattern:\n{regex_pattern}.\n"
