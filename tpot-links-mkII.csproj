@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>TPOT Links</RootNamespace>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
