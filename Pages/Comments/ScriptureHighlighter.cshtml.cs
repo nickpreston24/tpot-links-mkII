@@ -61,7 +61,7 @@ public class ScriptureHighlighterModel : HighSpeedPageModel
       // postfixed_scriptures.Dump("postfixed scriptures");
 
       var extracted_scriptures_list = prefixed_scriptures
-        .FlattenText(postfixed_scriptures) // joins N array of strings into a single array
+        .Concat(postfixed_scriptures) // joins N array of strings into a single array
         .Select(scripture=> $"""
               <div class="card w-96 bg-base-100 shadow-xl">
                 <div class="card-body">
@@ -200,9 +200,4 @@ Victor Hafichuk
 
 }
 
-
-public class Scripture {
-  public string Name {get;set;} = "Nothing";
-  public string Text {get;set;} = "Nothing";
-}
 
