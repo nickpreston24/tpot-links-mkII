@@ -3,7 +3,7 @@
 FROM alpine:3.9.4
 
 # Add some libs required by .NET runtime 
-# RUN apk add --no-cache libstdc++ libintl
+RUN apk add --no-cache libstdc++ libintl
 
 # https://github.com/dotnet/core/blob/master/Documentation/build-and-install-rhel6-prerequisites.md#troubleshooting
 # RUN apk add --no-cache \ 
@@ -17,6 +17,8 @@ EXPOSE 443
 
 # Copy 
 WORKDIR /app
-COPY ./publish ./
+# COPY ./publish ./
+COPY . .
 
-ENTRYPOINT ["./tpot_links_api.dll", "--urls", "http://0.0.0.0:80"]
+ENTRYPOINT ["./publish/tpot_links_api.dll", "--urls", "http://0.0.0.0:80"]
+# ENTRYPOINT ["./tpot_links_api", "--urls", "http://0.0.0.0:80"]

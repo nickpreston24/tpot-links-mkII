@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  tpot-api:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+  # baz:
+  #   build:
+  #     context: .
+  #     dockerfile: baz/Dockerfile
