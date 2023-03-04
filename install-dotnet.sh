@@ -12,8 +12,8 @@ sudo apt-get install -y aspnetcore-runtime-7.0
 
 ## these are to be removed after installation
 sudo apt autoremove aspnetcore-targeting-pack-6.0 dotnet-apphost-pack-6.0 dotnet-targeting-pack-6.0 gir1.2-snapd-1 libllvm13 libllvm13:i386
-
-echo "here's the runtimes & sdks (if any):"
+https://github.com/harriris/external-ballistics-js.git
+echo "here'https://github.com/harriris/external-ballistics-js.gits the runtimes & sdks (if any):"
 
 dotnet --list-runtimes
 dotnet --list-sdks
