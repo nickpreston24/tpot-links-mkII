@@ -1,10 +1,26 @@
-version: "3.7"
+version: '3.1'
+
 services:
-  tpot-api:
-    build:
-      context: .
-      dockerfile: ./api/Dockerfile
-  # baz:
-  #   build:
-  #     context: .
-  #     dockerfile: baz/Dockerfile
+    web:
+        image: lsapan/docker-swarm-demo-web2
+        command: gunicorn --bind 0.0.0.0:5000 wsgi:app
+        deploy:
+            replicas: 2
+        # secrets:
+        #     - db_password
+
+    nginx:
+        image: lsapan/docker-swarm-demo-nginx
+        ports:
+            - 8000:80
+        deploy:
+            mode: global
+
+    redis:
+        image: redis
+        deploy:
+            replicas: 1
+
+secrets:
+    db_password:
+        external: true
