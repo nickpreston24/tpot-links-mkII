@@ -1,11 +1,11 @@
-<!-- @page
+@page
 @model TPOT_Links.Pages.Comments.IndexModel
 @{
-} -->
+}
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
+<!-- <!DOCTYPE html>
+<html lang="en"> -->
+  <!-- <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,8 +27,8 @@
     <script type="module" src="/main.js"></script>
 
     <title>Facebook Comments</title>
-  </head>
-  <body>
+  </head> -->
+  <div>
     <div x-data="setup()" class="flex flex-col">
       <div x-bind:data-theme="theme" class="flex hero min-h-screen bg-base-200">
         <div class="hero-content flex-col lg:flex-row-reverse">
@@ -141,7 +141,7 @@
         </div>
       </div>
     </div>
-  </body>
+  </div>
 
   <script>
     const regex_patterns = {
@@ -158,7 +158,7 @@
 
         options: {
           show_comments: true,
-          // show_comments_form: false,
+          show_comments_form: false,
         },
 
         theme: "dark",
