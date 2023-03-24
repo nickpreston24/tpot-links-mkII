@@ -4,6 +4,9 @@ This class only exists to reduce boilerplate
 and because I can'think of a better name
 
  So, It's Hi-Speed.
+ Inheritance sucks.
+
+ Get used to it.
 */
 
 
@@ -16,26 +19,33 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using TPOT_Links.Extensions;
+using CodeMechanic.Extensions;
 using Neo4j.Driver;
+using AirtableApiClient;
 
-namespace TPOT_Links.RazorPages;
+namespace CodeMechanic.RazorPages;
 
-public abstract class HighSpeedPageModel : PageModel
+///<summary>
+///Airtable https://github.com/ngocnicholas/airtable.net/wiki/Documentation
+///</summary>
+public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirtable
 {
     protected readonly IEmbeddedResourceQuery embeddedResourceQuery;
     protected readonly IDriver driver;
+    protected readonly IAirtableRepo airtable_repo;
 
     public HighSpeedPageModel(
         IEmbeddedResourceQuery embeddedResourceQuery
-        , IDriver driver
+        , IDriver driver = null
+        , IAirtableRepo repo = null
     )
     {
         this.embeddedResourceQuery = embeddedResourceQuery;
         this.driver = driver;
+        this.airtable_repo = repo;
     }
 
-    public async Task<IList<IRecord>> NeoFind(string query, object parameters) 
+    public async Task<IList<IRecord>> SearchNeo4J(string query, object parameters) 
     {
         var none = new List<IRecord>();
         
@@ -45,7 +55,7 @@ public abstract class HighSpeedPageModel : PageModel
         await using var session = driver
             .AsyncSession();
             // .AsyncSession(configBuilder => configBuilder
-            // .WithDatabase("Recommendations"));
+            // .WithDatabase("nugs"));
 
         try
         {
@@ -65,4 +75,37 @@ public abstract class HighSpeedPageModel : PageModel
             throw;
         }
     }
+
+    // public object NeoWrite(string query, IDictionary<string, object> neo4j_params) 
+    // {
+    //     await using var session = driver.AsyncSession(configBuilder => configBuilder.WithDatabase("neo4j"));
+
+    //     try
+    //     {
+    //         // Write transactions allow the driver to handle retries and transient error
+    //         var writeResults = await session.ExecuteWriteAsync(async tx =>
+    //         {
+    //             var result = await tx.RunAsync(query, 
+    //             new { 
+    //                 person1Name, person2Name 
+    //             });
+    //             return await result.ToListAsync();
+    //         });
+
+    //         // foreach (var result in writeResults)
+    //         // {
+    //         //     var person1 = result["p1"].As<INode>().Properties["name"];
+    //         //     var person2 = result["p2"].As<INode>().Properties["name"];
+    //         //     Console.WriteLine($"Created friendship between: {person1}, {person2}");
+    //         // }
+    //     }
+
+    //     // Capture any errors along with the query and data for traceability
+    //     catch (Neo4jException ex)
+    //     {
+    //         Console.WriteLine($"{query} - {ex}");
+    //         throw;
+    //     }
+    // }
+
 }

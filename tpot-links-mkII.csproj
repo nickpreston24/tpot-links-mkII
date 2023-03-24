@@ -10,10 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- The following should embed every .cypher query file into the assembly
+    <!-- The following should embed every query file into the assembly
     Credit: https://stackoverflow.com/questions/69258345/add-all-files-in-folder-including-sub-dir-as-embedded-resource
     -->
-    <EmbeddedResource Include="Pages\**\*.cypher" ></EmbeddedResource>
+    <EmbeddedResource Include="Pages\**\*.cypher"></EmbeddedResource>
+    <EmbeddedResource Include="Pages\**\*.sql"></EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -23,8 +24,8 @@
     <PackageReference Include="Htmx.TagHelpers" Version="1.0.1" />
     <PackageReference Include="Insight.Database" Version="6.3.11" />
     <PackageReference Include="Neo4j.Driver" Version="5.4.0" />
-    <PackageReference Include="DotEnv.Core" Version="2.3.2" />
-    <PackageReference Include="RestSharp" Version="108.0.3" />
+    <PackageReference Include="NSpecifications" Version="1.1.0" />
+    <PackageReference Include="RestSharp" Version="109.0.1" />
   </ItemGroup>
 
 </Project> 

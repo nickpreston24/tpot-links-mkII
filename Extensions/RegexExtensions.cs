@@ -19,6 +19,8 @@ namespace CodeMechanic.Advanced.Extensions
                    new Dictionary<Type, ICollection<PropertyInfo>>();
 
 
+
+
         /// <summary>
         /// Takes a dictionary full of Regex patterns (or words) and swaps those values with whatever you set as the .Value.
         /// 
@@ -95,55 +97,151 @@ namespace CodeMechanic.Advanced.Extensions
         }
 
 
-        // public static List<T> Extract<T>(
-        //     this string text,
-        //     string delimiter = "",
-        //     params Expression<Func<T, object>>[] patterns
-        // )
-        // {
-        //     var options =
-        //            RegexOptions.Compiled
-        //            | RegexOptions.IgnoreCase
-        //            | RegexOptions.ExplicitCapture
-        //            | RegexOptions.Multiline
-        //            | RegexOptions.IgnorePatternWhitespace;
+        public static List<T> Extract<T>(
+            this string text,
+            string delimiter = "",
+            params Expression<Func<T, object>>[] patterns
+        )
+        {
+            var options =
+                   RegexOptions.Compiled
+                   | RegexOptions.IgnoreCase
+                   | RegexOptions.ExplicitCapture
+                   | RegexOptions.Multiline
+                   | RegexOptions.IgnorePatternWhitespace;
 
-        //     var dictionary = patterns
-        //        .GetExpressionParts()
-        //        .ToDictionary(kv => kv.Key, kv => kv.Value);
+            var dictionary = patterns
+               .GetExpressionParts()
+               .ToDictionary(kv => kv.Key, kv => kv.Value);
 
-        //     //dictionary.Dump("patterns");
-        //     StringBuilder pattern_builder = new StringBuilder();
+            //dictionary.Dump("patterns");
+            StringBuilder pattern_builder = new StringBuilder();
 
-        //     foreach (var kvp in dictionary)
-        //     {
-        //         string pattern = kvp.Value.ToString();
-        //         string propertyname = kvp.Key;
+            foreach (var kvp in dictionary)
+            {
+                string pattern = kvp.Value.ToString();
+                string propertyname = kvp.Key;
 
-        //         string named_group_pattern = @$"(?<{propertyname}>{pattern}){delimiter}"/*.Dump("named group")*/;
+                string named_group_pattern = @$"(?<{propertyname}>{pattern}){delimiter}"/*.Dump("named group")*/;
 
-        //         pattern_builder.Append(named_group_pattern);
+                pattern_builder.Append(named_group_pattern);
 
-        //     }
+            }
 
-        //     string full_pattern = pattern_builder
-        //         .RemoveFromEnd(delimiter.Length)
-        //         .ToString()
-        //        /* .Dump("full pattern")*/;
+            string full_pattern = pattern_builder
+                .RemoveFromEnd(delimiter.Length)
+                .ToString()
+               /* .Dump("full pattern")*/;
 
-        //     Console.WriteLine(full_pattern);
+            Console.WriteLine(full_pattern);
 
-        //     var batch = text.Extract<T>(
-        //         full_pattern,
-        //         enforce_exact_match: false,
-        //         options: options);
+            var batch = text.Extract<T>(
+                full_pattern,
+                enforce_exact_match: false,
+                options: options);
 
-        //     return batch;
-        // }
+            return batch;
+        }
 
-        ///
+        /// <summary>
+        /// 
         /// Extracts any class from text, given a Regex Pattern with Named Capture groups.
-        ///      
+        /// 
+        /// <usage>
+        /// 
+        /// 
+        /// /* --- ArgumentExtensions.cs --- */
+        /// public static IEnumerable<Argument> ExtractArguments(this string[] args)
+        ///{
+        ///    if (args == null || args.Length == 0)
+        ///    {
+        ///        return Enumerable.Empty<Argument>();
+        ///    }
+        ///
+        ///    string rawText = string.Join(' ', args);
+        ///    string pattern = cli_pattern;
+        ///
+        ///    var actual_args = rawText.Extract<Argument>(pattern);
+        ///
+        ///    return actual_args;
+        ///}
+        ///
+        /// /* -- Argument.cs --- */
+        /// 
+        ///  public string RawCommand { get; set; }= string.Empty;// e.g. 'run'
+        ///  public string Flag { get; set; } 
+        ///  public string RawValues { get; set; } = string.Empty;
+        /// .. other stuff ..
+        /// 
+        /// The Extract() method requires a pattern.  Here's the one embedded in ArgumentExtenions.cs (from project Shargs)
+        /// 
+        /// /*        
+        /// private static string cli_pattern =
+        ///     @"(?<RawCommand>\w+)?\s*" + // Matches command text, e.g. 'run, build, install, whatever'
+        ///     @"(?<Flag>--?[a-zA-Z-?]+)" + // Matches flag with one or two dashes, e.g. -d or --dir, for example.
+        ///     @"\s*" +  //Matches spaces
+        ///     @"(?<RawValues>([a-zA-Z.-?_0-9]+?\s*)*)"; // Matches values after a Flag.  Note: at time of writing, will only match ONE command name IFF a Command is matched.
+        /// */
+        /// 
+        /// See the '?<' ?  That lets us name something that we capture in side of our parenthesis '()'.
+        /// 
+        /// So, in the first line, we look for '\w+' or any 'word' characters A thru Z and the underscore '_'.
+        /// 
+        /// This method will match the first words you type and assign those words to the 'RawCommand' property.
+        /// 
+        /// And so on, and so on, through all the Regexes and class properties, by name.
+        /// 
+        /// As long as you name your Captured Groups the same as your Class Properties, you're good to go.
+        /// 
+        /// I did not support private fields, but that's IS possible.  It's just so unlikely, I left it out.
+        /// 
+        /// </usage> 
+        /// 
+        /// What is this good for???
+        /// 1. Line Items - Got a weird record in a database?  Not in XML or JSON?  Parse it directly to a DTO using this Extract() method.
+        /// 
+        /// 2. Grepping - If you wanted, you could search an entire drive for a particular bit of text (FH_Grep), then Extract() out whatever you wanted from that file, no matter how badly formatted it is.
+        /// 
+        /// 3. Validation - You could easily find, say, a Regex for Emails and add that to your API validation to complement other validators. 
+        /// 
+        /// For example, using Fluent Validation, you could adapt this [example](https://docs.fluentvalidation.net/en/latest/index.html):
+        /// 
+        /// ... 
+        /// RuleFor(x => x.Surname).NotEmpty();
+        /// RuleFor(x => x.Forename).NotEmpty().WithMessage("Please specify a first name");
+        /// RuleFor(x => x.Discount).NotEqual(0).When(x => x.HasDiscount);
+        /// RuleFor(x => x.Address).Length(20, 250);
+        /// RuleFor(x => x.Postcode).Must(BeAValidPostcode).WithMessage("Please specify a valid postcode");
+        /// 
+        /// // Your code:
+        /// // RuleFor(customer => customer.email).Matches("email regex");  // Meh...
+        /// 
+        /// // Could instead be ...
+        /// string customer_regex = "(?<Surname>\w+)?\s* ...[more properties here]... (?<Email>\w+@\w*.com...blahdeeblah) ";
+        /// var customer_dto = customer_line.Extract<Customer>();
+        /// ...
+        /// 
+        /// With this, you get Validation + Mapping, all in one line.
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="text">
+        /// This can be any string, but for best results, go with a single line at a time
+        /// </param>
+        /// <param name="regex_pattern"></param>
+        /// <param name="enforce_exact_match">
+        /// Toggles whether to get all or nothing when it comes to the object's properties matching the Regex Captured Groups
+        /// </param>
+        /// <param name="debug">
+        /// Determines whether this will throw Exceptions on bad inputs.  The default is to quietly fail.
+        /// </param>
+        /// <param name="options">
+        /// Overload this with whatever RegexOption you need.  
+        /// I've added a good default set that covers most cases of Extracting most C# classes reliably.
+        /// </param>
+        /// <returns>
+        /// List<typeparamref name="T"/>
+        /// </returns>
         public static List<T> Extract<T>(
            this string text,
            string regex_pattern,
@@ -153,9 +251,6 @@ namespace CodeMechanic.Advanced.Extensions
         )
         {
             var collection = new List<T>();
-
-            // text.Length.Dump("Length");
-            // text.Dump("text");
 
             // If we get no text, throw if we're in devmode (debug == true)
             // If in prod, we want to probably return an empty set.
@@ -186,13 +281,13 @@ namespace CodeMechanic.Advanced.Extensions
             var regex = new Regex(regex_pattern, options, TimeSpan.FromMilliseconds(250));
 
             var matches = regex.Matches(text).Cast<Match>();
-            matches.ToList().Count.Dump("# of matches");
+
 
             matches.Aggregate(
                 collection,
                 (list, match) =>
             {
-                if (!match.Success.Dump("Successful match?"))
+                if (!match.Success)
                 {
                     errors.AppendLine(
                             $"No matches found! Could not extract a '{typeof(T).Name}' instance from regex pattern:\n{regex_pattern}.\n"
@@ -273,7 +368,45 @@ namespace CodeMechanic.Advanced.Extensions
             return collection;
         }
 
-       
+        // // (Experimental)
+        // public static List<T> Extract<T>(
+        //     this string text,
+        //     Dictionary<Expression<Func<T, object>>, string> patterns
+        // )
+        // {
+        //     var pattern_strings = patterns
+        //         .Aggregate(new List<string>(), (current, kvp) =>
+        //         {
+        //             var property_name = MemberExtensions.GetMemberName(kvp.Key).Dump("propertyname");
+        //             var raw_pattern = kvp.Value;
+
+        //             string pattern_segment = string.IsNullOrWhiteSpace(raw_pattern) || !raw_pattern.Contains("?<")
+        //                 ? $@"(?<{property_name}>{raw_pattern})"
+        //                 : raw_pattern;
+
+        //             current.Add(pattern_segment);
+        //             return current;
+        //         });
+
+        //     var possible_patterns = pattern_strings
+        //         .ToArray().GetPermutations().Dump("possible patterns");
+
+        //     string built_pattern = pattern_strings
+        //         .Aggregate(new StringBuilder()
+        //         , (sb, next) => sb.Append(next)).ToString();
+
+        //     built_pattern.Dump("built_pattern");
+
+        //     var options =
+        //             RegexOptions.Compiled
+        //             | RegexOptions.IgnoreCase
+        //             | RegexOptions.ExplicitCapture
+        //             | RegexOptions.Multiline
+        //             | RegexOptions.IgnorePatternWhitespace;
+
+        //     return Extract<T>(text, built_pattern, options: options);
+        // }
+
 
     }
 }

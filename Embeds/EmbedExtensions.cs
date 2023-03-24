@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace TPOT_Links.Extensions 
+namespace CodeMechanic.Extensions 
 {
 
     public static class  EmbedExtensions {

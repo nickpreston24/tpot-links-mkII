@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 
-namespace TPOT_Links.Extensions
+namespace CodeMechanic.Extensions
 {
     public class EmbeddedResourceQuery : IEmbeddedResourceQuery
     {

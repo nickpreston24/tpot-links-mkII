@@ -131,25 +131,25 @@ namespace Neo4JSample.Model
     public class Genre
     {
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 
     public class Movie
     {
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
 
         [JsonProperty("title")]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
     }
 
     public class Person
     {
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 
     public class MovieInformation
@@ -184,14 +184,14 @@ namespace Neo4JSample.Settings
 {
     public interface IConnectionSettings
     {
-        string Uri { get; }
+        string Uri { get; } = string.Empty;
 
         IAuthToken AuthToken { get; }
     }
 
     public class ConnectionSettings : IConnectionSettings
     {
-        public string Uri { get; private set; }
+        public string Uri { get; private set; } = string.Empty;
 
         public IAuthToken AuthToken { get; private set; }
 

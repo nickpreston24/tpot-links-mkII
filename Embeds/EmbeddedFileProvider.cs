@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace TPOT_Links.Extensions
+namespace CodeMechanic.Extensions
 {
     public class EmbeddedFileProvider_EmbeddedResourceQuery : IEmbeddedResourceQuery
     {

@@ -39,6 +39,6 @@ public class ScrapingBeeRepo {
 
 public class Comment 
 {
-    public string user_name { get; set; } = "stephanie.reinke.92";
-    public string post_id { get; set; } = "pfbid02Q9rYwrWFvme7e7VRXU1waKewW8VzUDAPCgi6k7q83yFzDsYvYYDpNKfHnn2EBHXl";
+    public string user_name { get; set; }= "stephanie.reinke.92";
+    public string post_id { get; set; }= "pfbid02Q9rYwrWFvme7e7VRXU1waKewW8VzUDAPCgi6k7q83yFzDsYvYYDpNKfHnn2EBHXl";
 }
