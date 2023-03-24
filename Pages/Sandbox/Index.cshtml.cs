@@ -8,10 +8,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using TPOT_Links.Extensions;
-using TPOT_Links.RazorPages;
+// using TPOT_Links.Extensions;
+// using TPOT_Links.RazorPages;
 using Neo4j.Driver;
 
+using CodeMechanic.Extensions;
+
+using CodeMechanic.RazorPages;
 namespace TPOT_Links.Pages.Sandbox;
 
 public class IndexModel : HighSpeedPageModel
@@ -61,7 +64,7 @@ public class IndexModel : HighSpeedPageModel
         // Reads the any file I tell it to as a query.
         query = await stream.ReadAllLinesFromStreamAsync();
 
-        var records = await NeoFind(query, new {});
+        var records = await SearchNeo4J(query, new {});
 
         // return Partial("_RecordsTable", records);
         

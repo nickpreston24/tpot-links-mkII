@@ -8,9 +8,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using TPOT_Links.Extensions;
-using TPOT_Links.RazorPages;
+// using TPOT_Links.Extensions;
+// using TPOT_Links.RazorPages;
 using Neo4j.Driver;
+
+using CodeMechanic.RazorPages;
+using CodeMechanic.Extensions;
 
 namespace TPOT_Links.Pages.Tutorial;
 

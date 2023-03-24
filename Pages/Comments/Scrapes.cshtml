@@ -60,35 +60,20 @@
               </button>
             </a>
 
-            <!-- <a>
-              <button
-                x-on:click="options.show_comments=true"
-                class="btn btn-primary"                
-              >
-                See Comments
-              </button>
-            </a> -->
             <template x-if="options.show_comments_form">
               <div></div>
             </template>
 
             <template x-if="options.show_comments">
               <div>
-                <!-- <iframe
-                  class="airtable-embed w-auto h-screen"
-                  src="https://airtable.com/embed/shrcEu7hD1TmBFPwN?backgroundColor=purple&viewControls=on"
-                  frameborder="0"
-                  onmousewheel=""
-                  style="background: transparent; border: 1px solid #ccc"
-                ></iframe> -->
-
-                <iframe
-                  class="airtable-embed w-full h-screen"
-                  src="https://airtable.com/embed/shrcEu7hD1TmBFPwN?backgroundColor=purple&layout=card&viewControls=on"
-                  frameborder="0"
-                  onmousewheel=""
-                  style="background: transparent; border: 1px solid #ccc"
-                ></iframe>
+                <iframe 
+                  class="airtable-embed w-screen h-screen" 
+                  src="https://airtable.com/embed/shrcEu7hD1TmBFPwN?backgroundColor=purple&layout=card&viewControls=on" 
+                  frameborder="0" 
+                  onmousewheel="" 
+                  >
+                </iframe>
+                
               </div>
             </template>
           </div>

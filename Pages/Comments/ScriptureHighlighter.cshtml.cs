@@ -7,12 +7,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using TPOT_Links.Extensions;
-using TPOT_Links.RazorPages;
+// using TPOT_Links.Extensions;
+// using TPOT_Links.RazorPages;
 using CodeMechanic.Extensions;
 using CodeMechanic.Advanced.Extensions;
 using Neo4j.Driver;
 
+
+using CodeMechanic.RazorPages;
 namespace TPOT_Links.Pages.Comments;
 
 public class ScriptureHighlighterModel : HighSpeedPageModel
