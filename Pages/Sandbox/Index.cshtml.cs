@@ -11,14 +11,14 @@ using System.Runtime.CompilerServices;
 using CodeMechanic.Extensions;
 using CodeMechanic.RazorPages;
 using Neo4j.Driver;
-
+using TPOT_Links.Models;
 namespace TPOT_Links.Pages.Sandbox;
 
 public class IndexModel : HighSpeedPageModel
 {
 
     private static int count = 0;
-
+ 
     public IndexModel(
         IEmbeddedResourceQuery embeddedResourceQuery
         , IDriver driver) 
@@ -31,24 +31,49 @@ public class IndexModel : HighSpeedPageModel
         // reset on refresh
         count = 0;
     }
-  
-    public async Task<IActionResult> OnGetRecommendations()
+
+    public async Task<IActionResult> OnGetSearchByTitle(string term = "God")
     {
+        string query = await embeddedResourceQuery
+            .GetQueryAsync<IndexModel>(new StackTrace());
+
+        var results = await SearchNeo4J(query, new {});
+
+        var records = results.MapTo<Paper>();
+        // records.Dump("FINAL");
+
+        return Content($"<p>Count... {records.Count}</p>");
+    }
+    
+    public async Task<IActionResult> OnGetRecommendations()
+{
         var failure = Content(
-        $"<div class='alert alert-error'><p class='text-3xl text-warning text-sh'>An Error Occurred...  But fret not! Our team of intelligent lab mice are on the job!</p></div>");
+        $"""
+            <div class='alert alert-error'>
+                <p class='text-3xl text-warning text-sh'>
+                    An Error Occurred...  But fret not! Our team of intelligent lab mice are on the job!
+                </p>
+            </div>
+        """);
 
-        string query = "...";
+        string query = "..."; // This can be ANY SQL query.  In my case, I'm using cypher, because it's lovely.
 
-        // Magically infers that the current method name is referring to 'Recommended.cypher'
-        var trace = new StackTrace();
-        query = await embeddedResourceQuery.GetQueryAsync<IndexModel>(trace);
+        // Magically infers from the tract that the current method name is referring to 'Recommendations.cypher'
+        query = await embeddedResourceQuery
+            .GetQueryAsync<IndexModel>(new StackTrace());
 
         if(string.IsNullOrEmpty(query))
-            return failure;
+            return failure;  // If for some reason, nothing comes back, alert the user with this div.
 
-        // This can also be a template
+        // This can also be a template, if we want, but here's a fancy-schmancy use of the triple-double quotes to easily send back anything in C# directly to HTML/X:
         return Content(
-            $"<div class='alert alert-primary'><p class='text-xl text-secondary text-sh'>{query}</p></div>");
+        $"""
+            <div class='alert alert-primary'>
+                <p class='text-xl text-secondary text-sh'>
+                {query}
+                </p>
+            </div>
+        """);
     }
 
 }

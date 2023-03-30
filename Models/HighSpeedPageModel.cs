@@ -61,11 +61,13 @@ public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirta
         {
             var readResults = await session.ExecuteReadAsync(async tx =>
             {
-                var result = await tx.RunAsync(query, parameters);
+                var result = await tx.RunAsync(query.Dump(), parameters);
+                // result.Dump("raw results");
                 return await result.ToListAsync();
             });
 
-            return readResults;
+            // return readResults;
+            return readResults;//.Dump("neo library results");
         }
         
         // Capture any errors along with the query and data for traceability

@@ -21,7 +21,16 @@
             <div id="recommendations">
             </div>
 
+         <button
+                class='btn-active btn'
+                hx-get='@Url.Page("","SearchByTitle")'
+                hx-target="#search_results"
+                >Search by Term</button>
            
+
+           <div id="search_results">
+            </div>
+
         </div>
     </div>
 </form>
