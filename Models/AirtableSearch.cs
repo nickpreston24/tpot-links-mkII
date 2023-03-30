@@ -24,7 +24,7 @@ public class AirtableSearch
     public string offset  { get; set; } = string.Empty;
     public List<string> fields { get; set; } = new List<string>();
     public string filterByFormula { get; set; } = string.Empty;
-    public int maxRecords { get; set; } = 20;
+    public int maxRecords { get; set; } = 100;
     public int pageSize { get; set; } = 10;
     public List<Sort> sort { get; set; } = new List<Sort>();
     public string view { get; set; } = string.Empty;

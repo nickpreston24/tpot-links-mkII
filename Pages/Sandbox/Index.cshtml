@@ -1,37 +1,36 @@
-@page 
-@model IndexModel 
+@page
+@using TPOT_Links.Pages.Sandbox
+@model IndexModel
 @{
-     // C# vars go here! 
+  // C# vars go here!
 }
 
-<div x-data='setup()'>
-    <form asp-action="post">
-        <div class="card p-5 mb-4 text-ocean-500">
-            <div x-data="{ open: false }">
-                <button @@click="open = true">Expand</button>
+<form x-data='setup()' asp-action="post">
 
-                <span x-show="open"> Content... </span>
+    <h1 class='glowing text-8xl' x-text='title'></h1>
+
+    <div class="card p-5 mb-4 text-ocean-500">
+        <div class="d-flex justify-content-between">
+
+            <button
+                class='btn-active btn'
+                hx-get='@Url.Page("","Recommendations")'
+                hx-target="#recommendations"
+                >Get Teaching Recommendations</button>
+
+            <div id="recommendations">
             </div>
 
-            <pre>
-                <span x-text='foo'>1</span>
-            </pre>
-
-            <div class="d-flex justify-content-between">
-                <button class="btn-active btn" hx-get='@Url.Page("","Recommendations")' hx-target="#recommendations">
-                    Get Paper Recommendations
-                </button>
-
-                <div id="recommendations"></div>
-            </div>
+           
         </div>
-    </form>
-</div>
+    </div>
+</form>
 
 <script>
-    function setup() {
+    function setup()
+    {
         return {
-            foo: "bar",
-        };
+            title: "Teachings"
+        }
     }
 </script>
