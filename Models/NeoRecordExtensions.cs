@@ -18,49 +18,51 @@ public static class NeoRecordExtensions
     private static readonly IDictionary<Type, ICollection<PropertyInfo>> _propertyCache =
         new Dictionary<Type, ICollection<PropertyInfo>>();
 
-    public static IList<T> MapTo<T>(this IList<IRecord> neo_records) 
-        where T : class, new()
+    public static T MapTo<T>(this IRecord record
+    , string label = ""
+    ) 
+        where T: class, new()
     {
-        var collection = new List<T>();
-        // var properties = typeof(T).GetProperties();
+        var type = typeof(T);
+        label = label.IsNullOrEmpty() ? type.Name.ToLowerInvariant() : label;
+        var node = record["page"].As<INode>();
 
         ICollection<PropertyInfo> properties = _propertyCache
-                    .TryGetProperties<T>(true);
+                .TryGetProperties<T>(true);
 
-        properties.Count.Dump("total properties");
-        foreach (IRecord record in neo_records)
+        if (properties.Count == 0)
         {
-            // record.Dump("record");
-            var node = record.Values["page"].As<Page>().Dump("node");
-            // var raw_values = record.Values["page"].GetType().Dump("vals raw");
-
-            // string status = record["Status"].As<string>();
-            // status.Dump("status");
-
-            T obj = new T();
-
-            // raw_values.Keys.Dump("keys");
-
-            // foreach (PropertyInfo prop in properties)
-            // {
-            //     try
-            //     {
-            //         object value = raw_values[prop.Name];
-            //         // value.Dump("new value");
-
-            //         prop.SetValue(obj, value, null);
-            //     }
-            //     catch
-            //     {
-            //         continue;
-            //     }
-            // }
-
-            collection.Add(obj);
-
+            return new T();
         }
 
+        var obj = new T();
 
-        return collection;
+        foreach (var prop in properties ?? Enumerable.Empty<PropertyInfo>())
+        {
+            string name = prop.Name/*.Dump("key")*/;
+            // var value = node.Properties[name].Dump("value");
+            node.Properties.TryGetValue(name, out var value);
+
+            var next_value = CreateSafeValue(value, prop);
+
+            prop.SetValue(obj, next_value/*.Dump("value")*/, null);
+        }
+
+        // obj.Dump("T's obj");
+
+        return obj;
+    }
+
+    private static object CreateSafeValue(object value, PropertyInfo prop){
+
+        Type propType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+
+        object safeValue =
+            value == null
+                ? null
+                : Convert.ChangeType(value, propType);
+
+        return safeValue;
     } 
+
 }

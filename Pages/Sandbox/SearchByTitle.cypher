@@ -1,3 +1,3 @@
 MATCH (page:Page)
-WHERE page.Title contains $Title
+WHERE toLower(page.Title) contains toLower($Title)
 RETURN page LIMIT 25;

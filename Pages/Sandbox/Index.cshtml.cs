@@ -13,6 +13,7 @@ using CodeMechanic.RazorPages;
 using Neo4j.Driver;
 using TPOT_Links.Models;
 using Page = TPOT_Links.Models.Page;
+using Htmx;
 
 namespace TPOT_Links.Pages.Sandbox;
 
@@ -36,27 +37,32 @@ public class IndexModel : HighSpeedPageModel
 
     public async Task<IActionResult> OnGetSearchByTitle(string term = "God")
     {
+        Console.WriteLine("Called!");
+        // if (!Request.IsHtmx()) 
+        //     return Page();
+    
+        // Response.Htmx(h => {
+        //     // we want to push the current url 
+        //     // into the history
+        //     h.Push(Request.GetEncodedUrl());
+        // });
+
         string query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
-
-        // var search_parameters = new Dictionary<string, string>();
-        // search_parameters.Add("Title", term);
 
         var search_parameters = new
         {
             Title = term
-            // person = person.AsDictionary()
         };
 
         var results = await SearchNeo4J<Page>(query, search_parameters);
-        // results.Dump("FINAL");
+        results.Dump("FINAL PAGES");
 
-        // return Content($"<p>Count... {records.Count}</p>");
-        return Content("<p>done.</p>");
+        return Partial("_PageTable", results);
     }
     
     public async Task<IActionResult> OnGetRecommendations()
-{
+    {
         var failure = Content(
         $"""
             <div class='alert alert-error'>

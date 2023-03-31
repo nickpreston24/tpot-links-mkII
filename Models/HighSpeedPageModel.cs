@@ -55,7 +55,6 @@ public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirta
     public async Task<IList<T>> SearchNeo4J<T>(
         string query
         , object parameters
-        // , bool hydrate = false
     )
         where T : class, new()
     {
@@ -64,9 +63,6 @@ public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirta
         if(parameters == null || string.IsNullOrWhiteSpace(query))
             return collection;
 
-        // if(hydrate)
-        //     query = query.Hydrate(parameters).Dump("hydrated query");
-
         await using var session = driver.AsyncSession();
 
         try
@@ -74,48 +70,8 @@ public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirta
             var results = await session.ExecuteReadAsync(async tx =>
             {
                 var result = await tx.RunAsync(query, parameters.Dump("passed params"));
-                return await result.ToListAsync<T>(record => {
-                    
-                    var node = record["page"].As<INode>();
-                    var Id = node.Properties.Dump("properties")["Id"]?.As<long>().Dump("Id");
-                    var Title = node.Properties["Title"]?.As<string>().Dump("Title");
-
-                    // // var obj = new PropertyModel<IRecord>()
-                    // // {
-                    // //     GenericProperty = record
-                    // // };
-                    
-                    // // //C# Extension Method: Object - GetPropertyValue
-                    // // Console.WriteLine(obj.GetPropertyValue("GenericProperty").Dump("record so far"));
-                    // // T obj = new T();
-                    // var page = record.Values["page"].As<Page>();
-                    // page.Dump("Page");
-                    // // title.Dump("Found title");
-                    // // record.Values["page"].Dump("i'm a record");
-                    // // obj.GetType().GetProperties().Dump("obj props");
-                    return new T();
-                });
+                return await result.ToListAsync<T>(record => record.MapTo<T>());
             });
-
-             // var results = await session.ExecuteReadAsync(async tx =>
-            // {
-            //     var result = await tx.RunAsync(query, parameters.Dump("passed params"));
-            //     // result.Dump("raw results");
-            //     return await result.ToListAsync(record => {
-            //         // var obj = record.Values["page"];//.Properties.Dump("i'm a record");
-            //         // obj.GetType().GetProperties().Dump("obj props");
-            //         return record;
-            //     });
-            // });
-
-            // var results =  await session.RunAndConsumeAsync(query, parameters);
-            // results.GetType().Dump("type");
-            // return results.Dump("Results");
-
-            // IResultCursor cursor = await session.RunAsync("MATCH (a:Person) RETURN a.name as name");
-            // List<string> results = await cursor.ToListAsync(record => record["Title"].As<string>());
-
-            // results.Dump("results");
 
             return results;
         }

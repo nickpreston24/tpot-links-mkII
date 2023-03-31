@@ -5,7 +5,7 @@
   // C# vars go here!
 }
 
-<form x-data='setup()' asp-action="post">
+<form x-data='setup()'>
 
     <h1 class='glowing text-8xl' x-text='title'></h1>
 
@@ -13,6 +13,7 @@
         <div class="d-flex justify-content-between">
 
             <button
+                x-show='false'
                 class='btn-active btn'
                 hx-get='@Url.Page("","Recommendations")'
                 hx-target="#recommendations"
@@ -21,15 +22,35 @@
             <div id="recommendations">
             </div>
 
-         <button
-                class='btn-active btn'
-                hx-get='@Url.Page("","SearchByTitle")'
-                hx-target="#search_results"
-                >Search by Term</button>
-           
 
-           <div id="search_results">
+        <input 
+            type="text"
+            name="term"
+            id="query"
+            autocomplete="off"
+            hx-get='@Url.Page("Index", "SearchByTitle")'
+            hx-target="#search_results"
+            hx-trigger="keyup changed delay:250ms"
+            hx-indicator="#loading"
+            placeholder="Search"
+            class="form-control"
+            aria-label="Username"
+            aria-describedby="search-addon" />
+
+            <!-- 
+                <button
+                    class='btn-active btn'
+                    hx-get='@Url.Page("","SearchByTitle")'
+                    hx-target="#search_results"
+                    >Search by Term</button>
+            -->
+
+            <div id="search_results">
             </div>
+
+            <div class="htmx-indicator" id='loading'>loading...</div>
+
+            <!-- <div class='loading-indicator' id="loading">loading...</div> -->
 
         </div>
     </div>
