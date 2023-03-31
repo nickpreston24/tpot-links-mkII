@@ -12,6 +12,8 @@ using CodeMechanic.Extensions;
 using CodeMechanic.RazorPages;
 using Neo4j.Driver;
 using TPOT_Links.Models;
+using Page = TPOT_Links.Models.Page;
+
 namespace TPOT_Links.Pages.Sandbox;
 
 public class IndexModel : HighSpeedPageModel
@@ -37,12 +39,20 @@ public class IndexModel : HighSpeedPageModel
         string query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
 
-        var results = await SearchNeo4J(query, new {});
+        // var search_parameters = new Dictionary<string, string>();
+        // search_parameters.Add("Title", term);
 
-        var records = results.MapTo<Paper>();
-        // records.Dump("FINAL");
+        var search_parameters = new
+        {
+            Title = term
+            // person = person.AsDictionary()
+        };
 
-        return Content($"<p>Count... {records.Count}</p>");
+        var results = await SearchNeo4J<Page>(query, search_parameters);
+        // results.Dump("FINAL");
+
+        // return Content($"<p>Count... {records.Count}</p>");
+        return Content("<p>done.</p>");
     }
     
     public async Task<IActionResult> OnGetRecommendations()

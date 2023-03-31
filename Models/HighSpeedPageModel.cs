@@ -7,6 +7,11 @@ and because I can'think of a better name
  Inheritance sucks.
 
  Get used to it.
+
+    TODO:
+
+ - [ ] https://www.bytefish.de/blog/neo4j_dotnet.html
+
 */
 
 
@@ -22,7 +27,9 @@ using System.Runtime.CompilerServices;
 using CodeMechanic.Extensions;
 using Neo4j.Driver;
 using AirtableApiClient;
-
+using CodeMechanic.Advanced.Extensions;
+using CodeMechanic.Neo4j.Extensions;
+using Page = TPOT_Links.Models.Page;
 namespace CodeMechanic.RazorPages;
 
 ///<summary>
@@ -45,29 +52,72 @@ public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirta
         this.airtable_repo = repo;
     }
 
-    public async Task<IList<IRecord>> SearchNeo4J(string query, object parameters) 
+    public async Task<IList<T>> SearchNeo4J<T>(
+        string query
+        , object parameters
+        // , bool hydrate = false
+    )
+        where T : class, new()
     {
-        var none = new List<IRecord>();
+        var collection = new List<T>();
         
         if(parameters == null || string.IsNullOrWhiteSpace(query))
-            return none;
+            return collection;
 
-        await using var session = driver
-            .AsyncSession();
-            // .AsyncSession(configBuilder => configBuilder
-            // .WithDatabase("nugs"));
+        // if(hydrate)
+        //     query = query.Hydrate(parameters).Dump("hydrated query");
+
+        await using var session = driver.AsyncSession();
 
         try
         {
-            var readResults = await session.ExecuteReadAsync(async tx =>
+            var results = await session.ExecuteReadAsync(async tx =>
             {
-                var result = await tx.RunAsync(query.Dump(), parameters);
-                // result.Dump("raw results");
-                return await result.ToListAsync();
+                var result = await tx.RunAsync(query, parameters.Dump("passed params"));
+                return await result.ToListAsync<T>(record => {
+                    
+                    var node = record["page"].As<INode>();
+                    var Id = node.Properties.Dump("properties")["Id"]?.As<long>().Dump("Id");
+                    var Title = node.Properties["Title"]?.As<string>().Dump("Title");
+
+                    // // var obj = new PropertyModel<IRecord>()
+                    // // {
+                    // //     GenericProperty = record
+                    // // };
+                    
+                    // // //C# Extension Method: Object - GetPropertyValue
+                    // // Console.WriteLine(obj.GetPropertyValue("GenericProperty").Dump("record so far"));
+                    // // T obj = new T();
+                    // var page = record.Values["page"].As<Page>();
+                    // page.Dump("Page");
+                    // // title.Dump("Found title");
+                    // // record.Values["page"].Dump("i'm a record");
+                    // // obj.GetType().GetProperties().Dump("obj props");
+                    return new T();
+                });
             });
 
-            // return readResults;
-            return readResults;//.Dump("neo library results");
+             // var results = await session.ExecuteReadAsync(async tx =>
+            // {
+            //     var result = await tx.RunAsync(query, parameters.Dump("passed params"));
+            //     // result.Dump("raw results");
+            //     return await result.ToListAsync(record => {
+            //         // var obj = record.Values["page"];//.Properties.Dump("i'm a record");
+            //         // obj.GetType().GetProperties().Dump("obj props");
+            //         return record;
+            //     });
+            // });
+
+            // var results =  await session.RunAndConsumeAsync(query, parameters);
+            // results.GetType().Dump("type");
+            // return results.Dump("Results");
+
+            // IResultCursor cursor = await session.RunAsync("MATCH (a:Person) RETURN a.name as name");
+            // List<string> results = await cursor.ToListAsync(record => record["Title"].As<string>());
+
+            // results.Dump("results");
+
+            return results;
         }
         
         // Capture any errors along with the query and data for traceability
@@ -75,6 +125,9 @@ public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirta
         {
             Console.WriteLine($"{query} - {ex}");
             throw;
+        }
+        finally {
+            session.CloseAsync();
         }
     }
 

@@ -1,3 +1,3 @@
 MATCH (page:Page)
-where page.Title contains "God"
+WHERE page.Title contains $Title
 RETURN page LIMIT 25;

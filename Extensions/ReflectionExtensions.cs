@@ -45,5 +45,36 @@ namespace CodeMechanic.Extensions
 
             return properties;
         }
+
+        public static object GetPropertyValue<T>(this T self, string propertyName)
+        {
+            Type type = self.GetType();
+            PropertyInfo property = type.GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+
+            return property.GetValue(self, null);
+        }
+    }
+
+    public class PropertyModel<T> : AbstractPropertyModel
+    {
+        public static int StaticProperty { get; set; }
+        public override int OverrideProperty { get; set; }
+        public virtual int VirtualProperty { get; set; }
+        internal int InternalProperty { get; set; }
+        private int PrivateProperty { get; set; }
+        protected int ProtectedProperty { get; set; }
+        protected internal int ProtectedInternalProperty { get; set; }
+        public int PublicProperty { get; set; }
+        public int PublicGetterPrivateSetterProperty { get; private set; }
+        public int PrivateGetterPublicSetterProperty { private get; set; }
+        public T GenericProperty { get; set; }
+        public T this[T param1, int param2] { get { return param1; }}
+        public override int AbstractProperty { get; set; }
+    }
+
+    public abstract class AbstractPropertyModel
+    {
+        public abstract int AbstractProperty { get; set; }
+        public virtual int OverrideProperty { get; set; }
     }
 }

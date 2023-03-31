@@ -5,8 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Neo4j.Driver;
-using Neo4j.Driver.Internal.Types;
 using TPOT_Links.Models;
+using Page = TPOT_Links.Models.Page;
 
 namespace CodeMechanic.Extensions;
 
@@ -31,7 +31,7 @@ public static class NeoRecordExtensions
         foreach (IRecord record in neo_records)
         {
             // record.Dump("record");
-            var node = record.Values["page"].As<Paper>().Dump("node");
+            var node = record.Values["page"].As<Page>().Dump("node");
             // var raw_values = record.Values["page"].GetType().Dump("vals raw");
 
             // string status = record["Status"].As<string>();
