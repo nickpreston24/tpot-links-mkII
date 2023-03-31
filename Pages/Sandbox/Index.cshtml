@@ -7,7 +7,7 @@
 
 <form x-data='setup()'>
 
-    <h1 class='glowing text-8xl' x-text='title'></h1>
+    <h1 class='glowing text-xl' x-text='title'></h1>
 
     <div class="card p-5 mb-4 text-ocean-500">
         <div class="d-flex justify-content-between">
@@ -37,20 +37,10 @@
             aria-label="Username"
             aria-describedby="search-addon" />
 
-            <!-- 
-                <button
-                    class='btn-active btn'
-                    hx-get='@Url.Page("","SearchByTitle")'
-                    hx-target="#search_results"
-                    >Search by Term</button>
-            -->
-
             <div id="search_results">
             </div>
 
             <div class="htmx-indicator" id='loading'>loading...</div>
-
-            <!-- <div class='loading-indicator' id="loading">loading...</div> -->
 
         </div>
     </div>
