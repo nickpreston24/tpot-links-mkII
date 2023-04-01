@@ -3,12 +3,13 @@ using CodeMechanic.RazorPages;
 public static class AirtableConfigurations {
    public static void ConfigureAirtable(this IServiceCollection services)
     {
-        services.AddScoped<IAirtableRepo>(x =>
-        {
-            string airtable_api_key = Environment.GetEnvironmentVariable("AIRTABLE_API_KEY");
-            string nugs_api_key = Environment.GetEnvironmentVariable("NUGS_BASE_KEY");
+        string PAT = Environment.GetEnvironmentVariable("TPOT_PAT");
+        string tpot_base_key = Environment.GetEnvironmentVariable("TPOT_BASE_KEY");
 
-            return new AirtableRepo(airtable_api_key, nugs_api_key);
+        services.AddHttpClient<IAirtableRepo, AirtableRepo>(client => {
+            client.BaseAddress = new Uri($"https://api.airtable.com/v0/{PAT}");
+            return new AirtableRepo(client, tpot_base_key, PAT);
         });
     }
 }
+

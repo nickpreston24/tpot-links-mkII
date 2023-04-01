@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using TPOT_Links;
 
-namespace CodeMechanic.RazorPages;
 public interface IAirtableRepo {
-       Task<List<T>> ListRecords<T>(AirtableSearch search);
+       Task<List<T>> SearchRecords<T>(AirtableSearch search);
 }
