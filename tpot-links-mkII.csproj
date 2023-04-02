@@ -15,6 +15,7 @@
     -->
     <EmbeddedResource Include="Pages\**\*.cypher"></EmbeddedResource>
     <EmbeddedResource Include="Pages\**\*.sql"></EmbeddedResource>
+    <EmbeddedResource Include="Pages\**\*.html"></EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
