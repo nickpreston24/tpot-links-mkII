@@ -5,12 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Neo4j.Driver;
-using TPOT_Links.Models;
-using Page = TPOT_Links.Models.Page;
 
 namespace CodeMechanic.Extensions;
 
-public static class NeoRecordExtensions 
+public static class Neo4jRecordExtensions 
 {
     /// <summary>
     /// PropertyCache stores the properties we wish to use again so we only have to run Reflection once per property.
@@ -25,7 +23,7 @@ public static class NeoRecordExtensions
     {
         var type = typeof(T);
         label = label.IsNullOrEmpty() ? type.Name.ToLowerInvariant() : label;
-        var node = record["page"].As<INode>();
+        var node = record[label].As<INode>();
 
         ICollection<PropertyInfo> properties = _propertyCache
                 .TryGetProperties<T>(true);
@@ -48,7 +46,7 @@ public static class NeoRecordExtensions
             prop.SetValue(obj, next_value/*.Dump("value")*/, null);
         }
 
-        // obj.Dump("T's obj");
+        obj.Dump("T's obj");
 
         return obj;
     }
