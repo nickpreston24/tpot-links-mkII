@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "yarn bundle && dotnet watch run --launch-profile hotreloadprofile",
+    "dev": "dotnet watch run --launch-profile hotreloadprofile",
     "build": "yarn && npm i && dotnet build && yarn bundle",
     "restore": "dotnet restore",
     "buildcss:dev": "cross-env TAILWIND_MODE=build postcss ./Styles/app.css -o ./wwwroot/css/app.css",
@@ -8,8 +8,7 @@
     "buildcss:linux": "npx tailwindcss -i ./Styles/app.css -o ./wwwroot/css/site.css",
     "electron": "electronize-h5 start /watch",
     "nuke": "rm -rf node_modules wwwroot/lib wwwroot/css",
-    "reinstall": "npm run nuke && yarn && npm i",
-    "bundle": "browserify ./wwwroot/js/main.js > ./wwwroot/js/bundle.js"
+    "reinstall": "npm run nuke && yarn && npm i"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.7",
@@ -24,7 +23,6 @@
     "alpinejs": "^3.11.1",
     "animejs": "^3.2.1",
     "axios": "^1.2.4",
-    "browserify": "^17.0.0",
     "htmx.org": "^1.8.5",
     "xregexp": "^5.1.1"
   }
