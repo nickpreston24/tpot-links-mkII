@@ -23,7 +23,7 @@ public static class Neo4jRecordExtensions
     {
         var type = typeof(T);
         label = label.IsNullOrEmpty() ? type.Name.ToLowerInvariant() : label;
-        var node = record[label].As<INode>();
+        var node = record.Dump("raw record")[label].As<INode>();
 
         ICollection<PropertyInfo> properties = _propertyCache
                 .TryGetProperties<T>(true);

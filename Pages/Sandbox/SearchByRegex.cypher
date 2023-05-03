@@ -1,5 +1,6 @@
-MATCH (p)
-WHERE "Page" IN LABELS(p) 
-AND p.Title =~ '(?i)^P.*'
-AND p.Slug =~ '(?i)^P.*'
-RETURN p
+MATCH (page)-[rel]->(m)
+WHERE "Page" IN LABELS(page) 
+AND page.Title =~ '(?i)^$Term.*'
+// AND page.Slug =~ '(?i)^P.*'
+// OR page.Excerpt =~ '(?i)^P.*'
+RETURN page,rel

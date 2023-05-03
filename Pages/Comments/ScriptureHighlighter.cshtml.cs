@@ -7,14 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-// using TPOT_Links.Extensions;
-// using TPOT_Links.RazorPages;
 using CodeMechanic.Extensions;
 using CodeMechanic.Advanced.Extensions;
 using Neo4j.Driver;
-
-
 using CodeMechanic.RazorPages;
+using TPOT_Links.Models;
+
 namespace TPOT_Links.Pages.Comments;
 
 public class ScriptureHighlighterModel : HighSpeedPageModel
@@ -49,21 +47,18 @@ public class ScriptureHighlighterModel : HighSpeedPageModel
             </div>
             """);
 
-      var all_sample_text = sample_comments.Concat(sample_teachings);
+      string [] all_sample_text = sample_comments.Concat(sample_teachings).ToArray();
 
-      IEnumerable<Scripture> prefixed_scriptures = all_sample_text
-        .SelectMany(comment => comment
-        .Extract<Scripture>(@"(?<Name>[a-zA-Z]+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]+\r*\n)(?<Text>.*?)(?:\r*\n){2}"));
+      (List<Scripture> prefixed
+      , List<Scripture> postfixed
+      , List<Scripture> full
+      ) = new ScriptureParser(all_sample_text);
 
-      IEnumerable<Scripture> postfixed_scriptures = all_sample_text
-        .SelectMany(comment => comment
-        .Extract<Scripture>(@"^(?<Text>.*?)(?<Name>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?)"));
-
-      // prefixed_scriptures.Dump("prefixed scriptures");
-      // postfixed_scriptures.Dump("postfixed scriptures");
-
-      var extracted_scriptures_list = prefixed_scriptures
-        .Concat(postfixed_scriptures) // joins N array of strings into a single array
+      var extracted_scriptures_list = 
+        prefixed.Dump("prefixed")
+        // .Concat(postfixed.Dump("postfixed"))
+        .Concat(full.Dump("full"))
+         // joins N array of strings into a single array
         .Select(scripture=> $"""
               <div class="card w-96 bg-base-100 shadow-xl">
                 <div class="card-body">

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -16,12 +17,12 @@ using Page = TPOT_Links.Models.Page;
 using Htmx;
 
 namespace TPOT_Links.Pages.Sandbox;
-
+//Note: to remove all comments, replace this with nothing:  // .*$
 public class IndexModel : HighSpeedPageModel
 {
+    private static string _query { get;set; } = string.Empty;
+    public string Query => _query;
 
-    private static int count = 0;
- 
     public IndexModel(
         IEmbeddedResourceQuery embeddedResourceQuery
         , IDriver driver) 
@@ -31,34 +32,63 @@ public class IndexModel : HighSpeedPageModel
 
     public void OnGet()
     {
-        // reset on refresh
-        count = 0;
     }
 
-    public async Task<IActionResult> OnGetSearchByTitle(string term = "God")
+    public async Task<IActionResult> OnGetSearchByRegex(string term = "God")
     {
-        Console.WriteLine("Called!");
-        // if (!Request.IsHtmx()) 
-        //     return Page();
-    
-        // Response.Htmx(h => {
-        //     // we want to push the current url 
-        //     // into the history
-        //     h.Push(Request.GetEncodedUrl());
-        // });
-
         string query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
+
+        // Make the code snippet purty :)
+        // var query_lines = query.Split("\n").Dump("query lines");
+        // _query = new StringBuilder(query)
+        //     .AppendEach(
+        //     query_lines
+        //     ,line => $"""
+        //         <pre class='text-sm' data-prefix="$"><code>{line}</code></pre>
+        //     """)
+        //     .ToString()
+        // ;
 
         var search_parameters = new
         {
             Title = term
         };
 
-        var results = await SearchNeo4J<Page>(query, search_parameters);
-        results.Dump("FINAL PAGES");
+        var pages = await SearchNeo4J<Page>(query.Dump("QUERY"), search_parameters);
 
-        return Partial("_PageTable", results);
+        var papers = pages.Select(page=> new TPOTPaper()
+            .With(paper=> {
+                // Doing some ad-hoc mapping here b/c Page.cs maps from Neo4j and TPOTPaper.cs from MySql, to be resolved soon.
+
+
+            })
+        ); 
+
+        // pages.Dump("SEARCH RESULTS");
+
+        // return Partial("_PageTable", results);
+
+        string html = new StringBuilder()
+            .AppendEach(
+                papers, paper => 
+        $"""
+            <tr>
+                <th>
+                    <label>
+                        <td>{paper.id}</td>
+                    </label>
+                </th>
+                <th class='text-primary'>{paper.Title}</th>
+                <td class='text-secondary'>{paper.Excerpt}</td>
+                <td class='text-secondary'>{paper.Category}</td>
+                <td class='text-accent'>${paper.Link}</td>
+                <td class='text-secondary'>{paper.Markdown}</td>
+                <td class='text-secondary'>{paper.RawJson}</td>
+            </tr>
+        """).ToString();
+
+        return Content(html);
     }
     
     public async Task<IActionResult> OnGetRecommendations()

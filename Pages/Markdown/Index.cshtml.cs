@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,7 +11,7 @@ using Neo4j.Driver;
 using CodeMechanic.RazorPages;
 using CodeMechanic.Extensions;
 
-namespace TPOT_Links.Pages.Tutorial;
+namespace TPOT_Links.Pages.Markdown;
 
 public class IndexModel : HighSpeedPageModel
 {
@@ -30,9 +29,11 @@ public class IndexModel : HighSpeedPageModel
       string sort_direction="..."
       , int max_lines = 3)  
     {
+        
+        
         count = 0;
     }
-    
+
     public async Task<IActionResult> OnPostStuff()
     {
         var failure_message = Content(
@@ -42,14 +43,9 @@ public class IndexModel : HighSpeedPageModel
                 job!</p>
             </div>
             """);
-  
+
         string result = "candy";
         string change = "coconut";
-
-        /* 
-          This demonstrates that we can apply updates to alpinejs variables in the cshtml file 
-          from our server side templater.
-        */
 
         return Content($"""
           <div>
@@ -64,5 +60,3 @@ public class IndexModel : HighSpeedPageModel
     }
 
 }
-
-

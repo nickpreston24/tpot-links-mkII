@@ -3,12 +3,23 @@
 @model IndexModel
 @{
   // C# vars go here!
+  var current_query = Model.Query;
 }
 
 <form x-data='setup()'>
 
     <h1 class='glowing text-xl' x-text='title'></h1>
 
+    @if (!string.IsNullOrEmpty(@current_query))
+    {
+        <div class='text-ghost'>
+            <label class='text-2xl'>Current Query: </label>
+            <div class="mockup-code">
+                @current_query
+            </div>
+        </div>
+    }
+   
     <div class="card p-5 mb-4 text-ocean-500">
         <div class="d-flex justify-content-between">
 
@@ -20,8 +31,8 @@
                 >Get Teaching Recommendations</button>
 
             <div id="recommendations">
+                <!-- Recommended papers get injected here -->
             </div>
-
 
             <div class="form-control w-full max-w-xs">
                 <label class="label">
@@ -34,7 +45,7 @@
                     name="term"
                     id="query"
                     autocomplete="off"
-                    hx-get='@Url.Page("Index", "SearchByTitle")'
+                    hx-get='@Url.Page("Index", "SearchByRegex")'
                     hx-target="#search_results"
                     hx-trigger="keyup changed delay:250ms"
                     hx-indicator="#loading"

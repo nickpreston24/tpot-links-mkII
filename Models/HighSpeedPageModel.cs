@@ -55,9 +55,13 @@ public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirta
     public async Task<IList<T>> SearchNeo4J<T>(
         string query
         , object parameters
+        , Func<IRecord, T> mapper = null
     )
         where T : class, new()
     {
+        if(mapper == null)
+            mapper = record => record.MapTo<T>();
+        
         var collection = new List<T>();
         
         if(parameters == null || string.IsNullOrWhiteSpace(query))
@@ -70,7 +74,7 @@ public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirta
             var results = await session.ExecuteReadAsync(async tx =>
             {
                 var result = await tx.RunAsync(query, parameters.Dump("passed params"));
-                return await result.ToListAsync<T>(record => record.MapTo<T>());
+                return await result.ToListAsync<T>(mapper);
             });
 
             return results;
