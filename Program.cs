@@ -1,7 +1,8 @@
 using TPOT_Links;
 using Neo4j.Driver;
-using CodeMechanic.Extensions;
-using CodeMechanic.RazorPages;
+using CodeMechanic.Embeds;
+using CodeMechanic.RazorHAT;
+using CodeMechanic.Types;
 
 var builder = WebApplication.CreateBuilder(args);
 

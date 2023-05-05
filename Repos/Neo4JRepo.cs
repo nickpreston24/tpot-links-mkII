@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CodeMechanic.Neo4j.Extensions;
 using TPOT_Links.Models;
+using Category = TPOT_Links.Models.Category;
 
 public class Neo4JRepo : IDisposable
 {

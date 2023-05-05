@@ -30,6 +30,9 @@ using AirtableApiClient;
 using CodeMechanic.Advanced.Extensions;
 using CodeMechanic.Neo4j.Extensions;
 using Page = TPOT_Links.Models.Page;
+
+using CodeMechanic.Embeds;
+
 namespace CodeMechanic.RazorPages;
 
 ///<summary>

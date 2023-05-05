@@ -10,13 +10,13 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using CodeMechanic.Extensions;
-using CodeMechanic.RazorPages;
+using CodeMechanic.RazorHAT;
 using Neo4j.Driver;
 using TPOT_Links.Models;
 using Page = TPOT_Links.Models.Page;
 using Htmx;
 
-using rider_bytesafe_nuget_attempt;
+using CodeMechanic.Embeds;
 
 namespace TPOT_Links.Pages.Sandbox;
 //Note: to remove all comments, replace this with nothing:  // .*$
@@ -34,7 +34,6 @@ public class IndexModel : HighSpeedPageModel
 
     public void OnGet()
     {
-        new PurpleElephant().Dump("elephant");
     }
 
     public async Task<IActionResult> OnGetSearchByRegex(string term = "God")
