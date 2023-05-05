@@ -16,6 +16,8 @@ using TPOT_Links.Models;
 using Page = TPOT_Links.Models.Page;
 using Htmx;
 
+using rider_bytesafe_nuget_attempt;
+
 namespace TPOT_Links.Pages.Sandbox;
 //Note: to remove all comments, replace this with nothing:  // .*$
 public class IndexModel : HighSpeedPageModel
@@ -32,6 +34,7 @@ public class IndexModel : HighSpeedPageModel
 
     public void OnGet()
     {
+        new PurpleElephant().Dump("elephant");
     }
 
     public async Task<IActionResult> OnGetSearchByRegex(string term = "God")

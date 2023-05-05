@@ -22,6 +22,7 @@ public class ScriptureParser
 
   private const string PostFixPattern = """^(?<Text>.*?)(?<Name>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?)""";
 
+  //https://regex101.com/r/DQu8B1/1
   private const string FullPattern = """(?(?=^\s*\((?<chapter>^\d*\s*[a-zA-Z]+\s*\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{3,})\)\.)$)(“(?<quoted_text>\b[\s\.,a-zA-Z!:\d]+\b)”\s*?(?<end>\([\w\s:-]+\)\.))|((?<start>^\d*?\s*?[A-Z][\w\s:-]+$)\n(?<quote>^((\s*“?\(\d+\)[\w\s,\.!?’',”;:]+))*)(?<spaces>(”?$\n)|(”\n*?$)))""";
 
   public ScriptureParser(params string [] lines) {
