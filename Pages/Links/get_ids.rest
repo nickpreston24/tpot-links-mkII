@@ -1,7 +1,0 @@
-GET https://tpot-api.vercel.app/api/pages?id=7001
-
-###
-
-GET https://tpot-api.vercel.app/api/pages?slug=teachings___in-defense-of-exhttps://github.com/MikePreston17/tpot-api.gittra-biblical-inspiration-of-god-outside-bible-htm
-
-###
