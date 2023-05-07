@@ -2,7 +2,7 @@ using Microsoft.Data.SqlClient;
 
 namespace TPOT_Links.Models;
 
-sealed class LogRow
+public sealed class LogRow
 {
     public int Id { get; set; } = -1;
 

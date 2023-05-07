@@ -21,13 +21,13 @@
                 class="card-body"
               >
                 <div 
-                 class="form-control"> <label class="label">
+                  class="form-control"> <label class="label">
                     <span class="label-text">Email</span>
                   </label>
                   <input 
-                  type="text" 
-                  name='email'
-                  placeholder="email" class="input input-bordered" />
+                    type="text" 
+                    name='email'
+                    placeholder="email" class="input input-bordered" />
                 </div>
                 <div class="form-control">
                   <label class="label">
@@ -35,17 +35,18 @@
                   </label>
                   <input 
                   
-                   name='password'
-                  type="text" placeholder="password" class="input input-bordered" />
+                    name='password'
+                    type="text" placeholder="password" class="input input-bordered" />
                   <label class="label">
                     <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
                   </label>
                 </div>
                 <div 
-                hx-get='@Url.Page("", "Login")' 
-                class="form-control mt-6">
+                  hx-get='@Url.Page("", "Login")' 
+                  class="form-control mt-6">
                   <button class="btn btn-primary">Login</button>
                 </div>
+              </div>
             </div>
           </div>
         </div>
@@ -53,6 +54,7 @@
     </div>
   </div>
 </div>
+
 <script>
   function setup() {
     return {

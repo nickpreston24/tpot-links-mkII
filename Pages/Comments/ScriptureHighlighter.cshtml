@@ -1,62 +1,23 @@
 @page
 @model ScriptureHighlighterModel
 @{
-  // C# vars go here!
+    // C# vars go here!
 }
-  
-<form 
-x-data='setup()'
-asp-action="post"
-  hx-post='@Url.Page("","ExtractedScriptures")'
-  hx-target='#extracted'
->
 
-<div class="flex flex-col items-center justify-center gap-2 p-4">
-  <button type='submit'>Go</button>
-  <div id='extracted'>..</div>
-</div>
+<form
+    x-data='setup()'
+    action='post'
+    hx-post='@Url.Page("", "ExtractedScriptures")'
+    hx-target='#extracted'>
 
-<!--       
-  <div>
-    <div x-data="setup()" class="flex flex-col items-center justify-center">
-      <div class="flex flex-center hero min-h-screen bg-base-200">
-        <div class="hero-content flex-col lg:flex-row-reverse">
-          <div class="flex flex-col items-center justify-center gap-2">
-            <h1 class="text-5xl font-bold">Scripture Parsing</h1>
-            <div class="flex flex-row items-center justify-center gap-2">
-              <div class="bg-secondary text-white-content mockup-code w-3/4">
-                <pre x-show="debug">
-                    <template x-for="pattern in patterns">
-                      <pre data-prefix="$">
-                        <code x-text="pattern">
-                        </code>
-                      </pre> 
-                  </template>
-                </pre>
-              </div>
-            </div>
-
-            <h2 class="text-4xl flex flex-col">
-              Comments Discovered
-              <a href="https://regex101.com/r/HiM1uO/1">
-                <button class="btn btn-secondary">See the Regex</button>
-              </a>
-            </h2>
-            <div class="w-72 flex flex-col items-center justify-center gap-2">
-              <template x-for="comment in comment_highlights">
-                <h2 x-text="comment"></h2>
-              </template>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="flex flex-col items-center justify-center gap-2 p-4">
+        <button type='submit'>Go</button>
+        <div id='extracted'>..</div>
     </div>
 
+    <!--       
+    -->
 
-
-
-  </div> -->
-  
 </form>
 
 <script>
