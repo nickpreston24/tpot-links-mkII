@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Airtable" Version="1.3.0" />
-    <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.1" />
+    <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.2" />
     <PackageReference Include="CodeMechanic.Embeds" Version="1.0.0" />
     <PackageReference Include="CodeMechanic.RazorHAT" Version="1.0.0" />
     <PackageReference Include="CodeMechanic.Types" Version="1.0.6" />
