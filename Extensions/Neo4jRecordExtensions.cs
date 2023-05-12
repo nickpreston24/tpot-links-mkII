@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using Neo4j.Driver;
 
@@ -21,9 +16,9 @@ public static class Neo4jRecordExtensions
     ) 
         where T: class, new()
     {
+        label.Dump("label!!");
         var type = typeof(T);
         label = label.IsNullOrEmpty() ? type.Name.ToLowerInvariant() : label;
-        var node = record.Dump("raw record")[label].As<INode>();
 
         ICollection<PropertyInfo> properties = _propertyCache
                 .TryGetProperties<T>(true);
@@ -39,6 +34,8 @@ public static class Neo4jRecordExtensions
         {
             string name = prop.Name/*.Dump("key")*/;
             // var value = node.Properties[name].Dump("value");
+            var node = record.Dump("raw record")[label].As<INode>();
+
             node.Properties.TryGetValue(name, out var value);
 
             var next_value = CreateSafeValue(value, prop);

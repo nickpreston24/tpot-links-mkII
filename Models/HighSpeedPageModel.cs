@@ -16,21 +16,8 @@ and because I can'think of a better name
 
 
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using CodeMechanic.Extensions;
 using Neo4j.Driver;
-using AirtableApiClient;
-using CodeMechanic.Advanced.Extensions;
-using CodeMechanic.Neo4j.Extensions;
-using Page = TPOT_Links.Models.Page;
-
 using CodeMechanic.Embeds;
 
 namespace CodeMechanic.RazorPages;
@@ -38,7 +25,7 @@ namespace CodeMechanic.RazorPages;
 ///<summary>
 ///Airtable https://github.com/ngocnicholas/airtable.net/wiki/Documentation
 ///</summary>
-public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirtable
+public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirtable
 {
     protected readonly IEmbeddedResourceQuery embeddedResourceQuery;
     protected readonly IDriver driver;
@@ -62,13 +49,15 @@ public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirta
     )
         where T : class, new()
     {
-        if(mapper == null)
-            mapper = record => record.MapTo<T>();
-        
+        parameters.Dump("Hello from params");
+
+        if (mapper == null)
+            mapper = record => record.MapTo<T>().Dump("mapped record");
+
         var collection = new List<T>();
-        
-        if(parameters == null || string.IsNullOrWhiteSpace(query))
-            return collection;
+
+        if (parameters == null || string.IsNullOrWhiteSpace(query))
+            return collection.Dump("nothing");
 
         await using var session = driver.AsyncSession();
 
@@ -76,20 +65,23 @@ public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirta
         {
             var results = await session.ExecuteReadAsync(async tx =>
             {
-                var result = await tx.RunAsync(query, parameters.Dump("passed params"));
-                return await result.ToListAsync<T>(mapper);
+                parameters.Dump("hello?  params?");
+                var result = await tx.RunAsync(query.Dump("query"), parameters.Dump("passed params"));
+                result.Dump("raw results");
+                return await result.ToListAsync<T>(mapper.Dump("my mapper"));
             });
 
-            return results;
+            return results.Dump("final results");
         }
-        
+
         // Capture any errors along with the query and data for traceability
         catch (Neo4jException ex)
         {
             Console.WriteLine($"{query} - {ex}");
             throw;
         }
-        finally {
+        finally
+        {
             session.CloseAsync();
         }
     }
@@ -125,5 +117,4 @@ public abstract class HighSpeedPageModel : PageModel//, IQueryNeo4j, IQueryAirta
     //         throw;
     //     }
     // }
-
 }

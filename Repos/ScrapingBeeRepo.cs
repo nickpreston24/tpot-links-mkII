@@ -1,11 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Linq;
-using System.Threading.Tasks;
-using RestSharp;
-using TPOT_Links;
-
 public class ScrapingBeeRepo {
 
     protected string base_url = string.Empty;

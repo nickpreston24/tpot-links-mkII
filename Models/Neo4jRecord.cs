@@ -1,4 +1,3 @@
-using Neo4j.Driver;
 namespace CodeMechanic.Neo4j;
 
 

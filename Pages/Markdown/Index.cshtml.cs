@@ -1,17 +1,8 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using Neo4j.Driver;
-using CodeMechanic.RazorHAT;
-
 using CodeMechanic.Embeds;
-
+using CodeMechanic.RazorPages;
+using Microsoft.AspNetCore.Mvc;
+using Neo4j.Driver;
+    
 namespace TPOT_Links.Pages.Markdown;
 
 public class IndexModel : HighSpeedPageModel
@@ -30,8 +21,6 @@ public class IndexModel : HighSpeedPageModel
       string sort_direction="..."
       , int max_lines = 3)  
     {
-        
-        
         count = 0;
     }
 

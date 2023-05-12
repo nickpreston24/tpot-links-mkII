@@ -3,7 +3,6 @@ namespace TPOT_Links;
 
 public class TPOTPaper
 {
-    public int id { get; set; } = -9999;
     public string Markdown { get; set; } = string.Empty;
     public string FrontMatter { get; set; } = string.Empty;
     public string Category { get; set; } = string.Empty;
@@ -14,7 +13,8 @@ public class TPOTPaper
     public string RawJson { get; set; } = string.Empty;
     public int Author { get; set; } = -1;
     public string AuthorName { get; set; } = string.Empty;
-
+    public string Id { get; set; } = string.Empty;
+    public string Status { get; set; } = string.Empty;
 }
 
  /*

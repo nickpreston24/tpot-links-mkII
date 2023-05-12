@@ -1,22 +1,13 @@
 
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using CodeMechanic.Extensions;
-using CodeMechanic.RazorHAT;
+using System.Text;
+using CodeMechanic.Diagnostics;
+using CodeMechanic.Embeds;
+using CodeMechanic.RazorPages;
+using CodeMechanic.Types;
+using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using TPOT_Links.Models;
-using Page = TPOT_Links.Models.Page;
-using Htmx;
-
-using CodeMechanic.Embeds;
 
 namespace TPOT_Links.Pages.Sandbox;
 //Note: to remove all comments, replace this with nothing:  // .*$
@@ -54,39 +45,29 @@ public class IndexModel : HighSpeedPageModel
 
         var search_parameters = new
         {
-            Title = term
+            regex = $"(?i).*{term}.*".Dump("regex")
         };
 
-        var pages = await SearchNeo4J<Page>(query.Dump("QUERY"), search_parameters);
+        var pages = await SearchNeo4J<Page>(query, search_parameters);
 
-        var papers = pages.Select(page=> new TPOTPaper()
-            .With(paper=> {
-                // Doing some ad-hoc mapping here b/c Page.cs maps from Neo4j and TPOTPaper.cs from MySql, to be resolved soon.
-
-
-            })
-        ); 
-
+        // var papers = pages.Select(page=> new TPOTPaper()
+        //     .With(paper=> {
+        //         // Doing some ad-hoc mapping here b/c Page.cs maps from Neo4j and TPOTPaper.cs from MySql, to be resolved soon.
+        //     })
+        // ); 
         // pages.Dump("SEARCH RESULTS");
-
         // return Partial("_PageTable", results);
-
         string html = new StringBuilder()
             .AppendEach(
-                papers, paper => 
+                pages, paper => 
         $"""
             <tr>
-                <th>
-                    <label>
-                        <td>{paper.id}</td>
-                    </label>
-                </th>
-                <th class='text-primary'>{paper.Title}</th>
+                <th class='text-primary'>{paper.Id}</th>
+                <th class='text-accent'>{paper.Title}</th>
+                <td class='text-secondary'>{paper.Status}</td>
+                <td class='text-secondary'>{paper.Author}</td>
+                <td class='text-accent'>{paper.Categories}</td>
                 <td class='text-secondary'>{paper.Excerpt}</td>
-                <td class='text-secondary'>{paper.Category}</td>
-                <td class='text-accent'>${paper.Link}</td>
-                <td class='text-secondary'>{paper.Markdown}</td>
-                <td class='text-secondary'>{paper.RawJson}</td>
             </tr>
         """).ToString();
 

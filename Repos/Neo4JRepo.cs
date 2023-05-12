@@ -1,8 +1,5 @@
 using Neo4j.Driver;
-using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using CodeMechanic.Neo4j.Extensions;
 using TPOT_Links.Models;
 using Category = TPOT_Links.Models.Category;

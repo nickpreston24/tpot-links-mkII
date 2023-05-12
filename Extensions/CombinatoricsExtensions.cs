@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace CodeMechanic.Extensions
 {
     public static class CombinatoricsExtensions

@@ -1,14 +1,13 @@
 @page
-@using TPOT_Links.Pages.Sandbox
 @model IndexModel
 @{
-  // C# vars go here!
-  var current_query = Model.Query;
+    // C# vars go here!
+    var current_query = Model.Query;
 }
 
 <form x-data='setup()'>
 
-    <h1 class='glowing text-xl' x-text='title'></h1>
+    @* <h1 class='glowing text-xl' x-text='title'></h1> *@
 
     @if (!string.IsNullOrEmpty(@current_query))
     {
@@ -19,45 +18,67 @@
             </div>
         </div>
     }
-   
+
     <div class="card p-5 mb-4 text-ocean-500">
         <div class="d-flex justify-content-between">
 
             <button
                 x-show='false'
                 class='btn-active btn'
-                hx-get='@Url.Page("","Recommendations")'
-                hx-target="#recommendations"
-                >Get Teaching Recommendations</button>
+                hx-get='@Url.Page("", "Recommendations")'
+                hx-target="#recommendations">
+                Get Teaching Recommendations
+            </button>
 
             <div id="recommendations">
                 <!-- Recommended papers get injected here -->
             </div>
 
-            <div class="form-control w-full max-w-xs">
-                <label class="label">
-                    <span class="label-text">What is the name of the paper?</span>
-                    <span class="label-text-alt">Top Right label</span>
-                </label>
+            @* <div class="form-control w-full max-w-xs"> *@
+            @*     <label class="label"> *@
+            @*         <span class="label-text">What is the name of the paper?</span> *@
+            @*         <span class="label-text-alt">Top Right label</span> *@
+            @*     </label> *@
+            @* </div> *@
 
-                <input 
-                    type="text"
-                    name="term"
-                    id="query"
-                    autocomplete="off"
-                    hx-get='@Url.Page("Index", "SearchByRegex")'
-                    hx-target="#search_results"
-                    hx-trigger="keyup changed delay:250ms"
-                    hx-indicator="#loading"
-                    placeholder="Search"
-                    class="input input-bordered w-full max-w-xs input-ghost"
-                    aria-label="Username"
-                    aria-describedby="search-addon" />
-            </div>  
+            <table class="table table-compact w-full">
+                <thead>
+                <tr>
+                    <th class=''>
+                        <input
+                            type="text"
+                            name="term"
+                            id="query"
+                            autocomplete="off"
+                            hx-get='@Url.Page("Index", "SearchByRegex")'
+                            hx-target="#search_results"
+                            hx-trigger="keyup changed delay:100ms"
+                            hx-indicator="#loading"
+                            placeholder="Search"
+                            class="input input-bordered input-ghost"
+                            aria-label="Username"
+                            aria-describedby="search-addon"/>
+                    </th>
+                </tr>
+                <tr>
+                    @* <th> *@
+                    @*     <label> *@
+                    @*         <input type="checkbox" class="checkbox"/> *@
+                    @*     </label> *@
+                    @* </th> *@
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Author</th>
+                    <th>Categories</th>
+                    <th>Excerpt</th>
+                </tr>
+                </thead>
+                <tbody id='search_results'>
+                <div class="htmx-indicator" id='loading'>loading...</div>
+                </tbody>
 
-            <div id="search_results">
-            </div>
-
+            </table>
             <div class="htmx-indicator" id='loading'>loading...</div>
 
         </div>
