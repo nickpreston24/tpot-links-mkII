@@ -20,7 +20,7 @@ public static class Neo4jExtensions
             .ConfigureAwait(false);
 
         List<string> titles = await cursor.ToListAsync(record => record["Title"].As<string>());
-        titles.Dump("titles");
+        // titles.Dump("titles");
 
         return await cursor
             .ConsumeAsync()
@@ -34,7 +34,7 @@ public static class Neo4jExtensions
             .ConfigureAwait(false);
 
          List<string> titles = await cursor.ToListAsync(record => record["Title"].As<string>());
-        titles.Dump("titles");
+        // titles.Dump("titles");
 
         return await cursor
             .ConsumeAsync()

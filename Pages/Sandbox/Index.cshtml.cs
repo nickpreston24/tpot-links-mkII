@@ -27,36 +27,40 @@ public class IndexModel : HighSpeedPageModel
     {
     }
 
-    public async Task<IActionResult> OnGetSearchByRegex(string term = "God")
+
+    public async void OnPostSetOption(string key = "", string value = "") 
     {
+        key.Dump("setting option");
+        value.Dump("with value");
+    }
+
+    // public async void OnGetSetOption(string key = "", string value = "") 
+    // {
+    //     key.Dump("setting option");
+    //     value.Dump("with value");
+    // }
+
+
+    public async Task<IActionResult> OnGetSearchByRegex(
+        string term = "God"
+        , bool show_excerpts = true
+        , string show_slugs = ""
+        , string show_urls = ""
+        )
+    {
+        show_excerpts.Dump("excerpts");
+        
         string query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
 
-        // Make the code snippet purty :)
-        // var query_lines = query.Split("\n").Dump("query lines");
-        // _query = new StringBuilder(query)
-        //     .AppendEach(
-        //     query_lines
-        //     ,line => $"""
-        //         <pre class='text-sm' data-prefix="$"><code>{line}</code></pre>
-        //     """)
-        //     .ToString()
-        // ;
-
         var search_parameters = new
         {
-            regex = $"(?i).*{term}.*".Dump("regex")
+            regex = $"(?i).*{term}.*"//.Dump("regex")
+            , term = term
         };
 
         var pages = await SearchNeo4J<Page>(query, search_parameters);
 
-        // var papers = pages.Select(page=> new TPOTPaper()
-        //     .With(paper=> {
-        //         // Doing some ad-hoc mapping here b/c Page.cs maps from Neo4j and TPOTPaper.cs from MySql, to be resolved soon.
-        //     })
-        // ); 
-        // pages.Dump("SEARCH RESULTS");
-        // return Partial("_PageTable", results);
         string html = new StringBuilder()
             .AppendEach(
                 pages, paper => 

@@ -16,7 +16,6 @@ public static class Neo4jRecordExtensions
     ) 
         where T: class, new()
     {
-        label.Dump("label!!");
         var type = typeof(T);
         label = label.IsNullOrEmpty() ? type.Name.ToLowerInvariant() : label;
 
@@ -34,7 +33,7 @@ public static class Neo4jRecordExtensions
         {
             string name = prop.Name/*.Dump("key")*/;
             // var value = node.Properties[name].Dump("value");
-            var node = record.Dump("raw record")[label].As<INode>();
+            var node = record/*.Dump("raw record")*/[label].As<INode>();
 
             node.Properties.TryGetValue(name, out var value);
 
@@ -43,7 +42,7 @@ public static class Neo4jRecordExtensions
             prop.SetValue(obj, next_value/*.Dump("value")*/, null);
         }
 
-        obj.Dump("T's obj");
+        // obj.Dump("T's obj");
 
         return obj;
     }

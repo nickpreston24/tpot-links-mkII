@@ -49,15 +49,15 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
     )
         where T : class, new()
     {
-        parameters.Dump("Hello from params");
+        // parameters.Dump("Hello from params");
 
         if (mapper == null)
-            mapper = record => record.MapTo<T>().Dump("mapped record");
+            mapper = record => record.MapTo<T>();
 
         var collection = new List<T>();
 
         if (parameters == null || string.IsNullOrWhiteSpace(query))
-            return collection.Dump("nothing");
+            return collection;
 
         await using var session = driver.AsyncSession();
 
@@ -65,13 +65,11 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
         {
             var results = await session.ExecuteReadAsync(async tx =>
             {
-                parameters.Dump("hello?  params?");
-                var result = await tx.RunAsync(query.Dump("query"), parameters.Dump("passed params"));
-                result.Dump("raw results");
-                return await result.ToListAsync<T>(mapper.Dump("my mapper"));
+                var result = await tx.RunAsync(query, parameters);
+                return await result.ToListAsync<T>(mapper);
             });
 
-            return results.Dump("final results");
+            return results;
         }
 
         // Capture any errors along with the query and data for traceability

@@ -23,7 +23,7 @@ public static class DotEnv
             options: regex_options
         );
 
-        raw_settings.Dump();
+        // raw_settings.Dump();
 
         foreach(var setting in raw_settings){
             Environment.SetEnvironmentVariable(setting.Left, setting.Right);
