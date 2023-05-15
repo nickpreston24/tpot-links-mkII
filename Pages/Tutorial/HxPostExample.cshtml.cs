@@ -29,6 +29,18 @@ public class HxPostExample : HighSpeedPageModel
     [BindProperty, Required]
     public int? Age { get; init; } = null!;
 
+    [BindProperty]
+    public bool  show_slugs {get;set;} =  true;
+    [BindProperty]
+
+    public bool  show_excerpts {get;set;} =  true;
+    [BindProperty]
+
+    public bool  show_urls {get;set;} =  true;
+    [BindProperty]
+    public bool  case_insensitive {get;set;} =  true ;
+
+
     public HxPostExample(
         IEmbeddedResourceQuery embeddedResourceQuery
         , IDriver driver) 
@@ -41,6 +53,9 @@ public class HxPostExample : HighSpeedPageModel
         "hello from validate".Dump();
         Name.Dump();
         Age.Dump();
+
+        show_excerpts.Dump("show excerpts?");
+
         return Content($"""
             <div class="card lg:card-side bg-base-100 shadow-xl">
                 <figure><img src="https://i.pravatar.cc/300" alt="Album" /></figure>
@@ -50,10 +65,27 @@ public class HxPostExample : HighSpeedPageModel
                     <div class="card-actions justify-end">
                         <button class="btn btn-primary">Confirm</button>
                     </div>
+
+                    <ul>
+                        <label class="cursor-pointer label">
+                            Show Excerpts?
+                            <span class="label-text">{show_excerpts}</span>
+                        </label>
+                        <label class="cursor-pointer label">
+                            Show Urls?
+                            <span class="label-text">{show_urls}</span>
+                        </label>
+                        <label class="cursor-pointer label">
+                            Case Insensitive?
+                            <span class="label-text">{case_insensitive}</span>
+                        </label>
+                        <label class="cursor-pointer label">
+                            Show Slugs?
+                            <span class="label-text">{show_slugs}</span>
+                        </label>
+                    </ul>
                 </div>
             </div>
-
-
         """);
     }
 
