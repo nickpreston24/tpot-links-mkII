@@ -11,6 +11,11 @@ namespace CodeMechanic.Extensions
         private static readonly IDictionary<Type, ICollection<PropertyInfo>> _propertyCache =
            new Dictionary<Type, ICollection<PropertyInfo>>();
 
+        
+        public static IEnumerable<T> Repeat<T>(
+            this T obj
+            , int count = 1) => Enumerable.Repeat(obj, count);
+
         public static DataTable ToDataTable<T>(this List<T> collection,
             PropertyInfo[] props = null)
         {
@@ -557,5 +562,6 @@ namespace CodeMechanic.Extensions
             }
         }
 
+       
     }
 }

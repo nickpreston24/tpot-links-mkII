@@ -5,6 +5,10 @@ public class Page
     public string Status { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string Categories { get; set; } = string.Empty;
+    
+    public string Content { get; set; } = string.Empty;
+    public string Rendered_Content { get; set; } = string.Empty;
+    
     public string created { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;

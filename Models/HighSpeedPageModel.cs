@@ -84,6 +84,45 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
         }
     }
 
+    public async Task<IList<T>> BulkCreateNodes<T>(
+        string query = ""
+        // , string batch_command = ":param {}"
+        , object parameters = null
+        , Func<IRecord, T> mapper = null
+    ) 
+        where T : class, new()
+    {
+        if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+        
+        await using var session = driver.AsyncSession();
+        
+        try
+        {
+            var results = await session.ExecuteWriteAsync(async tx =>
+            {
+                // var _ = await tx.RunAsync(batch_command, null);
+                var result = await tx.RunAsync(query, parameters);
+                return await result.ToListAsync<T>(record => record.MapTo<T>());
+            });
+
+            return results;
+        }
+        
+        // Capture any errors along with the query and data for traceability
+        catch (Neo4jException ex)
+        {
+            Console.WriteLine($"{query} - {ex}");
+            throw;
+        }
+        finally {
+            session.CloseAsync();
+        }
+
+
+
+    }
+
+
     // public object NeoWrite(string query, IDictionary<string, object> neo4j_params) 
     // {
     //     await using var session = driver.AsyncSession(configBuilder => configBuilder.WithDatabase("neo4j"));

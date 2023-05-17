@@ -5,6 +5,9 @@ module.exports = {
   darkMode: "class", // or 'media' or 'class'
   theme: {
     extend: {
+      width: {
+        '128': '32rem',
+      },
       colors: {
         primary: "var(--primary)",
         secondary: "var(--secondary)",

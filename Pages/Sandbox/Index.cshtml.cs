@@ -1,4 +1,3 @@
-
 using System.Diagnostics;
 using System.Text;
 using CodeMechanic.Diagnostics;
@@ -10,61 +9,51 @@ using Neo4j.Driver;
 using TPOT_Links.Models;
 
 namespace TPOT_Links.Pages.Sandbox;
+
 //Note: to remove all comments, replace this with nothing:  // .*$
+[BindProperties]
 public class IndexModel : HighSpeedPageModel
 {
-    private static string _query { get;set; } = string.Empty;
+    private static string _query { get; set; } = string.Empty;
     public string Query => _query;
+
+    public bool show_slugs { get; set; }
+    public bool show_excerpts { get; set; }
+    public bool show_urls { get; set; }
+    public bool case_insensitive { get; set; }
+    public string category { get; set; } = string.Empty;
+    public bool search_by_categories { get; set; }
+    public int Number { get; set; } = -1;
+    public string Title { get; set; } = string.Empty;
 
     public IndexModel(
         IEmbeddedResourceQuery embeddedResourceQuery
-        , IDriver driver) 
-    : base(embeddedResourceQuery, driver)
+        , IDriver driver)
+        : base(embeddedResourceQuery, driver)
     {
     }
-
-    public void OnGet()
-    {
-    }
-
-
-    public async void OnPostSetOption(string key = "", string value = "") 
-    {
-        key.Dump("setting option");
-        value.Dump("with value");
-    }
-
-    // public async void OnGetSetOption(string key = "", string value = "") 
-    // {
-    //     key.Dump("setting option");
-    //     value.Dump("with value");
-    // }
-
 
     public async Task<IActionResult> OnGetSearchByRegex(
         string term = "God"
         , bool show_excerpts = true
         , string show_slugs = ""
         , string show_urls = ""
-        )
+    )
     {
-        show_excerpts.Dump("excerpts");
-        
         string query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
 
         var search_parameters = new
         {
-            regex = $"(?i).*{term}.*"//.Dump("regex")
-            , term = term
+            regex = $"(?i).*{term}.*", term = term, category = search_by_categories ? this.Number.ToString().Dump() : ""
         };
 
         var pages = await SearchNeo4J<Page>(query, search_parameters);
 
         string html = new StringBuilder()
             .AppendEach(
-                pages, paper => 
-        $"""
+                pages, paper =>
+                    $"""
             <tr>
                 <th class='text-primary'>{paper.Id}</th>
                 <th class='text-accent'>{paper.Title}</th>
@@ -77,11 +66,49 @@ public class IndexModel : HighSpeedPageModel
 
         return Content(html);
     }
-    
+
+    public async Task<IActionResult> OnPostBulkCreatePapers(
+        string title = "")
+    {
+        var batch_of_papers = new Page
+        {
+            Title = "Test Paper 2",
+            Content = "<p>test2</p>",
+            Rendered_Content = "<p>test2</p>",
+            Url = "tpotexample2.com"
+        }.AsList();
+
+        string query = """
+            UNWIND $batch AS map
+            CREATE (pages:Page)
+            SET pages = map
+        """;
+
+        var parameters = new
+        {
+            batch = batch_of_papers
+        };
+
+        var alert = (string text, string alert)
+            => $"""<p class='alert alert-{alert}' x-init='loading=false'>{text}!<p>""";
+        try
+        {
+            var created = await BulkCreateNodes<Page>(query, parameters);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            // throw;
+            return Content(alert($"FAILED{e.Message}", "error"));
+        }
+
+        return Content(alert("hey", "success"));
+    }
+
     public async Task<IActionResult> OnGetRecommendations()
     {
         var failure = Content(
-        $"""
+            $"""
             <div class='alert alert-error'>
                 <p class='text-3xl text-warning text-sh'>
                     An Error Occurred...  But fret not! Our team of intelligent lab mice are on the job!
@@ -95,20 +122,31 @@ public class IndexModel : HighSpeedPageModel
         query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
 
-        if(string.IsNullOrEmpty(query))
-            return failure;  // If for some reason, nothing comes back, alert the user with this div.
+        if (string.IsNullOrEmpty(query))
+            return failure; // If for some reason, nothing comes back, alert the user with this div.
 
-        // This can also be a template, if we want, but here's a fancy-schmancy use of the triple-double quotes to easily send back anything in C# directly to HTML/X:
-        return Content(
-        $"""
-            <div class='alert alert-primary'>
-                <p class='text-xl text-secondary text-sh'>
-                {query}
-                </p>
-            </div>
-        """);
+
+        var search_parameters = new
+        {
+        };
+        search_parameters.Dump("s");
+        var pages = await SearchNeo4J<Page>(query, search_parameters);
+        pages.FirstOrDefault().Dump("recommendations");
+        pages.ToList().Count.Dump("# of recommendations");
+        string html = new StringBuilder()
+            .AppendEach(
+                pages, paper =>
+                    $"""
+            <tr>
+                <th class='text-primary'>{paper.Id}</th>
+                <th class='text-accent'>{paper.Title}</th>
+                <td class='text-secondary'>{paper.Status}</td>
+                <td class='text-secondary'>{paper.Author}</td>
+                <td class='text-accent'>{paper.Categories}</td>
+                <td class='text-secondary'>{paper.Excerpt}</td>
+            </tr>
+        """).ToString();
+
+        return Content(html);
     }
-
 }
-
-
