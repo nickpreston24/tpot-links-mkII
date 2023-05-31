@@ -1,10 +1,11 @@
 using CodeMechanic.Embeds;
 using CodeMechanic.RazorPages;
+using CodeMechanic.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 
 namespace TPOT_Links.Pages.Tutorial;
-//Note: to remove all comments, replace this with nothing:  // .*$
+//Note: to remove all comments, replace this pattern with nothing:  // .*$
 
 [BindProperties]
 public class HxPostExample : HighSpeedPageModel
@@ -27,6 +28,7 @@ public class HxPostExample : HighSpeedPageModel
 
     public async Task<IActionResult> OnPostValidate()
     {
+        Name.Dump("your name is");
         return Content($"""
             <div class="card lg:card-side bg-base-100 shadow-xl">
                 <figure><img src="https://i.pravatar.cc/300" alt="Album" /></figure>

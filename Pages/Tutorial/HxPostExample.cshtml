@@ -4,13 +4,9 @@
 @{
 
 }
-
 <div x-data='setup()'>
-
-    <form hx-post='@Url.Page("HxPostExample", "Validate")' hx-swap="outerHTML"
-          class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
-
-        <!-- Text input-->
+    <form hx-post hx-page="HxPostExample" hx-page-handler="Validate" hx-swap="outerHTML"
+        class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
         <div class="mb-3">
             <label class="form-label" asp-for="Name"></label>
             <input type="text" class="form-control" asp-for="Name">
@@ -19,7 +15,6 @@
             </div>
         </div>
 
-        <!-- Text input-->
         <div class="mb-3">
             <label class="form-label" asp-for="Age"></label>
             <input type="text" class="form-control" asp-for="Age">
@@ -34,9 +29,7 @@
                 <div class="mb-3">
                     <label class="form-label" :for="key"></label>
                     <span x-text="key">This is for debugging only and can be omitted</span>
-                    <input type="checkbox"
-                           class="form-control toggle toggle-accent"
-                           :for="key">
+                    <input type="checkbox" class="form-control toggle toggle-accent" :for="key">
                 </div>
             </template>
         </div>
@@ -63,7 +56,6 @@
     ]
 
     function setup() {
-
         return {
             title: "Teachings",
             selected_category: "Chinese",
@@ -74,15 +66,14 @@
                 // show_urls: true,
                 // case_insensitive: true,
                 search_by_categories: false
-            }  ,
+            },
             get grid_class() {
-                let cols = this.options?.length || 5;
+                let cols = this.options ? .length || 5;
                 return `grid grid-cols-${cols}`;
-            }         
+            }
         }
     }
 </script>
-
 
 <!--
 

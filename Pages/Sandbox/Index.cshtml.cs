@@ -71,6 +71,8 @@ public class IndexModel : HighSpeedPageModel
     public async Task<IActionResult> OnPostBulkCreatePapers(
         string title = "")
     {
+        System.Console.WriteLine("creating batch of papers...");
+        Debug.WriteLine("creating batch of papers...".Dump());
         var batch_of_papers = new Page
         {
             Title = "Test Paper 2",
