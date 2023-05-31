@@ -5,64 +5,63 @@
     // C# vars go here!
 }
 
-<form
-    x-data='setup()'
-    action='post'
-    hx-post='@Url.Page("", "ExtractedScriptures")'
-    hx-target='#extracted'>
+@* hx-post='@Url.Page("", "ExtractedScriptures")' *@
+@* action='post' *@
+<div
+    x-data='setup()'>
 
-    <div class="flex flex-col items-center justify-center gap-2 p-4">
-        <button type='submit'>Go</button>
-        <div id='extracted'>..</div>
+    <div
+    >
+
+        <div class="flex flex-col items-center justify-center gap-2 p-4">
+            <button
+                hx-get
+                hx-page="ScriptureHighlighter"
+                hx-page-handler="ExtractedScriptures"
+                hx-target='#extracted'
+                hx-swap="outerHTML"
+                class='btn-active btn btn-md btn btn-outline-primary float-end'
+                x-on:click='btn_width = 4; loading=true'
+                :class="loading_button"
+                type='submit'>
+                <span x-show="loading" class="htmx-indicator">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="visually-hidden">Loading...</span>
+                </span>
+                Run Parse
+            </button>
+
+            @* <button *@
+            @*                 *@
+            @*                 *@
+            @*                :class='loading_button_class' *@
+            @*                type="submit"> *@
+            @*                Submit *@
+            @*            </button> *@
+            <div id='extracted'></div>
+        </div>
+
     </div>
 
-    <!--       
-    -->
-
-</form>
+</div>
 
 <script>
     function setup() {
-      const patterns = {
-        prefix:
-          /(?<Name>[a-zA-Z]+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]+\r*\n)(?<Text>.*?)(?:\r*\n){2}/gms,
-        postfix:
-          /^(?<Text>.*?)(?<Name>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?)/gm,
-      };
+      // const patterns = {
+      //   prefix:
+      //     /(?<Name>[a-zA-Z]+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]+\r*\n)(?<Text>.*?)(?:\r*\n){2}/gms,
+      //   postfix:
+      //     /^(?<Text>.*?)(?<Name>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?)/gm,
+      // };
 
-      const sample_comments = [
-        `Yes                        Victor Hafichuk . You speak The Truth!\n2 Corinthians 6:16 comes to mind! You must leave, separate yourselves from them, have nothing to do with what is unclean!`,
-        `
-        Embrace the Truth with your whole being. Romans 12:1,2 and Matthew 5:48. Flee all forms of religion, which exercises itself in every area of life - churchdom, government, medicine, entertainment, fashion, commerce, agriculture, food-production, processing, adulteration, and distribution.\n\nHebrews 4:12 - divide the good from the evil. Heed the Word of God. When we allow any pollution and corruption, we invite suffering, loss, and death. When we receive the Truth, we invite victory, security, healing, prosperity, peace, life, and joy. That's how it is. \n\nWhich do we choose and stand with - the prince of this world or the Prince of peace? The destroyer with all his machinations or the Savior in all His Glory? The one who seeks to deceive, steal, kill, and destroy us in all his devious, fleshly, and worldly ways, or the One Who laid His Life down for us so that we might, from the beginning to the end, have His Favor with Everlasting Life, Wisdom, and Power?\n\nIt doesn't take two brains to know the answer. In fact, we don't want two brains - it's called \"double-mindedness.\" One brain will do and only One, the Mind of Christ, our Creator and Lover. Amen?"
-`,
-      ];
-
-      const sample_teaching = `
-      
-      `;
-
-      function find_scriptures(text = "") {
-        let results = ["bleah"];
-
-        return results;
-      }
 
       return {
-        debug: true,
-        foo: 'bar',
-
-        patterns: patterns,
-        comments: sample_comments,
-        teachings: [sample_teaching],
-
-        get teaching_highlights() {
-          return this.teachings;
+        loading: false,
+        get loading_button() {
+            let is_loading = this.loading ? 'loading' : '';
+            return `${is_loading} btn btn-accent w-[${this.btn_width}rem]`;
         },
-
-        get comment_highlights() {
-          let result = find_scriptures(this.comments);
-          return result;
-        },
+        
       };
     }
 </script>

@@ -6,10 +6,12 @@
 - [x] Create Pages/Admin (hidden)
   - [ ] Form for Test Pages (neo4j)
   - [ ] Form for Submitting an Issue (Airtable)
-  - [ ] 
+    - [x] Scaffold
+  - [ ] Feature request form
+    - [x] Scaffold
 
 ## Upgrading the app to a Desktop App
-
+  
 
 For Issues with SDKs or Runtimes not running, try this:
 

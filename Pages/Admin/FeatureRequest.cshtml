@@ -51,15 +51,16 @@
             <button
                 class='btn-active btn btn-md btn btn-outline-primary float-end'
                 x-on:click='btn_width = 4; loading=true'
-                :class='bulk_button_class'
+                :class='loading_button_class'
                 type="submit">
+                <span x-show="loading" class="htmx-indicator">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="visually-hidden">Loading...</span>
+                </span>
                 Submit
             </button>
             @* <button id="submitButton" type="submit" class="btn btn-primary"> *@
-            @*     <span class="htmx-indicator"> *@
-            @*         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> *@
-            @*         <span class="visually-hidden">Loading...</span> *@
-            @*     </span> *@
+
             @*     Submit *@
             @* </button> *@
 
@@ -78,7 +79,7 @@
     function setup() {
         return {
             loading: false,
-            get bulk_button_class() {
+            get loading_button_class() {
                 let is_loading = this.loading ? 'loading' : '';
                 return `${is_loading} btn btn-accent w-[${this.btn_width}rem]`;
             }
