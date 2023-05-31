@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.Text;
-using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
 using CodeMechanic.RazorPages;
 using CodeMechanic.Types;

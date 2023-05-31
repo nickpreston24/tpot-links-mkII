@@ -2,7 +2,7 @@ using System.Reflection;
 using System.Text;
 using Neo4j.Driver;
 using Newtonsoft.Json;
-using CodeMechanic.Extensions;
+
 namespace CodeMechanic.Neo4j.Extensions;
 
 public static class Neo4jExtensions 

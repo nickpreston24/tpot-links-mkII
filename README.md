@@ -3,9 +3,9 @@
 # TODOS / Ideas
 
 - [x] Update the .sh installers
-- [ ] Create Pages/Admin (hidden)
+- [x] Create Pages/Admin (hidden)
   - [ ] Form for Test Pages (neo4j)
-  - [ ] Form for Submitting an Issue
+  - [ ] Form for Submitting an Issue (Airtable)
   - [ ] 
 
 ## Upgrading the app to a Desktop App
