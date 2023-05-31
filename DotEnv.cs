@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using CodeMechanic.Extensions;
-using CodeMechanic.Advanced.Extensions;
+using CodeMechanic.Advanced.Regex;
 
 public static class DotEnv 
 {

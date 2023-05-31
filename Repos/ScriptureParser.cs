@@ -1,4 +1,4 @@
-using CodeMechanic.Advanced.Extensions;
+using CodeMechanic.Advanced.Regex;
 
 namespace TPOT_Links.Models;
 

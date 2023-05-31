@@ -45,7 +45,8 @@ public class IndexModel : HighSpeedPageModel
 
         var search_parameters = new
         {
-            regex = $"(?i).*{term}.*", term = term, category = search_by_categories ? this.Number.ToString().Dump() : ""
+            regex = $"(?i).*{term}.*", 
+            term = term, category = search_by_categories ? this.Number.ToString().Dump() : ""
         };
 
         var pages = await SearchNeo4J<Page>(query, search_parameters);
