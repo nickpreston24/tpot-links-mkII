@@ -43,11 +43,14 @@ public class IndexModel : HighSpeedPageModel
         string query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
 
-        var search_parameters = new
+        var category = search_by_categories ? this.Number.ToString() : "";
+        var search_parameters = new PaperSearch
         {
-            regex = $"(?i).*{term}.*", 
-            term = term, category = search_by_categories ? this.Number.ToString().Dump() : ""
+            regex = $"""(?i)(<\w+>)?.*{term}.*(<\w+>)?""",
+            term = term,
+            category = category
         };
+            // .Dump("paper search");
 
         var pages = await SearchNeo4J<Page>(query, search_parameters);
 
@@ -71,8 +74,8 @@ public class IndexModel : HighSpeedPageModel
     public async Task<IActionResult> OnPostBulkCreatePapers(
         string title = "")
     {
-        System.Console.WriteLine("creating batch of papers...");
-        Debug.WriteLine("creating batch of papers...".Dump());
+        // System.Console.WriteLine("creating batch of papers...");
+        // Debug.WriteLine("creating batch of papers...".Dump());
         var batch_of_papers = new Page
         {
             Title = "Test Paper 2",
@@ -128,14 +131,13 @@ public class IndexModel : HighSpeedPageModel
         if (string.IsNullOrEmpty(query))
             return failure; // If for some reason, nothing comes back, alert the user with this div.
 
-
         var search_parameters = new
         {
         };
-        search_parameters.Dump("s");
+        // search_parameters.Dump("s");
         var pages = await SearchNeo4J<Page>(query, search_parameters);
-        pages.FirstOrDefault().Dump("recommendations");
-        pages.ToList().Count.Dump("# of recommendations");
+        // pages.FirstOrDefault().Dump("recommendations");
+        // pages.ToList().Count.Dump("# of recommendations");
         string html = new StringBuilder()
             .AppendEach(
                 pages, paper =>

@@ -1,10 +1,11 @@
 MATCH (page:Page)
 // OPTIONAL MATCH (a)-[r:LINKS_TO]-(x)
 WHERE 
-  $term is not null //AND $term != ''
-  AND (
-    $regex is not null OR page.Content =~ $regex
-  )
+page.Content =~ $regex
+  OR page.Title =~ $regex
+  OR page.Slug =~ $regex
+  OR page.Excerpt =~ $regex
+//OR toLower(page.Categories) contains toLower($category)
 RETURN *
 
 
