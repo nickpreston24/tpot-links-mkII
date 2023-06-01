@@ -5,10 +5,13 @@
 - [x] Update the .sh installers
 - [x] Create Pages/Admin (hidden)
   - [ ] Form for Test Pages (neo4j)
+    - Cypher `merge` query for creating and updating a page
   - [ ] Form for Submitting an Issue (Airtable)
     - [x] Scaffold
   - [ ] Feature request form
     - [x] Scaffold
+- [ ] Generate Sidebar from `/Pages` folders.
+  - [ ] 
 
 ## Upgrading the app to a Desktop App
   

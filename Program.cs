@@ -1,3 +1,4 @@
+using System.Text;
 using Neo4j.Driver;
 using CodeMechanic.Embeds;
 using CodeMechanic.Types;
@@ -16,13 +17,13 @@ builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 
 static void ConfigureServices(IServiceCollection services)
 {
-    string uri =  Environment.GetEnvironmentVariable("NEO4J_URI") ?? string.Empty;
+    string uri = Environment.GetEnvironmentVariable("NEO4J_URI") ?? string.Empty;
     string user = Environment.GetEnvironmentVariable("NEO4J_USER") ?? string.Empty;
     string password = Environment.GetEnvironmentVariable("NEO4J_PASSWORD") ?? string.Empty;
-    
+
     string airtable_bearer_token = Environment.GetEnvironmentVariable("TPOT_PAT") ?? string.Empty;
 
-    bool devmode = Environment.GetEnvironmentVariable("DEVMODE").ToBoolean();   
+    bool devmode = Environment.GetEnvironmentVariable("DEVMODE").ToBoolean();
 
     services.AddControllers();
     services.ConfigureAirtable();
