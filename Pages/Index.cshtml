@@ -3,22 +3,16 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
 <div x-data="setup()" class='!bg-black'>
-    <section
-        class="font-['Space Mono'] h-screen flex flex-col items-center justify-center text-2xl text-secondary">
+    <section class="font-['Space Mono'] h-screen flex flex-col items-center justify-center text-2xl text-secondary">
 
         <div class="hero">
             <div class="hero-content text-center">
                 <div class="max-w-md flex flex-col gap-4">
                     <h1 class="text-5xl font-bold">Welcome to TPOT LINKS</h1>
-                    <a 
-                    x-show='false'
-                    :href="hero_link" class='text-3xl text-primary'>
+                    <a x-show='false' :href="hero_link" class='text-3xl text-primary'>
                         <button class="btn btn-accent hover:scale-125">
-                            <h1 x-on:mouseover="hacky_text"
-                                :data-value="hero_title"
-                                x-text="hero_title">
+                            <h1 x-on:mouseover="hacky_text" :data-value="hero_title" x-text="hero_title">
 
                             </h1>
                         </button>
@@ -27,25 +21,19 @@
             </div>
 
         </div>
-        
-        
-        <div
-                    x-if="true" 
-                    :class="grid_class" class="flex join-horizontal flex-row items-center justify-center gap-2">
-                    <template 
-                        
-                        x-for="item in $store.notifications.routes">
-                        <div :class="item.class" class="join-item">
-                            <a :target="external?'_blank':'_self'" :href="item.url" 
-                               class='text-3xl text-primary'>
-                                <button class="btn btn-primary hover:scale-125">
-                                    <h1 x-on:mouseover="hacky_text" :data-value="item.text" x-text="item.text"></h1>
-                                </button>
-                            </a>
-                        </div>
-                    </template>
-                   
+
+        <div x-if="true" :class="grid_class" class="flex join-horizontal flex-row items-center justify-center gap-2">
+            <template x-for="item in $store.notifications.routes">
+                <div :class="item.class" class="join-item">
+                    <a :target="external?'_blank':'_self'" :href="item.url" class='text-3xl text-primary'>
+                        <button class="btn btn-primary hover:scale-125">
+                            <h1 x-on:mouseover="hacky_text" :data-value="item.text" x-text="item.text"></h1>
+                        </button>
+                    </a>
                 </div>
+            </template>
+
+        </div>
 
     </section>
 </div>
@@ -77,14 +65,13 @@
 </script>
 
 <script>
-
     function setup() {
         return {
             hero_title: "Home",
             hero_link: "https://tpot-links-mkii-production.up.railway.app/",
             get grid_class() {
                 console.log('my routes: ', this.routes)
-                let column_count = this.routes?.length % 2;
+                let column_count = this.routes ? .length % 2;
                 let row_count = 5;
                 console.table(["cols", column_count, "rows", row_count]);
                 return `grid grid-cols-4 lg:grid-cols-${column_count} lg:grid-rows-${row_count}`;
