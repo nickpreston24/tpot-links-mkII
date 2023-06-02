@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
-<html data-theme="dracula" lang="en">
+<html data-theme="lemonade" lang="en">
 <head>
     <base href="~/"/>
     <meta charset="utf-8"/>
@@ -29,7 +29,7 @@
 <body class='text-lg bg-black'>
 <header>
 
-    <div>
+    <!-- <div>
 
         @* <div class="drawer"> *@
         @*     <div class="drawer-side"> *@
@@ -49,7 +49,7 @@
         @* *@
         @* </div> *@
 
-    </div>
+    </div> -->
 
 
 </header>
@@ -79,14 +79,22 @@
 
 <script>
 
+    const included = ['Sandbox'];
+    const excluded = ['Error', 'Privacy', 'Index', 'Comments', 'Admin', 'ScrapeRequestForm'];
+
     const stored_routes = JSON.parse(localStorage.getItem('routes'))
-        .filter(x=> !['Error', 'Privacy','Index'].includes(x.text)) 
+        .filter(
+            x => 
+            !included.includes(x.url) 
+            &&
+            !excluded.includes(x.text) 
+        // && included.includes(x.text)
+        ) 
         || [] ;
     
     document.addEventListener('alpine:init', () => {
         console.log('initialized alpine') 
         Alpine.store('notifications', {
-            items: ['hot coffee'],
             routes: stored_routes
             // routes: [{
             //     text: "hi"

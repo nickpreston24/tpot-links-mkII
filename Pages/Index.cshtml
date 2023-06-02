@@ -4,71 +4,51 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class='!bg-black'>
-    <section x-data='setup()' class="font-['Space Mono'] h-screen flex flex-col items-center justify-center text-2xl text-secondary">
-
-        @* <pre class="text-primary" x-text="$store.notifications.items"></pre> *@
-        @* <pre class="text-primary" x-text="$store.notifications.routes"></pre> *@
-
-        <div
-            :class="grid_class"
-            class="flex flex-row items-center justify-center gap-2">
-            <template x-for="item in $store.notifications.routes">
-                @* <span class="text-white" x-text="item.url"></span> *@
-                <a :target="external?'_blank':'_self'" :href="item.url" class="btn btn-primary"    :class="item.class"
-                   class='text-3xl text-primary'>
-                    <button class="btn btn-primary hover:scale-125">
-                        <h1 x-on:mouseover="hacky_text" :data-value="item.text" x-text="item.text"></h1>
-                    </button>
-                </a>
-            </template>
-        </div>
+<div x-data="setup()" class='!bg-black'>
+    <section
+        class="font-['Space Mono'] h-screen flex flex-col items-center justify-center text-2xl text-secondary">
 
         <div class="hero">
-
             <div class="hero-content text-center">
                 <div class="max-w-md flex flex-col gap-4">
                     <h1 class="text-5xl font-bold">Welcome to TPOT LINKS</h1>
-                    <a :href="hero_link" class='text-3xl text-primary'>
-
+                    <a 
+                    x-show='false'
+                    :href="hero_link" class='text-3xl text-primary'>
                         <button class="btn btn-accent hover:scale-125">
-                            <h1 x-on:mouseover="hacky_text" :data-value="hero_title" x-text="hero_title" </h1>
+                            <h1 x-on:mouseover="hacky_text"
+                                :data-value="hero_title"
+                                x-text="hero_title">
+
+                            </h1>
                         </button>
                     </a>
                 </div>
             </div>
-            @* <div class="hero-content"> *@
-            @*     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias doloremque esse impedit inventore necessitatibus odit rerum tempora tenetur voluptas voluptatibus. Eveniet facere id ipsa modi, officiis porro sapiente soluta voluptates? *@
-            @* </div> *@
 
-            <div x-show="false" class="hero-foot">
-
-                <div class="flex flex-row items-center justify-center gap-2">
-                    <template x-for="post in $store.items">
-                        <h2 x-text="post.title"></h2>
-                    </template>
-                </div>
-
-                @* <div x-data="dropdown"> *@
-                @*     ... *@
-                @* </div> *@
-
-                @* <button x-data @@click="$store.darkMode.toggle()">Toggle Dark Mode</button> *@
-
-                @* <div x-data :class="$store.darkMode.on && 'bg-black'"> *@
-                @*     ... *@
-                @* </div> *@
-                @* *@
-                @* <button @@click="$store.notifications.notify('...')"> *@
-                @*     Notify *@
-                @* </button> *@
-
-            </div>
         </div>
+        
+        
+        <div
+                    x-if="true" 
+                    :class="grid_class" class="flex join-horizontal flex-row items-center justify-center gap-2">
+                    <template 
+                        
+                        x-for="item in $store.notifications.routes">
+                        <div :class="item.class" class="join-item">
+                            <a :target="external?'_blank':'_self'" :href="item.url" 
+                               class='text-3xl text-primary'>
+                                <button class="btn btn-primary hover:scale-125">
+                                    <h1 x-on:mouseover="hacky_text" :data-value="item.text" x-text="item.text"></h1>
+                                </button>
+                            </a>
+                        </div>
+                    </template>
+                   
+                </div>
 
     </section>
 </div>
-
 
 <script>
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -97,109 +77,18 @@
 </script>
 
 <script>
-    const combined_routes = [
-           {
-               text: "TPOT SCRIBE",
-               url: "https://tpot-scribe.vercel.app/",
-               external: true
-           }, {
-               text: "SEARCH TPOT",
-               url: "https://tpot-links-mkii-production.up.railway.app/Sandbox"
-           },
-           {
-               text: 'TPOT LINKS',
-               url: "https://tpot-links-mkii-production.up.railway.app/"
-           },
-           {
-               text: 'TPOT HOME',
-               url: 'https://www.thepathoftruth.com/',
-               external: true,
-               // class: "btn btn-secondary"
-           }
-       ];
-    
+
     function setup() {
-        // console.log('setup run...')
-        // console.log('llamas:>>', this.routes)
-        
         return {
-            hero_title: "TPOT_LINKS",
+            hero_title: "Home",
             hero_link: "https://tpot-links-mkii-production.up.railway.app/",
-            menu_items: combined_routes,
-            
-            get all_routes() {
-                console.log('all routes :>>', this.routes)
-                // return this.routes;
-                return combined_routes;
-            },
-             get grid_class() { 
+            get grid_class() {
                 console.log('my routes: ', this.routes)
-                    let column_count = this.routes?.length % 2; 
-                    let row_count = 5; 
-                    console.table(["cols", column_count, "rows", row_count]); 
-                    return `grid grid-cols-4 lg:grid-cols-${column_count} lg:grid-rows-${row_count}`; 
-           },
-                
+                let column_count = this.routes?.length % 2;
+                let row_count = 5;
+                console.table(["cols", column_count, "rows", row_count]);
+                return `grid grid-cols-4 lg:grid-cols-${column_count} lg:grid-rows-${row_count}`;
+            },
         }
     }
 </script>
-
-
-@* *@
-@* <div x-data="setup_layout()" class="text-center"> *@
-@*     <div *@
-@*         x-data='setup()' *@
-@*         class=""> *@
-@* *@
-@*         <div class="hero min-h-screen" style=""> *@
-@*             <div class="hero-overlay bg-opacity-60"></div> *@
-@*             <div class="hero-content text-center text-neutral-content"> *@
-@*                 <div class="max-w-md"> *@
-@*                     <h1 class="mb-5 text-5xl font-bold">Hello there</h1> *@
-@* *@
-@*                     <div class="flex border-2 flex-col items-center justify-center"> *@
-@* *@
-@*                         <div :class="grid_class"> *@
-@*                             <template *@
-@*                                 x-for="(route, index) in routes" :key="index"> *@
-@*                                 <li class="card w-96 bg-base-100 shadow-xl"> *@
-@*                                     <div class="card-body"> *@
-@*                                         <h2 class="card-title">Card title!</h2> *@
-@*                                         <p>If a dog chews shoes whose shoes does he choose?</p> *@
-@*                                         <div class="card-actions justify-end"> *@
-@*                                             <button class="btn btn-primary">Buy Now</button> *@
-@*                                         </div> *@
-@*                                     </div> *@
-@*                                 </li> *@
-@*                                 $1$ <div :class="'card-body flex flex-col items-center justify-center gap-20 p-12 order-'+index"> #1# *@
-@*                                 $1$     <label class="form-label" :for="route.title"></label> #1# *@
-@*                                 $1$     <a :href="route.path"> #1# *@
-@*                                 $1$         <button x-text='route.title' class="btn btn-secondary">Get Started</button> #1# *@
-@*                                 $1$     </a> #1# *@
-@*                                 $1$ </div> #1# *@
-@* *@
-@*                             </template> *@
-@*                         </div> *@
-@* *@
-@*                     </div> *@
-@* *@
-@*                 </div> *@
-@*             </div> *@
-@*         </div> *@
-@* *@
-@* *@
-@*     </div> *@
-@* *@
-@* </div> *@
-@* <script> *@
-@*     function setup() { *@
-@*         return { *@
-@*             get grid_class() { *@
-@*                 let column_count = this.routes?.length % 2; *@
-@*                 let row_count = 5; *@
-@*                 console.table(["cols", column_count, "rows", row_count]); *@
-@*                 return `grid grid-cols-4 lg:grid-cols-${column_count} lg:grid-rows-${row_count}`; *@
-@*             }, *@
-@*         } *@
-@*     } *@
-@* </script> *@
