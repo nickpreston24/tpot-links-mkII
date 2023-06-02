@@ -1,0 +1,102 @@
+<html>
+<!-- Codepen: https://codepen.io/mikepreston17/pen/bGmXVXX -->
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"> </script>
+
+    <script src="//unpkg.com/alpinejs" defer> </script>
+
+</head>
+
+<body x-data='setup()' data-theme='bumblebee' class='!bg-black'>
+
+    <section class="font-['Space Mono'] h-screen flex flex-col items-center justify-center text-2xl text-secondary">
+
+        <div class="flex flex-row items-center justify-center gap-2">
+            <template x-for="item in menu_items">
+                <a :target="external?'_blank':'_self'" :href="item.url" :class="item.class"
+                    class='text-3xl text-primary'>
+                    <button class="btn btn-ghost hover:scale-125 hover:bg-accent-content/100">
+                        <h1 x-on:mouseover="hacky_text" :data-value="item.text" x-text="item.text"></h1>
+                    </button>
+                </a>
+            </template>
+        </div>
+
+        <div class="hero">
+
+            <div class="hero-content text-center">
+                <div class="max-w-md flex flex-col gap-4">
+                    <h1 class="text-5xl font-bold">Welcome to TPOT LINKS</h1>
+                    <a :href="hero_link" class='text-3xl text-primary'>
+
+                        <button class="btn btn-accent hover:scale-125">
+
+                            <h1 x-on:mouseover="hacky_text" :data-value="hero_title" x-text="hero_title" </h1> </button>
+                                </a> </div> </div> <div class="hero-content">
+
+                </div>
+            </div>
+
+    </section>
+</body>
+
+<script>
+
+</script>
+
+<script>
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    function hacky_text(event) {
+        let interval = -1;
+        let iteration = 0;
+        clearInterval(interval);
+        interval = setInterval(() => {
+            event.target.innerText = event.target.innerText
+                .split("")
+                .map((letter, index) => {
+                    if (index < iteration) {
+                        let ds = event.target.dataset.value;
+                        return ds[index];
+                    }
+                    return letters[Math.floor(Math.random() * 26)]
+                })
+                .join("");
+            if (iteration >= event.target.dataset.value.length) {
+                clearInterval(interval);
+            }
+            iteration += 1 / 3;
+        }, 30);
+    }
+</script>
+
+<script>
+    function setup() {
+        return {
+            hero_title: "TPOT_LINKS",
+            hero_link: "https://tpot-links-mkii-production.up.railway.app/",
+            menu_items: [{
+                    text: "HAXORFUN",
+                    url: "https://tpot-links-mkii-production.up.railway.app/Sandbox"
+                }, {
+                    text: "SEARCH TPOT",
+                    url: "https://tpot-links-mkii-production.up.railway.app/Sandbox"
+                },
+                {
+                    text: 'TPOT LINKS',
+                    url: "https://tpot-links-mkii-production.up.railway.app/"
+                },
+                {
+                    text: 'TPOT HOME',
+                    url: 'https://www.thepathoftruth.com/',
+                    external: true,
+                    // class: "btn btn-secondary"
+                }
+            ]
+        }
+    }
+</script>
+
+</html>
