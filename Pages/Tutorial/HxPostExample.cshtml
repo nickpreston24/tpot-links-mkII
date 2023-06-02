@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div :class="grid_class">
+        <div>
 
             <template x-for="[key, value] of Object.entries(options)">
                 <div class="mb-3">
@@ -68,7 +68,7 @@
                 search_by_categories: false
             },
             get grid_class() {
-                let cols = this.options ? .length || 5;
+                let cols = this.options ? this.routes.length || 5;
                 return `grid grid-cols-${cols}`;
             }
         }

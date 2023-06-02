@@ -1,1 +1,116 @@
-[{"path":"/Admin/FeatureRequest","title":"FeatureRequest"},{"path":"/Admin/Index","title":"Index"},{"path":"/Comments/FinishedScrapes","title":"FinishedScrapes"},{"path":"/Comments/Index","title":"Index"},{"path":"/Comments/Manual_Copies","title":"Manual_Copies"},{"path":"/Comments/ScrapeRequestForm","title":"ScrapeRequestForm"},{"path":"/Comments/Scrapes","title":"Scrapes"},{"path":"/Comments/ScriptureHighlighter","title":"ScriptureHighlighter"},{"path":"/Error","title":"Error"},{"path":"/Index","title":"Index"},{"path":"/Logs/Index","title":"Index"},{"path":"/Markdown/Index","title":"Index"},{"path":"/Privacy","title":"Privacy"},{"path":"/Sandbox/.old/Index","title":"Index"},{"path":"/Sandbox/Index","title":"Index"},{"path":"/Tutorial/HxPatchExample","title":"HxPatchExample"},{"path":"/Tutorial/HxPostExample","title":"HxPostExample"},{"path":"/Tutorial/Index","title":"Index"},{"path":"/Uploads/Index","title":"Index"}]
+[
+  {
+    "url": "/Admin/FeatureRequest",
+    "text": "FeatureRequest",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Admin/Index",
+    "text": "Index",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Comments/FinishedScrapes",
+    "text": "FinishedScrapes",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Comments/Index",
+    "text": "Index",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Comments/Manual_Copies",
+    "text": "Manual_Copies",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Comments/ScrapeRequestForm",
+    "text": "ScrapeRequestForm",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Comments/Scrapes",
+    "text": "Scrapes",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Comments/ScriptureHighlighter",
+    "text": "ScriptureHighlighter",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Error",
+    "text": "Error",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Index",
+    "text": "Index",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Logs/Index",
+    "text": "Index",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Markdown/Index",
+    "text": "Index",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Privacy",
+    "text": "Privacy",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Sandbox/.old/Index",
+    "text": "Index",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Sandbox/Index",
+    "text": "Index",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Tutorial/HxPatchExample",
+    "text": "HxPatchExample",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Tutorial/HxPostExample",
+    "text": "HxPostExample",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Tutorial/Index",
+    "text": "Index",
+    "enabled": true,
+    "external": false
+  },
+  {
+    "url": "/Uploads/Index",
+    "text": "Index",
+    "enabled": true,
+    "external": false
+  }
+]

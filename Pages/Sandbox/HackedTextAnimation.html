@@ -39,11 +39,54 @@
                 </div>
             </div>
 
+            <div class="hero-foot">
+
+                <div class="flex flex-row items-center justify-center gap-2">
+                  <template x-for="post in $store.items">
+                    <h2 x-text="post.title"></h2>
+                  </template>       
+                </div>
+
+                <div x-data="dropdown">
+                    ...
+                </div>
+
+                <button x-data @click="$store.darkMode.toggle()">Toggle Dark Mode</button>
+
+                <div x-data :class="$store.darkMode.on && 'bg-black'">
+                    ...
+                </div>
+
+                <button @click="$store.notifications.notify('...')">
+                    Notify
+                </button>
+
+            </div>
+
     </section>
 </body>
 
 <script>
-
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('darkMode', {
+            on: false,
+            toggle() {
+                this.on = !this.on
+            }
+        })
+        Alpine.data('dropdown', () => ({
+            open: false,
+            toggle() {
+                this.open = !this.open
+            }
+        }))
+        Alpine.store('notifications', {
+            items: ['hot lava'],
+            notify(message) {
+                this.items.push(message)
+            }
+        })
+    })
 </script>
 
 <script>

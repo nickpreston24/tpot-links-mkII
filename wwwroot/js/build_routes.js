@@ -1,18 +1,18 @@
 'use strict';
 
 const fs = require('fs');
-const { readdirSync } = require('fs');
-const path=require('path');
+const {readdirSync} = require('fs');
+const path = require('path');
 
-const getFileList =  (dirName) => {
+const getFileList = (dirName) => {
     let files = [];
-    const items =  readdirSync(dirName, { withFileTypes: true });
+    const items = readdirSync(dirName, {withFileTypes: true});
 
     for (const item of items) {
         if (item.isDirectory()) {
             files = [
                 ...files,
-                ...( getFileList(`${dirName}/${item.name}`)),
+                ...(getFileList(`${dirName}/${item.name}`)),
             ];
         } else {
             files.push(`${dirName}/${item.name}`);
@@ -23,16 +23,16 @@ const getFileList =  (dirName) => {
 };
 
 
-const cwd = path.join(__dirname,'../../');
+const cwd = path.join(__dirname, '../../');
 // console.log('cwd :>> ', cwd);
-var files =  getFileList(cwd);
+var files = getFileList(cwd);
 
 
 const paths = files
-    .map((f,i)=> f
-        .replaceAll('../','')
-        .replaceAll('Pages/','')
-        .replaceAll(cwd,'')
+    .map((f, i) => f
+        .replaceAll('../', '')
+        .replaceAll('Pages/', '')
+        .replaceAll(cwd, '')
     )
 
     .filter(file => !file.includes("Shared/")
@@ -42,12 +42,17 @@ const paths = files
     );
 
 const names = [...paths]
-    .map((nm,i)=> path.parse(nm).name
+    .map((nm, i) => path.parse(nm).name
         .trim()
     )
 
-const routes = paths.map(function(path, i) {
-    return {path: path.replace('.cshtml',''), title: names[i]};
+const routes = paths.map(function (path, i) {
+    return {
+        url: path.replace('.cshtml', '')
+        , text: names[i]
+        , enabled: true
+        , external: false
+    };
 });
 
 const data = JSON.stringify(routes)

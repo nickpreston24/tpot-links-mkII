@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
-<html data-theme="night" lang="en">
+<html data-theme="dracula" lang="en">
 <head>
     <base href="~/"/>
     <meta charset="utf-8"/>
@@ -26,10 +26,10 @@
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 </head>
-<body class='text-lg'>
+<body class='text-lg bg-black'>
 <header>
 
-    <div x-data="setup_layout()">
+    <div>
 
         @* <div class="drawer"> *@
         @*     <div class="drawer-side"> *@
@@ -78,20 +78,75 @@
 </script>
 
 <script>
-    const stored_routes = JSON.parse(localStorage.getItem('routes')) || []
-            // .filter(r=> !r.includes('Index'))  // Exclude Indexes for now.
-    ;
-    console.log('stored_routes :>> ', stored_routes);
 
-    const non_index_routes = stored_routes?.filter(r=>!r.path.includes('Index'))
-
-    function setup_layout() {
-        return {
-            foo: 'bar',
-            routes: non_index_routes || []
-        }
-    }
+    const stored_routes = JSON.parse(localStorage.getItem('routes'))
+        .filter(x=> !['Error', 'Privacy','Index'].includes(x.text)) 
+        || [] ;
+    
+    document.addEventListener('alpine:init', () => {
+        console.log('initialized alpine') 
+        Alpine.store('notifications', {
+            items: ['hot coffee'],
+            routes: stored_routes
+            // routes: [{
+            //     text: "hi"
+            // }]
+        })
+    })
 </script>
+
+@* *@
+@* <script> *@
+@*     document.addEventListener('alpine:init', () => { *@
+@*          *@
+@*          console.log('stores init...') *@
+@*      Alpine.store('notifications', { *@
+@*                  items: ['hot lava'], *@
+@*                  notify(message) { *@
+@*                      this.items.push(message) *@
+@*                  } *@
+@*              }) *@
+@*         Alpine.store('darkMode', { *@
+@*             on: false, *@
+@*   *@
+@*             toggle() { *@
+@*                 this.on = ! this.on *@
+@*             } *@
+@*         }) *@
+@*     }) *@
+@* </script> *@
+@* *@
+@* <script> *@
+@* *@
+@* // .filter(r=> !r.includes('Index'))  // Exclude Indexes for now. *@
+@* const stored_routes = JSON.parse(localStorage.getItem('routes')) || [] ; *@
+@*     console.log('stored_routes :>> ', stored_routes); *@
+@*      *@
+@* Alpine.store('notifications', { *@
+@*   items: ['blarg'], *@
+@* *@
+@*   notify(message) {  *@
+@*     this.items.push(message) *@
+@*   } *@
+@* }) *@
+@* *@
+@* </script> *@
+@* *@
+@* <script> *@
+@*     const stored_routes = JSON.parse(localStorage.getItem('routes')) || [] *@
+@*             // .filter(r=> !r.includes('Index'))  // Exclude Indexes for now. *@
+@*     ; *@
+@*     console.log('stored_routes :>> ', stored_routes); *@
+@* *@
+@*     const non_index_routes = stored_routes?.filter(r=>!r.path.includes('Index')) *@
+@* *@
+@*     function setup_layout() { *@
+@*         return { *@
+@*             foo: 'bar', *@
+@*             routes: non_index_routes || [] *@
+@*         } *@
+@*     } *@
+@* </script> *@
 
 </html>
 
