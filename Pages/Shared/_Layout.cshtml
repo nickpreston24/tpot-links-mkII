@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
-<html data-theme="lemonade" lang="en">
+<html data-theme="dark" lang="en">
 <head>
     <base href="~/"/>
     <meta charset="utf-8"/>
@@ -23,10 +23,12 @@
 
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.47.0/dist/full.css" rel="stylesheet" type="text/css"/>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://unpkg.com/xregexp/xregexp-all.js"></script>
+
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 </head>
-<body class='text-lg bg-black'>
+<body class='text-lg bg-base-500'>
 <header>
 
     <!-- <div>
@@ -79,21 +81,66 @@
 
 <script>
 
-    const included = ['Sandbox'];
-    const excluded = ['Error', 'Privacy', 'Index', 'Comments', 'Admin', 'ScrapeRequestForm'];
+    const included = ['Sandbox/Index'];
+    const excluded = ['Error', 'Privacy'
+    , 'Index'
+    , 'Scrapes', 'FinishedScrapes'
+    , 'FeatureRequest' 
+    , 'Comments', 'Admin', 'ScrapeRequestForm'
+    , 'Logs/Index'
+    , 'Comments/Index'
+    , 'Admin/Index'
+    , 'Uploads/Index'
+    , 'Markdown/Index'
+    
+    // , 'HxPostExample'
+    ];
 
-    const stored_routes = JSON.parse(localStorage.getItem('routes'))
-        .filter(
-            x => 
-            !included.includes(x.url) 
-            &&
-            !excluded.includes(x.text) 
-        // && included.includes(x.text)
-        ) 
+    const stored_routes = 
+        JSON.parse(localStorage.getItem('routes'))
+        // .filter(x => x.text.includes("Index")
+        //  x.url.includes("Sandbox")
+        // )
+        // .filter(
+        //     x => 
+        //     !excluded.some(ex=> x.url.match(ex))
+        //     // included.some(incl=>incl.match(x.url) )
+        //     // ||
+        //     // included.some(incl=>incl.match(x.text) )
+        //     // ||          
+        //     // !excluded.some(ex=> x.url.includes(ex))
+        //    // ||
+        //    // || 
+        //    //  !excluded.some(ex=> x.text === 'Index')
+        //     // ||
+        //     // !excluded.some(ex=> ex.match(x.url))
+        //     // x
+        // // && included.includes(x.text)
+        // )
+        // .map(route=> {
+        //     // console.log('route', route)
+        //     // const parent_name = null //XRegExp.exec(route.url, `blah`).groups.
+        //     // const pattern = XRegExp(`(?<parent>\w+)\/Index`);
+        //     let text = route.url;
+        //     // let pattern = /(?<parent>\w+)(\/Index)?/gi;
+        //    
+        //     let pattern = /((?<parent>\w+\/)+?(\/)?)*(?<name>\w+)/gi
+        //    
+        //     let groups = text.match(pattern);
+        //     let parent_name =  groups?.length >= 1 ? groups[0] : null
+        //     console.log('parent: ', parent_name);
+        //     return {
+        //        ... route,
+        //        text: route.text.replace('Index', parent_name ?? '???')
+        //        }
+        //     }
+        // )
+        // .filter(x=> included.includes(x.text))
         || [] ;
     
     document.addEventListener('alpine:init', () => {
         console.log('initialized alpine') 
+        console.log('stored routes :>> ', stored_routes);   
         Alpine.store('notifications', {
             routes: stored_routes
             // routes: [{

@@ -3,6 +3,7 @@
 const fs = require('fs');
 const {readdirSync} = require('fs');
 const path = require('path');
+const XRegExp = require('xregexp');
 
 const getFileList = (dirName) => {
     let files = [];
@@ -46,7 +47,71 @@ const names = [...paths]
         .trim()
     )
 
+
+//https://regex101.com/r/YWbgev/1
+/**
+ * 
+ * (?<breadcrumb>((?<parent>\w+\/)*?(\/)?)*)(?<pagename>\w+)
+ * 
+ * /Sandbox/Index
+ * /Pages/Admin/Login
+ * /Search
+ * /super/long/paths/suck/blagh
+ * 
+ */
+
+
+
+const url = XRegExp(`^(?<scheme> [^:/?]+ ) ://   # aka protocol
+                      (?<host>   [^/?]+  )       # domain name/IP
+                      (?<path>   [^?]*   ) \\??  # optional path
+                      (?<query>  .*      )       # optional query`, 'x');
+
+// const url = XRegExp(`^(?<scheme>[^:/?]+)(?<host>[^/?]+)(?<path>[^?]*\/)(?<query>.*)`, 'x');
+
+
+// Get the URL parts
+let parts = XRegExp.exec('https://google.com/Pages/Sandbox/Index?q=1', url);
+  
+console.log('parts :>> ', parts);
+//
+
+const breadcrumb = parts.groups.path;
+console.log('breadcrumb :>> ', breadcrumb);
+// parts=null;
+let breadcrumb_pattern = XRegExp(`^(
+    (?<breadcrumb>(
+        (?<parent>\w+\/)*?
+        (\/)?)*)
+        (?<pagename>\w+)
+)`, 'x');
+
+
+const groups = XRegExp.exec(breadcrumb, breadcrumb_pattern)
+console.log('groups :>> ', groups);
+
+// let breadcrumb = parts.groups.path;
+// console.log('breadcrumb :>> ', breadcrumb);
+
+// let parent = 
+
+// const groups = XRegExp.exec('https://google.com/Pages/Sandbox/Index?q=1', url);
+
+
+// const route_pattern
+
+// const route_pattern = "(?<breadcrumb>((?<parent>\w+\/)*?(\/)?)*)(?<pagename>\w+)"
+// // XRegExp(, 'x');
+
+// let text = '/super/long/paths/suck/blagh';
+// let groups = XRegExp.exec(text, route_pattern)
+
+// console.log('groups :>> ', groups);
+
+// console.log('route_pattern :>> ', route_pattern);
+
 const routes = paths.map(function (path, i) {
+    
     return {
         url: path.replace('.cshtml', '')
         , text: names[i]
@@ -57,7 +122,8 @@ const routes = paths.map(function (path, i) {
 
 const data = JSON.stringify(routes)
 
-console.log('cwd :>> ', cwd);
+
+// console.log('cwd :>> ', cwd);
 fs.writeFile(path.join(cwd, 'wwwroot', 'routes.json'), data, (err) => {
     if (err) throw err;
     console.log('Routes written to file');
