@@ -47,7 +47,7 @@ public class IndexModel : HighSpeedPageModel
         var search_parameters = new PaperSearch
         {
             // regex = $"""(?i)(<\w+>)?.*{term}.*(<\w+>)?""",
-            regex = $"""(?i)(<\w+>)?.*({term}).*(<\w+>)?""",
+            regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
             term = term,
             category = category
         }
