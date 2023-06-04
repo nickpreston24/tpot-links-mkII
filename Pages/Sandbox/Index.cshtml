@@ -89,7 +89,9 @@ TODO: Needs work on the handler...
                                aria-describedby="search-addon"/>
                         <div class="grid grid-cols-5">
                             <form
-                                hx-post='@Url.Page("Index", "Validate")'
+                                hx-post
+                                hx-page-handler="Validate"
+                                hx-page="Index"
                                 hx-swap="outerHTML"
                                 class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
 
@@ -147,10 +149,11 @@ TODO: Needs work on the handler...
                 <tr>
                     <th>Id</th>
                     <th>Title</th>
+                    <th>Excerpt</th>
+                    <th>Content</th>
                     <th>Status</th>
                     <th>Author</th>
                     <th>Categories</th>
-                    <th>Excerpt</th>
                 </tr>
                 </thead>
                 <tbody id='search_results'>

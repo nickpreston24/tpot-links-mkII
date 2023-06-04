@@ -3,6 +3,7 @@ using System.Text;
 using CodeMechanic.Embeds;
 using CodeMechanic.RazorPages;
 using CodeMechanic.Types;
+using CodeMechanic.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using TPOT_Links.Models;
@@ -45,11 +46,12 @@ public class IndexModel : HighSpeedPageModel
         var category = search_by_categories ? this.Number.ToString() : "";
         var search_parameters = new PaperSearch
         {
-            regex = $"""(?i)(<\w+>)?.*{term}.*(<\w+>)?""",
+            // regex = $"""(?i)(<\w+>)?.*{term}.*(<\w+>)?""",
+            regex = $"""(?i)(<\w+>)?.*({term}).*(<\w+>)?""",
             term = term,
             category = category
-        };
-            // .Dump("paper search");
+        }
+        .Dump("paper search");
 
         var pages = await SearchNeo4J<Page>(query, search_parameters);
 
@@ -60,10 +62,11 @@ public class IndexModel : HighSpeedPageModel
             <tr>
                 <th class='text-primary'>{paper.Id}</th>
                 <th class='text-accent'>{paper.Title}</th>
+                <td class='text-secondary'>{paper.Excerpt}</td>
+                <td class='text-secondary'>{paper.Content}</td>
                 <td class='text-secondary'>{paper.Status}</td>
                 <td class='text-secondary'>{paper.Author}</td>
                 <td class='text-accent'>{paper.Categories}</td>
-                <td class='text-secondary'>{paper.Excerpt}</td>
             </tr>
         """).ToString();
 

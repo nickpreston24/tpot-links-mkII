@@ -4,7 +4,10 @@ WHERE
 page.Content =~ $regex
   OR page.Title =~ $regex
   OR page.Slug =~ $regex
-  OR page.Excerpt =~ $regex
+  // OR page.Excerpt =~ $regex  # Not working, though Content certainly does...
+  OR toLower(page.Excerpt) contains toLower($term)
+//  OR page.Id > 0
+
 //OR toLower(page.Categories) contains toLower($category)
 RETURN *
 
