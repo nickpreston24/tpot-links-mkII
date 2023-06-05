@@ -3,10 +3,10 @@ MATCH (paper:Paper)
 WHERE 
 paper.Content =~ $regex
   OR paper.Title =~ $regex
-  OR paper.Slug =~ $regex
   OR paper.Excerpt =~ $regex
-  OR paper.Id =~ $regex
-  OR paper.Categories =~ $regex
+  OR paper.Slug =~ $regex
+  // OR paper.Id =~ $regex
+  // OR paper.Categories =~ $regex
 RETURN *
 LIMIT $limit
 
