@@ -83,22 +83,22 @@ public class Neo4JRepo : IDisposable
             } });
     }
 
-    public async Task UpdateExistingNodeBatch<T>(NodeBatch<T> batch_of_nodes = null)
-    {
-        // { batch : [{"1":334,"2":222,3:3840, ... 100k}]}
-        string query = """
-                        WITH $batch as data, [k in keys($batch) | toInteger(k)] as ids
-                        MATCH (n) WHERE id(n) IN ids
-                        // single property value
-                        SET n.count = data[toString(id(n))]
-                        // or override all properties
-                        SET n = data[toString(id(n))]
-                        // or add all properties
-                        SET n += data[toString(id(n))]
-                        """;
-
-        return;
-    }
+    // public async Task UpdateExistingNodeBatch<T>(NodeBatch<T> batch_of_nodes = null)
+    // {
+    //     // { batch : [{"1":334,"2":222,3:3840, ... 100k}]}
+    //     string query = """
+    //                     WITH $batch as data, [k in keys($batch) | toInteger(k)] as ids
+    //                     MATCH (n) WHERE id(n) IN ids
+    //                     // single property value
+    //                     SET n.count = data[toString(id(n))]
+    //                     // or override all properties
+    //                     SET n = data[toString(id(n))]
+    //                     // or add all properties
+    //                     SET n += data[toString(id(n))]
+    //                     """;
+    //
+    //     return;
+    // }
 
     public async Task MergeCreateRelationship<T>(NodeBatch<T> batch_of_nodes = null)
     {

@@ -43,5 +43,4 @@
   <ItemGroup>
     <ProjectReference Include="..\neo4j-extensions\neo4j-extensions.csproj" />
   </ItemGroup>
-
 </Project> 
