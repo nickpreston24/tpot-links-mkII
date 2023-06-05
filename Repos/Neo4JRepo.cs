@@ -66,7 +66,7 @@ public class Neo4JRepo : IDisposable
             });
     }
 
-    public async Task CreatePages(IList<Page> pages)
+    public async Task CreatePages(IList<Paper> pages)
     {
         string cypher = new StringBuilder()
             .AppendLine("UNWIND {pages} AS page")

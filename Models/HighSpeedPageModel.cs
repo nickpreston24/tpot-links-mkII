@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using CodeMechanic.Extensions;
 using Neo4j.Driver;
 using CodeMechanic.Embeds;
+using CodeMechanic.Neo4j.Extensions;
 
 namespace CodeMechanic.RazorPages;
 
@@ -117,9 +118,6 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
         finally {
             session.CloseAsync();
         }
-
-
-
     }
 
 

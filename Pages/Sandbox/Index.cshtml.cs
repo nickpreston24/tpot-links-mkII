@@ -46,14 +46,14 @@ public class IndexModel : HighSpeedPageModel
         var category = search_by_categories ? this.Number.ToString() : "";
         var search_parameters = new PaperSearch
         {
-            // regex = $"""(?i)(<\w+>)?.*{term}.*(<\w+>)?""",
             regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
             term = term,
             category = category
         }
-        .Dump("paper search");
+        // .Dump("paper search")
+            ;
 
-        var pages = await SearchNeo4J<Page>(query, search_parameters);
+        var pages = await SearchNeo4J<Paper>(query, search_parameters);
 
         string html = new StringBuilder()
             .AppendEach(
@@ -78,7 +78,7 @@ public class IndexModel : HighSpeedPageModel
     {
         // System.Console.WriteLine("creating batch of papers...");
         // Debug.WriteLine("creating batch of papers...".Dump());
-        var batch_of_papers = new Page
+        var batch_of_papers = new Paper
         {
             Title = "Test Paper 2",
             Content = "<p>test2</p>",
@@ -101,7 +101,7 @@ public class IndexModel : HighSpeedPageModel
             => $"""<p class='alert alert-{alert}' x-init='loading=false'>{text}!<p>""";
         try
         {
-            var created = await BulkCreateNodes<Page>(query, parameters);
+            var created = await BulkCreateNodes<Paper>(query, parameters);
         }
         catch (Exception e)
         {
@@ -137,7 +137,7 @@ public class IndexModel : HighSpeedPageModel
         {
         };
         // search_parameters.Dump("s");
-        var pages = await SearchNeo4J<Page>(query, search_parameters);
+        var pages = await SearchNeo4J<Paper>(query, search_parameters);
         // pages.FirstOrDefault().Dump("recommendations");
         // pages.ToList().Count.Dump("# of recommendations");
         string html = new StringBuilder()
