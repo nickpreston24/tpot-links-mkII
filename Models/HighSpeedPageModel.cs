@@ -15,11 +15,10 @@ and because I can'think of a better name
 */
 
 
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using CodeMechanic.Extensions;
-using Neo4j.Driver;
 using CodeMechanic.Embeds;
 using CodeMechanic.Neo4j.Extensions;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Neo4j.Driver;
 
 namespace CodeMechanic.RazorPages;
 

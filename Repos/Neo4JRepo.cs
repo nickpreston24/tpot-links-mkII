@@ -1,6 +1,6 @@
-using Neo4j.Driver;
 using System.Text;
 using CodeMechanic.Neo4j.Extensions;
+using Neo4j.Driver;
 using TPOT_Links.Models;
 using Category = TPOT_Links.Models.Category;
 
@@ -45,7 +45,13 @@ public class Neo4JRepo : IDisposable
 
         await using var session = driver.AsyncSession();
         await session.RunAsync(cypher,
-            new Dictionary<string, object>() { { "persons", ParameterSerializer.ToDictionary(persons) } });
+            new Dictionary<string, object>()
+            {
+                {
+                    "persons",
+                    ParameterSerializer.ToDictionary(persons)
+                }
+            });
     }
 
     public async Task CreateCategories(IList<Category> categories)
@@ -77,10 +83,12 @@ public class Neo4JRepo : IDisposable
         await using var session = driver.AsyncSession();
 
         await session.RunAsync(cypher,
-            new Dictionary<string, object>() {
+            new Dictionary<string, object>()
             {
-                "pages", ParameterSerializer.ToDictionary(pages)
-            } });
+                {
+                    "pages", ParameterSerializer.ToDictionary(pages)
+                }
+            });
     }
 
     // public async Task UpdateExistingNodeBatch<T>(NodeBatch<T> batch_of_nodes = null)
