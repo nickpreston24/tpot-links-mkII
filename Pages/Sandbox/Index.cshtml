@@ -73,8 +73,7 @@ TODO: Needs work on the handler...
                 <!-- Recommended papers get injected here -->
             </div>
 
-            <table class="table table-compact w-full">
-                <thead>
+            <table class="table table-compact w-full" style="width: max-content">
                 <tr>
                     <th class='flex flex-row gap-4'>
                         <input type="text" name="term" id="query" autocomplete="off"
@@ -153,10 +152,9 @@ TODO: Needs work on the handler...
                     <th>Author</th>
                     <th>Categories</th>
                 </tr>
-                </thead>
-                <tbody id='search_results'>
+                <div id='search_results'>
                 <div class="htmx-indicator" id='loading'>loading...</div>
-                </tbody>
+                </div>
 
             </table>
             <div class="htmx-indicator" id='loading'>loading...</div>

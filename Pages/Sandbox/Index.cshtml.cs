@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
 using CodeMechanic.RazorPages;
 using CodeMechanic.Types;
@@ -37,6 +38,7 @@ public class IndexModel : HighSpeedPageModel
         , bool show_excerpts = true
         , string show_slugs = ""
         , string show_urls = ""
+        , int limit = 20
     )
     {
         string query = await embeddedResourceQuery
@@ -44,12 +46,13 @@ public class IndexModel : HighSpeedPageModel
 
         var category = search_by_categories ? this.Number.ToString() : "";
         var search_parameters = new PaperSearch
-        {
-            regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
-            term = term,
-            category = category
-        }
-        // .Dump("paper search")
+            {
+                regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
+                term = term,
+                category = category,
+                limit = limit
+            }
+            .Dump("paper search")
             ;
 
         var pages = await SearchNeo4J<Paper>(query, search_parameters);
@@ -62,7 +65,7 @@ public class IndexModel : HighSpeedPageModel
                 <th class='text-primary'>{paper.Id}</th>
                 <th class='text-accent'>{paper.Title}</th>
                 <td class='text-secondary'>{paper.Excerpt}</td>
-                <td class='text-secondary'>{paper.Content}</td>
+                <td class='text-secondary overflow-hidden truncate'>{paper.Content}</td>
                 <td class='text-secondary'>{paper.Status}</td>
                 <td class='text-secondary'>{paper.Author}</td>
                 <td class='text-accent'>{paper.Categories}</td>

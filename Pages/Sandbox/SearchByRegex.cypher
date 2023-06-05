@@ -8,6 +8,7 @@ paper.Content =~ $regex
   OR paper.Id =~ $regex
   OR paper.Categories =~ $regex
 RETURN *
+LIMIT $limit
 
 
 // MATCH (paper:Paper)-[r]->(m)
