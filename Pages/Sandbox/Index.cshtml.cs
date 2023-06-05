@@ -62,13 +62,18 @@ public class IndexModel : HighSpeedPageModel
                 pages, paper =>
                     $"""
             <tr>
-                <th class='text-primary'>{paper.Id}</th>
                 <th class='text-accent'>{paper.Title}</th>
+                <td class='text-secondary overflow-hidden truncate'>
+                    <a target='_' href='{paper.Url}'>
+                        <button class='btn btn-accent'>Read it</button>
+                    </a>
+                </td>
                 <td class='text-secondary'>{paper.Excerpt}</td>
-                <td class='text-secondary overflow-hidden truncate'>{paper.Content}</td>
+                <!--
                 <td class='text-secondary'>{paper.Status}</td>
                 <td class='text-secondary'>{paper.Author}</td>
                 <td class='text-accent'>{paper.Categories}</td>
+                -->
             </tr>
         """).ToString();
 

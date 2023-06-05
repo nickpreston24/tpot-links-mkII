@@ -74,6 +74,7 @@ TODO: Needs work on the handler...
             </div>
 
             <table class="table table-compact w-full" style="width: max-content">
+                <thead>
                 <tr>
                     <th class='flex flex-row gap-4'>
                         <input type="text" name="term" id="query" autocomplete="off"
@@ -144,17 +145,19 @@ TODO: Needs work on the handler...
                     </th>
                 </tr>
                 <tr>
-                    <th>Id</th>
+                    @* <th>Id</th> *@
                     <th>Title</th>
+                    <th>Link</th>
                     <th>Excerpt</th>
-                    <th>Content</th>
-                    <th>Status</th>
-                    <th>Author</th>
-                    <th>Categories</th>
+                    @* <th>Content</th> *@
+                    @* <th>Status</th> *@
+                    @* <th>Author</th> *@
+                    @* <th>Categories</th> *@
                 </tr>
-                <div id='search_results'>
+                </thead>
+                <tbody id='search_results'>
                 <div class="htmx-indicator" id='loading'>loading...</div>
-                </div>
+                </tbody>
 
             </table>
             <div class="htmx-indicator" id='loading'>loading...</div>
