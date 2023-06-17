@@ -5,75 +5,74 @@
 @{
     // C# vars go here!
     var current_query = Model.Query;
+    var watch = Model.watch;
 }
 
 <div x-data='setup()'>
 
     <!-- <h1 class='glowing text-xl' x-text='title'></h1> -->
 
-    @if (!string.IsNullOrEmpty(@current_query))
-    {
-        <div class='text-ghost'>
-            <label class='text-2xl'>Current Query: </label>
-            <div class="mockup-code">
-                @current_query
-            </div>
-        </div>
-    }
+    @* @if (!string.IsNullOrEmpty(@current_query)) *@
+    @* { *@
+    @*     <div class='text-ghost'> *@
+    @*         <label class='text-2xl'>Current Query: </label> *@
+    @*         <div class="mockup-code"> *@
+    @*             @current_query *@
+    @*         </div> *@
+    @*     </div> *@
+    @* } *@
 
 
     <div class="card p-5 mb-4 text-ocean-500">
         <div class="d-flex justify-content-between">
 
-            <template x-if="open">
+            <div
+                hx-get
+                hx-trigger='load'
+                hx-page-handler="Recommendations"
+                hx-target="#recommendations">
+                Get Teaching Recommendations
+            </div>
+
+
+            <form
+                id="bulk_create"
+                hx-post
+                hx-page="Index"
+                hx-page-handler="BulkCreatePapers"
+                hx-target="#modals-here"
+                hx-swap="innerHTML"
+                hx-trigger="submit">
+
+                <div class="form-floating mb-3">
+                    <input type="text"
+                           name="Title"
+                           required class="form-control"
+                           id="title" placeholder="What is Faith?">
+
+                    @* <b>Query Took : @watch.Elapsed</b> *@
+                    <label for="title">Title of Paper</label>
+                </div>
+
                 <button
-                    class='btn-active btn'
-                    hx-get='@Url.Page("", "Recommendations")'
-                    hx-target="#recommendations">
-                    Get Teaching Recommendations
+                    class='btn-active btn btn-md btn btn-outline-primary float-end'
+                    x-on:click='btn_width = 4; loading=true'
+                    :class='bulk_button_class'
+                    type="submit">
+                    Bulk Create
                 </button>
-            </template>
 
-            @* hx-post='@Url.Page("Index", "BulkCreatePapers")' 
-TODO: Needs work on the handler...
-*@
-
-            <template x-if="false">
-                <form
-                    id="bulk_create"
-                    hx-post
-                    hx-page="Index"
-                    hx-page-handler="BulkCreatePapers"
-                    hx-target="#modals-here"
-                    hx-swap="innerHTML"
-                    hx-trigger="submit">
-
-                    <div class="form-floating mb-3">
-                        <input type="text"
-                               name="Title"
-                               required class="form-control"
-                               id="title" placeholder="What is Faith?">
-                        <label for="title">Title of Paper</label>
-                    </div>
-
-                    <button
-                        class='btn-active btn btn-md btn btn-outline-primary float-end'
-                        x-on:click='btn_width = 4; loading=true'
-                        :class='bulk_button_class'
-                        type="submit">
-                        Bulk Create
-                    </button>
-
-                </form>
-
-            </template>
+            </form>
 
 
             <div id="recommendations">
                 <!-- Recommended papers get injected here -->
             </div>
 
-            <table class="table table-compact w-full" style="width: max-content">
+            
+            <!-- Search Results -->
+            @* style="width: max-content" *@
+            <table class="table table-zebra" >
                 <thead>
                 <tr class=''>
                     <th class=''>
@@ -84,64 +83,12 @@ TODO: Needs work on the handler...
                                hx-target="#search_results"
                                hx-trigger="keyup changed delay:250ms"
                                hx-indicator="#loading"
-                               class="input input-bordered input-ghost" 
+                               class="input input-bordered input-ghost"
                                aria-label="SEARCH"
                                :placeholder="search_placeholder"
                                aria-describedby="search-addon"/>
 
-                        <!-- <template x-if="false">
 
-                            <div class="grid grid-cols-5">
-                                <form
-                                    hx-post
-                                    hx-page-handler="Validate"
-                                    hx-page="Index"
-                                    hx-swap="outerHTML"
-                                    class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
-
-                                    <select name="number">
-                                        <option value="">Select a number</option>
-                                        <option value="366">366</option>
-                                        <option value="367">367</option>
-                                        <option value="368">368</option>
-                                    </select>
-                                </form>
-                            </div>
-                        </template>
-
-                        <div x-ignore>
-                            <template>
-                                <form
-                                    action='post'
-                                    hx-post='@Url.Page("Index", "???")'>
-
-                                    <div class='grid grid-cols-3 grid-rows-auto'>
-
-                                        <template x-for="[key, value] of Object.entries(options)">
-                                            <label class="cursor-pointer label flex-1">
-                                                <span x-text="key" class="label-text"></span>
-
-                                                <input
-                                                    name='key'
-                                                    x-bind:checked="options[key]"
-                                                    x-on:change="options[key]=!options[key]"
-                                                    type="checkbox"
-                                                    class="toggle toggle-primary"/>
-                                            </label>
-                                        </template>
-                                    </div>
-
-
-                                    <input type=hidden id="word" value='{{word}}'>
-
-                                    <button class="btn btn-primary" type="submit"
-                                            hx-include="#word">
-                                        Translate your word?
-                                    </button>
-
-                                </form>
-                            </template>
-                        </div> -->
                     </th>
                 </tr>
                 <tr>
@@ -191,3 +138,57 @@ TODO: Needs work on the handler...
         }
     }
 </script>
+
+
+<!-- <template x-if="false">
+
+    <div class="grid grid-cols-5">
+        <form
+            hx-post
+            hx-page-handler="Validate"
+            hx-page="Index"
+            hx-swap="outerHTML"
+            class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+
+            <select name="number">
+                <option value="">Select a number</option>
+                <option value="366">366</option>
+                <option value="367">367</option>
+                <option value="368">368</option>
+            </select>
+        </form>
+    </div>
+</template>
+
+<div x-ignore>
+    <template>
+        <form
+            action='post'
+
+        <div class='grid grid-cols-3 grid-rows-auto'>
+
+            <template x-for="[key, value] of Object.entries(options)">
+                <label class="cursor-pointer label flex-1">
+                    <span x-text="key" class="label-text"></span>
+
+                    <input
+                        name='key'
+                        x-bind:checked="options[key]"
+                        x-on:change="options[key]=!options[key]"
+                        type="checkbox"
+                        class="toggle toggle-primary"/>
+                </label>
+            </template>
+        </div>
+
+
+        <input type=hidden id="word" value='{{word}}'>
+
+        <button class="btn btn-primary" type="submit"
+                hx-include="#word">
+            Translate your word?
+        </button>
+
+        </form>
+    </template>
+</div> -->

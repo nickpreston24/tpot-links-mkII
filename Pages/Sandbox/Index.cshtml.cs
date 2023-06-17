@@ -26,6 +26,8 @@ public class IndexModel : HighSpeedPageModel
     public int Number { get; set; } = -1;
     public string Title { get; set; } = string.Empty;
 
+    public Stopwatch watch = new Stopwatch();
+
     public IndexModel(
         IEmbeddedResourceQuery embeddedResourceQuery
         , IDriver driver)
@@ -46,16 +48,19 @@ public class IndexModel : HighSpeedPageModel
 
         var category = search_by_categories ? this.Number.ToString() : "";
         var search_parameters = new PaperSearch
-            {
-                regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
-                term = term,
-                category = category,
-                limit = limit
-            }
-            .Dump("paper search")
+                {
+                    regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
+                    term = term,
+                    category = category,
+                    limit = limit
+                }
+                .Dump("paper search")
             ;
 
+        watch.Start();
+
         var pages = await SearchNeo4J<Paper>(query, search_parameters);
+        watch.Stop();
 
         string html = new StringBuilder()
             .AppendEach(
@@ -122,45 +127,59 @@ public class IndexModel : HighSpeedPageModel
 
     public async Task<IActionResult> OnGetRecommendations()
     {
-        var failure = Content(
-            $"""
-            <div class='alert alert-error'>
-                <p class='text-3xl text-warning text-sh'>
-                    An Error Occurred...  But fret not! Our team of intelligent lab mice are on the job!
-                </p>
-            </div>
-        """);
-
         string query = "..."; // This can be ANY SQL query.  In my case, I'm using cypher, because it's lovely.
+
+        // var failure = Alert("Fail!");
 
         // Magically infers from the tract that the current method name is referring to 'Recommendations.cypher'
         query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
 
         if (string.IsNullOrEmpty(query))
-            return failure; // If for some reason, nothing comes back, alert the user with this div.
+            return Alert("Failed to get recommendations cypher!"); // If for some reason, nothing comes back, alert the user with this div.
 
         var search_parameters = new
         {
         };
         // search_parameters.Dump("s");
         var pages = await SearchNeo4J<Paper>(query, search_parameters);
-        // pages.FirstOrDefault().Dump("recommendations");
-        // pages.ToList().Count.Dump("# of recommendations");
-        string html = new StringBuilder()
-            .AppendEach(
-                pages, paper =>
-                    $"""
-            <tr>
-                <th class='text-primary'>{paper.Id}</th>
-                <th class='text-accent'>{paper.Title}</th>
-                <td class='text-secondary'>{paper.Status}</td>
-                <td class='text-secondary'>{paper.Author}</td>
-                <td class='text-accent'>{paper.Categories}</td>
-                <td class='text-secondary'>{paper.Excerpt}</td>
-            </tr>
-        """).ToString();
+        pages.FirstOrDefault().Dump("recommendations");
 
-        return Content(html);
+        return Partial("_RecommendedPapersList", pages);
+    }
+
+
+    private IActionResult Alert(string text)
+    {
+        string html = $"""
+                  <div class='alert alert-error'>
+                      <p class='text-3xl text-warning text-sh'>
+                          An Error Occurred...  But fret not! Our team of intelligent lab mice are on the job!
+                      </p>
+                     <span>
+                         ${text}
+                     <span>
+                  </div>
+             """;
+
+        return Content(text, "text/html");
     }
 }
+
+
+// pages.ToList().Count.Dump("# of recommendations");
+//         string html = new StringBuilder()
+//             .AppendEach(
+//                 pages, paper =>
+//                     $"""
+//             <tr>
+//                 <th class='text-primary'>{paper.Id}</th>
+//                 <th class='text-accent'>{paper.Title}</th>
+//                 <td class='text-secondary'>{paper.Status}</td>
+//                 <td class='text-secondary'>{paper.Author}</td>
+//                 <td class='text-accent'>{paper.Categories}</td>
+//                 <td class='text-secondary'>{paper.Excerpt}</td>
+//             </tr>
+//         """).ToString();
+//
+//         return Content(html);
