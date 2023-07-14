@@ -317,6 +317,8 @@ module.exports = {
     //         },
     //     ],
     // },
-    plugins: [require("daisyui")],
+    
+    plugins: [require("daisyui"), require("@tailwindcss/typography")],
+
     content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"]
 };

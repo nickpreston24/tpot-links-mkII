@@ -66,8 +66,9 @@ public class IndexModel : HighSpeedPageModel
         return Content("<p>boop!</p>");
     }
 
-
-    public async Task<IActionResult> OnPostLikePaper(
+    
+    
+    public async Task<IActionResult> OnGetLikePaper(
         // [FromBody] Paper selected_paper
     )
     {
@@ -77,6 +78,18 @@ public class IndexModel : HighSpeedPageModel
 
         return Content("<p class='alert alert-success'>Liked!</p>");
     }
+    
+    //
+    // public async Task<IActionResult> OnPostLikePaper(
+    //     // [FromBody] Paper selected_paper
+    // )
+    // {
+    //     var user = this.CurrentUser;
+    //     user.Dump("dis user");
+    //     string query = "";
+    //
+    //     return Content("<p class='alert alert-success'>Liked!</p>");
+    // }
 
     public async Task<IActionResult> OnPostValidateUser([FromForm] User user, string pass = "")
     {
@@ -94,9 +107,11 @@ public class IndexModel : HighSpeedPageModel
         , bool show_excerpts = true
         , string show_slugs = ""
         , string show_urls = ""
+        , string partial_name = "_PaperTable"
         , int limit = 20
     )
     {
+        partial_name.Dump("yo");
         string query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
 
@@ -116,7 +131,7 @@ public class IndexModel : HighSpeedPageModel
         var pages = await SearchNeo4J<Paper>(query, search_parameters);
         watch.Stop();
 
-        return Partial("_PaperTable", pages);
+        return Partial(partial_name, pages);
         // return Partial("_PaperList", pages);
     }
 

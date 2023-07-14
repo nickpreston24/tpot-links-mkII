@@ -2,21 +2,32 @@
 
 @{
     var papers = Model;
+    var cols = @papers.Count > 0 ? Math.Ceiling((@papers.Count / Math.Log10(@papers.Count)) * 1.0) : 2;
 }
+<style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      /* This is better for small screens, once min() is better supported */
+      /* grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); */
+      gap: 1rem;
+    }
+</style>
 
 @if (papers.Any())
 {
-    @foreach (var paper in papers)
-    {
-        <ul>
-            <partial name="PaperCard" model="@paper"/>
+    <h2>@cols, @papers.Count</h2>
+                            
+                            
+                            
+    @* <div class="grid grid-flow-col grid-rows-6 grid-cols-@cols"> *@
+    <div class="grid grid-cols-@cols gap-x-10">
 
-            @* <li class='text-primary'>@paper.Id</li> *@
-            @* <li class='text-accent'>@paper.Title</li> *@
-            @* <li class='text-secondary'>@paper.Status</li> *@
-            @* <li class='text-secondary'>@paper.Author</li> *@
-            @* <li class='text-accent'>@paper.Categories</li> *@
-            @* <li class='text-secondary'>@paper.Excerpt</li> *@
-        </ul>
-    }
+        @foreach (var paper in papers)
+        {
+            <ul>
+                <partial name="PaperCard" model="@paper"/>
+            </ul>
+        }
+    </div>
 }

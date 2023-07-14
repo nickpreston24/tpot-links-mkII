@@ -5,14 +5,16 @@
 
 @if (Model is {} tpot_papers)
 {
-    <tbody class="w-1/2">
+    <tbody class="w-12 border-2 border-amber-500">
     @foreach (var paper in tpot_papers)
     {
         <tr hx-post hx-trigger="change">
             <th class='text-accent'>@paper.Title</th>
             <td class='text-secondary overflow-hidden truncate'>
                 <a target='_' href='@paper.Url'>
-                    <button class='btn btn-accent'>Read it</button>
+                    <button
+                        data-tippy-content="I'm a tooltip! :D"
+                        class='btn btn-accent'>Read it</button>
                 </a>
             </td>
             <td class='text-secondary'>@paper.Excerpt</td>

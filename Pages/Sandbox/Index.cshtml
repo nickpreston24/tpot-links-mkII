@@ -4,8 +4,9 @@
 @{
     Layout = null;
 }
+
 <!DOCTYPE html>
-<html data-theme="halloween" lang="en">
+<html data-theme="light" lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -21,22 +22,67 @@
         type="text/css"/>
 
     <script src="https://unpkg.com/htmx.org@1.8.5"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/include-vals.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     <title>What's Taters, Precious?</title>
 </head>
-<body>
-<div x-data="setup()" class="flex flex-row items-center justify-center">
+<body class="border-0 border-green-400">
+<div x-data="setup()" class="flex flex-row">
 
-    <section class="h-screen w-5/6 flex overflow-x-clip">
-        <table class="table table-zebra">
+    <section class="h-screen w-4/6 flex overflow-x-clip">
+
+        @* <pre x-text="routes"></pre> *@
+        <table class="table table-zebra border-0 border-red-700 ">
             <thead>
             <tr>
-                <th>
+
+                <th scope="row" class="col-span-4 border-2">
+                    <markdown
+                        data-tippy-content="I'm a tooltip! :D">
+                        # Hello there!, you can choose search options below
+                    </markdown>
+                    <div class="join">
+                        <div>
+                            <div hx-ext="include-vals">
+                                @* <pre x-text="current_partial"></pre> *@
+
+                                <input class="input input-bordered join-item"
+                                       hx-get
+                                       include-vals="partial_name: '_PaperList'"
+                                       hx-page="Index"
+                                       hx-page-handler="SearchByRegex"
+                                       hx-target="#search_results"
+                                       hx-swap="innerHTML"
+                                       hx-trigger="keyup changed delay:250ms"
+                                       hx-indicator="#loading"
+                                       class="input input-bordered input-ghost"
+                                       aria-label="SEARCH"
+                                       :placeholder="search_placeholder"
+                                       aria-describedby="search-addon"/>
+                            </div>
+                        </div>
+                        <select class="select select-bordered join-item">
+                            <option disabled selected>Category</option>
+                            <template x-cloak x-for="cat in categories">
+                                <option x-text="cat" :value="cat"></option>
+                            </template>
+                        </select>
+                        <div class="indicator">
+                            <span class="indicator-item badge badge-secondary">new</span>
+                            <button class="btn join-item">Search</button>
+                        </div>
+                        <div class="join-item">
+                            
+                        <partial name="_CardOptionsPanel"/>
+                        </div>
+                    </div>
+                    @*
                     <input type="text" name="term" id="query" autocomplete="off"
                            hx-get
                            hx-page="Index"
                            hx-page-handler="SearchByRegex"
                            hx-target="#search_results"
+                           hx-swap="innerHTML"
                            hx-trigger="keyup changed delay:250ms"
                            hx-indicator="#loading"
                            class="input input-bordered input-ghost"
@@ -44,13 +90,17 @@
                            :placeholder="search_placeholder"
                            aria-describedby="search-addon"/>
                     <div class="htmx-indicator" id='loading'>loading...</div>
-
+                    *@
+                    @* <div class="border-2 border-cyan-500"> *@
+                    @*     <partial name="_CardOptionsPanel"/> *@
+                    @* </div> *@
+                    <div class="htmx-indicator" id='loading'>loading...</div>
                 </th>
 
-                <th>
-
-                    <partial name="_CardOptionsPanel"/>
-                </th>
+                @* <th x-show="false" *@
+                @*     class=""> *@
+                @*     <partial name="_CardOptionsPanel"/> *@
+                @* </th> *@
             </tr>
             <tr>
                 @* <th>Id</th> *@
@@ -70,16 +120,13 @@
     </section>
 
 
-    <section class="w-1/6 flex flex-center hero min-h-screen bg-base-200">
+    <section class="w-2/6 flex hero min-h-screen bg-base-200">
 
-        <div class="hero-content flex-col lg:flex-row-reverse">
-            <div>
-                @* <h1 x-text="message" class="text-5xl font-bold"></h1> *@
-                @* <partial name="_AccordionPanel"/> *@
-                @* <partial name=""/> *@
-
-                @* <partial name="_LikePaper" model="null"/> *@
-
+        <div x-if="false">
+            <div class="hero-content flex-col lg:flex-row-reverse">
+                <template>
+                    <partial name="_CardOptionsPanel"/>
+                </template>
             </div>
         </div>
     </section>
@@ -89,14 +136,29 @@
 <script>
     function setup() {
       return {
-        message: "Have a Potato Day! 🥔 ",
         search_placeholder: "E.g.: 'What is Faith?'",
+        render_partial: '_PaperList',
+        get current_partial() {
+            return this.render_partial
+            },
         card_options: {
-            case_sensitive: true,
+            case_insensitive: true,
             ignore_whitespace: false,
-            ignore_special_characters: false,
+            ignore_special_characters: false
+        },
+        categories: [
+            'Faith',
+            'Obedience',
+            'Israel',
+        ],
+        apply_tippies(){
+            console.log('dippy tippy')
+            tippy('[data-tippy-content]'); 
+            tippy(document.querySelectorAll('.button'));
+            tippy(document.querySelectorAll('.btn'));
         }
-      };
+      }; 
     }
   </script>
+
 </html>

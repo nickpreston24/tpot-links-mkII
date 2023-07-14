@@ -4,8 +4,12 @@
     var current_paper = Model;
 }
 
-<form hx-post hx-page="Sandbox/Index" hx-page-handler="LikePaper" hx-swap="outerHTML"
-      class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+    @* hx-get hx-page="Sandbox/Index" *@
+    @* hx-page-handler="LikePaper" *@
+    @* hx-swap="outerHTML" *@
+<form
+    
+    class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
     <div class="mb-3">
         <label class="form-label" asp-for="Title"></label>
         <input type="text" class="form-control" asp-for="Title">
@@ -22,7 +26,6 @@
         </div>
     </div>
 
-
     <div class="mb-3">
         <label class="form-label" asp-for="Id"></label>
         <input type="number" class="form-control" asp-for="Id">
@@ -31,9 +34,10 @@
         </div>
     </div>
 
-
     <div class="control">
-        <button id="submitButton" type="submit" class="btn btn-accent">
+        <button 
+            x-on:click="confirm('Sorry, this feature is not ready!')"
+            id="submitButton" type="submit" class="btn btn-accent">
             <span class="htmx-indicator">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 <span class="visually-hidden">Loading...</span>
