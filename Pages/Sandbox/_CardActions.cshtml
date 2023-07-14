@@ -1,14 +1,14 @@
 @model TPOT_Links.Models.Paper
 
 @{
-    var current_paper = Model;
+    var paper = Model;
 }
 
-    @* hx-get hx-page="Sandbox/Index" *@
-    @* hx-page-handler="LikePaper" *@
-    @* hx-swap="outerHTML" *@
+@* hx-get hx-page="Sandbox/Index" *@
+@* hx-page-handler="LikePaper" *@
+@* hx-swap="outerHTML" *@
 <form
-    
+
     class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
     <div class="mb-3">
         <label class="form-label" asp-for="Title"></label>
@@ -35,7 +35,11 @@
     </div>
 
     <div class="control">
-        <button 
+
+    <a target="_" href="@paper.Url">
+        <button class="btn btn-secondary">Read</button>
+    </a>
+        <button
             x-on:click="confirm('Sorry, this feature is not ready!')"
             id="submitButton" type="submit" class="btn btn-accent">
             <span class="htmx-indicator">

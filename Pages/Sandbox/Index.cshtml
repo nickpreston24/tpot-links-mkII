@@ -139,10 +139,6 @@
       return {
         search_placeholder: "E.g.: 'What is Faith?'",
         search_button_text: "Search for Papers",
-        render_partial: '_PaperList',
-        get current_partial() {
-            return this.render_partial
-            },
         card_options: {
             case_insensitive: true,
             ignore_whitespace: false,
@@ -153,8 +149,11 @@
             'Faith',
             'Obedience',
             'Israel',
+            'Sin',
+            'Religion',
+            'Tithes & Offerings',
         ],
-        apply_tippies(){
+        apply_tippies(){    
             console.log('dippy tippy')
             tippy('[data-tippy-content]'); 
             tippy(document.querySelectorAll('.button'));

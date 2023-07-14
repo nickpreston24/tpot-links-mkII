@@ -12,19 +12,17 @@
 
     string GetCssClass()
     {
-        return $"grid sm:grid-cols-{@cols} grid-rows-{@rowz} gap-x-10";
+        return $"grid sm:grid-cols-{@cols} grid-rows-{@rowz} gap-x-2";
     }
 
 }
 @if (papers.Any())
 {
-    <div x-if="dev_mode">
+    <div x-show="card_options.dev_mode">
 
-        <template>
-
+        <div class="text-tiny text-red-600">
             <h2 >cols: @cols, rows: @rowz, total papers: @papers.Count</h2>
-
-        </template>
+        </div>
     </div>
 
     @* <div class="grid grid-flow-col grid-rows-6 grid-cols-@cols"> *@
