@@ -83,7 +83,7 @@ public class IndexModel : HighSpeedPageModel
         // CurrentUser = TypeExtensions.With(u =>
         // {
         // });
-        
+
         var pwd = Environment.GetEnvironmentVariable("TPOT_DEFAULT_PASSWORD");
         return Partial("_ValidatedUser", CurrentUser);
     }
@@ -169,15 +169,12 @@ public class IndexModel : HighSpeedPageModel
 
         if (string.IsNullOrEmpty(query))
             return
-                Alert("Failed to get recommendations cypher!"); // If for some reason, nothing comes back,~~ alert the user with this div.
+                Partial("_Alert");
         var search_parameters = new PaperSearch
                 {
-                    // regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
-                    // term = term,
                     category = category,
-                    // limit = limit
                 }
-                .Dump("paper search")
+                .Dump()
             ;
 
         // search_parameters.Dump("s");
@@ -187,22 +184,6 @@ public class IndexModel : HighSpeedPageModel
         return Partial("_PaperList", pages);
     }
 
-
-    private IActionResult Alert(string text)
-    {
-        string html = $"""
-                  <div class='alert alert-error'>
-                      <p class='text-3xl text-warning text-sh'>
-                          An Error Occurred...  But fret not! Our team of intelligent lab mice are on the job!
-                      </p>
-                     <span>
-                         ${text}
-                     <span>
-                  </div>
-             """;
-
-        return Content(text, "text/html");
-    }
 
     public string? IsSelectedClassName(string panel_name, string cssClass)
     {
