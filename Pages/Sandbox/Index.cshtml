@@ -30,8 +30,15 @@
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="js/animations/hacky_text_animation.js"></script>
 </head>
+
+<style>
+    table {
+            /*z-index: unset !important;*/
+            z-index: -1 !important;
+    }
+</style>
 <body class="border-0 border-green-400">
-<section x-data="setup()" class="flex flex-row">
+<section x-data="setup()" class="flex flex-row z-0">
 
     <div class="h-screen w-4/6">
 

@@ -12,8 +12,18 @@
         return $"{modal.BadgeCSS}";
     }
 }
+@* *@
+@* <style> *@
+@*     div.modal_container { *@
+@*         z-index: unset; *@
+@*         z-index: 50 !important; *@
+@*     } *@
+@* </style> *@
 
-<div x-data="{
+<div
+    id=""
+    class="modal_container"
+    x-data="{
     show_modal:false
     , get for_class(){
         return this.show_modal ? 'my_modal' : '';    
