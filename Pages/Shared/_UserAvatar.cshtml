@@ -1,25 +1,36 @@
+@using CodeMechanic.FileSystem
 @model TPOT_Links.Models.User
 
 @{
     var user = Model;
-    bool avatar_exists = string.IsNullOrWhiteSpace(@user.AvatarPic);
-    string avatar_pic = avatar_exists
-        ? "~/img/my_fb_avatar.jpg"
-        : @user.AvatarPic;
 
-    string avatar_online = avatar_exists ? " online " : "";
+    (
+         bool avatar_exists
+        , string avatar_status
+        , string avatar_full_css
+        , string avatar_pic
+            ) = user.Avatar;
 
-    string avatar_full_css = $"{avatar_online} avatar";
-    
-    // string GetImgCSS()
-    // {
-    //     return $"{@avatar_pic}";
-    // }
 }
 
-<div class="avatar">
+<pre x-show="false">
+  img:  @avatar_pic
+, status: @avatar_status
+, classname: @avatar_full_css
+, exists: @avatar_exists
+</pre>
+<div class="@avatar_full_css">
     <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-        <img src="~/img/my_fb_avatar.jpg" alt="avatar_img">
+        @if (!@avatar_exists)
+        {
+            <span class="text-3xl">NP</span>
+        }
+        else
+        {
+            <img
+                src="@avatar_pic"
+                alt="avatar_img">
+        }
     </div>
 </div>
 
