@@ -2,14 +2,19 @@
 
 @{
     var user = Model;
-    string avatar_pic = string.IsNullOrWhiteSpace(@user.AvatarPic)
+    bool avatar_exists = string.IsNullOrWhiteSpace(@user.AvatarPic);
+    string avatar_pic = avatar_exists
         ? "~/img/my_fb_avatar.jpg"
         : @user.AvatarPic;
 
-    string GetImgCSS()
-    {
-        return $"{@avatar_pic}";
-    }
+    string avatar_online = avatar_exists ? " online " : "";
+
+    string avatar_full_css = $"{avatar_online} avatar";
+    
+    // string GetImgCSS()
+    // {
+    //     return $"{@avatar_pic}";
+    // }
 }
 
 <div class="avatar">

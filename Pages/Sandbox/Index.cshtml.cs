@@ -32,6 +32,9 @@ public class IndexModel : HighSpeedPageModel
     public CardOptions CardOptions { get; set; } = new CardOptions();
 
     public Paper SelectedPaper { get; set; } = new Paper();
+    private static List<Paper> _current_recommendations = new List<Paper>();
+    public List<Paper> RecommendedPapers => _current_recommendations;
+    
     public User CurrentUser { get; set; } = new User();
 
     // public List<Panel> Panels { get; set; } = new List<Panel>()
@@ -204,7 +207,7 @@ public class IndexModel : HighSpeedPageModel
 
         // search_parameters.Dump("s");
         // var recommended_papers = await SearchNeo4J<Paper>(query, search_parameters);
-        var users_who_liked_papers = await SearchNeo4J<Paper>(query, search_parameters);
+        var users_who_liked_papers = await SearchNeo4J<User>(query, search_parameters);
         // recommended_papers.FirstOrDefault().Dump("recommendations");
 
         // if (recommended_papers.Where(has_no_recommendations))
