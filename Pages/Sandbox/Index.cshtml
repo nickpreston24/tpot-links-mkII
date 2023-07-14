@@ -24,24 +24,21 @@
     <script src="https://unpkg.com/htmx.org@1.8.5"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/include-vals.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
-    <title>What's Taters, Precious?</title>
+    <script src="js/animations/hacky_text_animation.js"></script>
 </head>
 <body class="border-0 border-green-400">
-<div x-data="setup()" class="flex flex-row">
+<section x-data="setup()" class="flex flex-row">
 
-    <section class="h-screen w-4/6 flex overflow-x-clip">
+    <div class="h-screen w-4/6">
 
         @* <pre x-text="routes"></pre> *@
-        <table class="table table-zebra border-0 border-red-700 ">
+        <table x-show="true" class="table table-zebra border-0 border-red-700 ">
             <thead>
             <tr>
 
                 <th scope="row" class="col-span-4 border-2">
-                    <markdown
-                        data-tippy-content="I'm a tooltip! :D">
-                        # Hello there!, you can choose search options below
-                    </markdown>
-                    <div class="join">
+                   
+                    <div class="join flex-row flex">
                         <div>
                             <div hx-ext="include-vals">
                                 @* <pre x-text="current_partial"></pre> *@
@@ -69,12 +66,22 @@
                         </select>
                         <div class="indicator">
                             <span class="indicator-item badge badge-secondary">new</span>
-                            <button class="btn join-item">Search</button>
+                            <button class="btn join-item rounded-r-full">
+                                <h1 x-on:mouseover="hacky_text"
+                                    :data-value="search_button_text">
+                                    Search
+                                </h1>
+                            </button>
+
+                            <button x-show="false"
+                                    class="btn btn-accent hover:scale-125">
+                                <h1 x-on:mouseover="hacky_text" :data-value="search_button_text">
+                                    Start Searching
+                                </h1>
+                            </button>
                         </div>
-                        <div class="join-item">
-                            
-                        <partial name="_CardOptionsPanel"/>
-                        </div>
+                        @* <partial name="_CardOptionsPanel"/> *@
+                        @* <div class=""></div> *@
                     </div>
                     @*
                     <input type="text" name="term" id="query" autocomplete="off"
@@ -102,41 +109,36 @@
                 @*     <partial name="_CardOptionsPanel"/> *@
                 @* </th> *@
             </tr>
-            <tr>
-                @* <th>Id</th> *@
-                <th>Title</th>
-                <th>Link</th>
-                <th>Excerpt</th>
-                @* <th>Content</th> *@
-                @* <th>Status</th> *@
-                @* <th>Author</th> *@
-                @* <th>Categories</th> *@
-            </tr>
+            @* <tr> *@
+            @*     $1$ <th>Id</th> #1# *@
+            @*     <th>Title</th> *@
+            @*     <th>Link</th> *@
+            @*     <th>Excerpt</th> *@
+            @*     $1$ <th>Content</th> #1# *@
+            @*     $1$ <th>Status</th> #1# *@
+            @*     $1$ <th>Author</th> #1# *@
+            @*     $1$ <th>Categories</th> #1# *@
+            @* </tr> *@
             </thead>
             <tbody id='search_results'>
             </tbody>
 
         </table>
-    </section>
+    </div>
 
-
-    <section class="w-2/6 flex hero min-h-screen bg-base-200">
-
-        <div x-if="false">
-            <div class="hero-content flex-col lg:flex-row-reverse">
-                <template>
-                    <partial name="_CardOptionsPanel"/>
-                </template>
-            </div>
+    <div class="w-2/6 hero bg-base-200 border-2 border-accent">
+        <div class="hero-content lg:flex-row-reverse">
+            <partial name="_CardOptionsPanel"/>
         </div>
-    </section>
+    </div>
 
-</div>
+</section>
 </body>
 <script>
     function setup() {
       return {
         search_placeholder: "E.g.: 'What is Faith?'",
+        search_button_text: "Search for Papers",
         render_partial: '_PaperList',
         get current_partial() {
             return this.render_partial
@@ -144,7 +146,8 @@
         card_options: {
             case_insensitive: true,
             ignore_whitespace: false,
-            ignore_special_characters: false
+            ignore_special_characters: false,
+            dev_mode: false            
         },
         categories: [
             'Faith',

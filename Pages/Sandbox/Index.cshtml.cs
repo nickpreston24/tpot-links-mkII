@@ -72,7 +72,7 @@ public class IndexModel : HighSpeedPageModel
         // [FromBody] Paper selected_paper
     )
     {
-        var user = this.CurrentUser;
+        var user = CurrentUser;
         user.Dump("dis user");
         string query = "";
 

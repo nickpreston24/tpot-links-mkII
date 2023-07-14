@@ -2,32 +2,37 @@
 
 @{
     var papers = Model;
-    var cols = @papers.Count > 0 ? Math.Ceiling((@papers.Count / Math.Log10(@papers.Count)) * 1.0) : 2;
-}
-<style>
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      /* This is better for small screens, once min() is better supported */
-      /* grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); */
-      gap: 1rem;
-    }
-</style>
+    int rowz = (int)(@papers.Count > 0
+        ? Math.Ceiling(papers.Count / Math.Log10(@papers.Count) * 1.0)
+        : papers.Count);
 
+    int cols = (int)(@papers.Count > 0
+        ? Math.Ceiling(Math.Log10(@papers.Count) * 1.0)
+        : 1);
+
+    string GetCssClass()
+    {
+        return $"grid sm:grid-cols-{@cols} grid-rows-{@rowz} gap-x-10";
+    }
+
+}
 @if (papers.Any())
 {
-    <h2>@cols, @papers.Count</h2>
-                            
-                            
-                            
+    <div x-if="dev_mode">
+
+        <template>
+
+            <h2 >cols: @cols, rows: @rowz, total papers: @papers.Count</h2>
+
+        </template>
+    </div>
+
     @* <div class="grid grid-flow-col grid-rows-6 grid-cols-@cols"> *@
-    <div class="grid grid-cols-@cols gap-x-10">
+    <div class="@GetCssClass()">
 
         @foreach (var paper in papers)
         {
-            <ul>
-                <partial name="PaperCard" model="@paper"/>
-            </ul>
+            <partial name="PaperCard" model="@paper"/>
         }
     </div>
 }
