@@ -13,7 +13,7 @@
             }));
 
     var alert_render = (CustomAlert alert)
-        => $"""
+        => $@"""
             <div class='alert alert-{alert.AlertCssClass.Name}'>
                 <p class='text-3xl text-warning text-sh'>
                     {alert.Text}
@@ -22,7 +22,7 @@
                     {alert.Text}
                 <span>
             </div>
-        """;
+""";
 }
 <div>
     @(new HtmlString(alert_render(alert)))
