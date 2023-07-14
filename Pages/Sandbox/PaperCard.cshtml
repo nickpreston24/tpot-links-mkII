@@ -2,11 +2,12 @@
 
 @{
     var paper = Model;
+    string edit_mode = "false";
 }
 
 <div class="card w-84 bg-ghost border-2 border-accent">
     <div class="card-body text-secondary">
-        <h2 class="card-title text-primary">@paper.Title</h2>
+        <h2 x-show="!@edit_mode" class="card-title text-primary">@paper.Title</h2>
         <p class="max-w-full">@paper.Description</p>
         <div class="card-actions justify-end flex flex-col">
             <partial name="_CardActions"/>

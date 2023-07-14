@@ -2,12 +2,15 @@
 
 @{
     var paper = Model;
+    string edit_mode = "false";
 }
 
 <form
 
     class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
-    <div class="mb-3">
+    <div
+        x-show="@edit_mode"
+        class="mb-3">
         <label class="form-label" asp-for="Title"></label>
         <input type="text" class="form-control" asp-for="Title">
         <div class="invalid-feedback">
@@ -15,15 +18,19 @@
         </div>
     </div>
 
-    @* <div class="mb-3"> *@
-    @*     <label class="form-label" asp-for="Url"></label> *@
-    @*     <input type="text" class="form-control" asp-for="Url"> *@
-    @*     <div class="invalid-feedback"> *@
-    @*         <span asp-validation-for="Url"></span> *@
-    @*     </div> *@
-    @* </div> *@
+    <div
+        x-show="@edit_mode"
+        class="mb-3">
+        <label class="form-label" asp-for="Url"></label>
+        <input type="text" class="form-control" asp-for="Url">
+        <div class="invalid-feedback">
+            <span asp-validation-for="Url"></span>
+        </div>
+    </div>
 
-    <div class="mb-3">
+    <div 
+        x-show="@edit_mode"
+        class="mb-3">
         <label class="form-label" asp-for="Id"></label>
         <input type="number" class="form-control" asp-for="Id">
         <div class="invalid-feedback">
