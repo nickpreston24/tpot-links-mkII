@@ -7,6 +7,7 @@ using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using TPOT_Links.Models;
+using TypeExtensions = CodeMechanic.Extensions.TypeExtensions;
 
 namespace TPOT_Links.Pages.Sandbox;
 
@@ -14,17 +15,34 @@ namespace TPOT_Links.Pages.Sandbox;
 [BindProperties]
 public class IndexModel : HighSpeedPageModel
 {
-    private static string _query { get; set; } = string.Empty;
-    public string Query => _query;
-
-    public bool show_slugs { get; set; }
-    public bool show_excerpts { get; set; }
-    public bool show_urls { get; set; }
-    public bool case_insensitive { get; set; }
+    // private static string _query { get; set; } = string.Empty;
+    // public string Query => _query;
+    //
+    //
     public string category { get; set; } = string.Empty;
     public bool search_by_categories { get; set; }
-    public int Number { get; set; } = -1;
-    public string Title { get; set; } = string.Empty;
+
+    public int CategoryNumber { get; set; } = -1;
+
+    public bool IsSelected(string name) =>
+        name.Equals(CurrentPanel?.Trim(), StringComparison.OrdinalIgnoreCase);
+
+    public string CurrentPanel { get; set; } = string.Empty;
+    public CardOptions CardOptions { get; set; } = new CardOptions();
+
+    public Paper SelectedPaper { get; set; } = new Paper();
+    public User CurrentUser { get; set; } = new User();
+
+    // public List<Panel> Panels { get; set; } = new List<Panel>()
+    // {
+    //     new Panel
+    //     {
+    //         panel_name = "_PaperList",
+    //         message = "Yarrr",
+    //         title = "List of Papers"
+    //     }
+    // };
+
 
     public Stopwatch watch = new Stopwatch();
 
@@ -35,8 +53,44 @@ public class IndexModel : HighSpeedPageModel
     {
     }
 
+    // public async Task<IActionResult> OnGetBloopf(string email)
+    // {
+    //     email.Dump("index");
+    //     return Content("<p>boop!</p>");
+    // }
+
+
+    public async Task<IActionResult> OnPostBloopf()
+    {
+        // email.Dump("index");
+        return Content("<p>boop!</p>");
+    }
+
+
+    public async Task<IActionResult> OnPostLikePaper(
+        // [FromBody] Paper selected_paper
+    )
+    {
+        var user = this.CurrentUser;
+        user.Dump("dis user");
+        string query = "";
+
+        return Content("<p class='alert alert-success'>Liked!</p>");
+    }
+
+    public async Task<IActionResult> OnPostValidateUser([FromForm] User user, string pass = "")
+    {
+        // CurrentUser = TypeExtensions.With(u =>
+        // {
+        // });
+        
+        var pwd = Environment.GetEnvironmentVariable("TPOT_DEFAULT_PASSWORD");
+        return Partial("_ValidatedUser", CurrentUser);
+    }
+
+
     public async Task<IActionResult> OnGetSearchByRegex(
-        string term = "God"
+        string term = ""
         , bool show_excerpts = true
         , string show_slugs = ""
         , string show_urls = ""
@@ -46,7 +100,7 @@ public class IndexModel : HighSpeedPageModel
         string query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
 
-        var category = search_by_categories ? this.Number.ToString() : "";
+        var category = search_by_categories ? CategoryNumber.ToString() : "";
         var search_parameters = new PaperSearch
                 {
                     regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
@@ -62,27 +116,8 @@ public class IndexModel : HighSpeedPageModel
         var pages = await SearchNeo4J<Paper>(query, search_parameters);
         watch.Stop();
 
-        string html = new StringBuilder()
-            .AppendEach(
-                pages, paper =>
-                    $"""
-            <tr>
-                <th class='text-accent'>{paper.Title}</th>
-                <td class='text-secondary overflow-hidden truncate'>
-                    <a target='_' href='{paper.Url}'>
-                        <button class='btn btn-accent'>Read it</button>
-                    </a>
-                </td>
-                <td class='text-secondary'>{paper.Excerpt}</td>
-                <!--
-                <td class='text-secondary'>{paper.Status}</td>
-                <td class='text-secondary'>{paper.Author}</td>
-                <td class='text-accent'>{paper.Categories}</td>
-                -->
-            </tr>
-        """).ToString();
-
-        return Content(html);
+        return Partial("_PaperTable", pages);
+        // return Partial("_PaperList", pages);
     }
 
     public async Task<IActionResult> OnPostBulkCreatePapers(
@@ -127,25 +162,29 @@ public class IndexModel : HighSpeedPageModel
 
     public async Task<IActionResult> OnGetRecommendations()
     {
-        string query = "..."; // This can be ANY SQL query.  In my case, I'm using cypher, because it's lovely.
+        string query = "...";
 
-        // var failure = Alert("Fail!");
-
-        // Magically infers from the tract that the current method name is referring to 'Recommendations.cypher'
         query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
 
         if (string.IsNullOrEmpty(query))
-            return Alert("Failed to get recommendations cypher!"); // If for some reason, nothing comes back, alert the user with this div.
+            return
+                Alert("Failed to get recommendations cypher!"); // If for some reason, nothing comes back,~~ alert the user with this div.
+        var search_parameters = new PaperSearch
+                {
+                    // regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
+                    // term = term,
+                    category = category,
+                    // limit = limit
+                }
+                .Dump("paper search")
+            ;
 
-        var search_parameters = new
-        {
-        };
         // search_parameters.Dump("s");
         var pages = await SearchNeo4J<Paper>(query, search_parameters);
         pages.FirstOrDefault().Dump("recommendations");
 
-        return Partial("_RecommendedPapersList", pages);
+        return Partial("_PaperList", pages);
     }
 
 
@@ -164,6 +203,19 @@ public class IndexModel : HighSpeedPageModel
 
         return Content(text, "text/html");
     }
+
+    public string? IsSelectedClassName(string panel_name, string cssClass)
+    {
+        return IsSelected(panel_name) ? cssClass : null;
+    }
+}
+
+public class CardOptions
+{
+    public bool show_slugs { get; set; }
+    public bool show_excerpts { get; set; }
+    public bool show_urls { get; set; }
+    public bool case_insensitive { get; set; }
 }
 
 

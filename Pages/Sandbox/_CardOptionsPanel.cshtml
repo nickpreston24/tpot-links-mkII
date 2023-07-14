@@ -1,0 +1,12 @@
+<h1>Hello from card options!</h1>
+<template x-cloak x-for="[key, value] of Object.entries(card_options)">
+    <div class="mb-3">
+        <label class="form-label" :asp-for='key'></label>
+        <span x-text='key' class="label-text"></span>
+        <input x-bind:name='key' x-bind:value='value' :asp-for="key" type="checkbox"
+               class="form-control toggle toggle-primary" x-bind:checked="value" @@change='options[key]=!value'>
+        <div class="invalid-feedback">
+            <span :asp-validation-for='key'></span>
+        </div>
+    </div>
+</template>

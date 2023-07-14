@@ -1,0 +1,15 @@
+@model TPOT_Links.Models.Paper
+
+@{
+    var paper = Model;
+}
+
+<div class="card w-96 bg-primary text-primary-content">
+    <div class="card-body">
+        <h2 class="card-title">@paper.Title</h2>
+        <p>@paper.Description</p>
+        <div class="card-actions justify-end flex flex-col">
+            <partial name="_LikePaper"/>
+        </div>
+    </div>
+</div>

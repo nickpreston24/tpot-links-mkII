@@ -1,0 +1,11 @@
+@using Microsoft.AspNetCore.Html
+@model CustomAlert
+
+@{
+    var alert = Model;
+    var alert_render = (CustomAlert alert)
+        => $"""<p class='alert alert-{alert.AlertCssClass.Name}' x-init='loading=false'>{alert.Text}!<p>""";
+}
+<div>
+    @(new HtmlString(alert_render(alert)))
+</div>

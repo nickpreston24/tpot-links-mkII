@@ -1,0 +1,15 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model TPOT_Links.Models.Paper
+
+@{
+    var paper = Model;
+}
+
+<option>
+    <span>
+        <b>@paper.Title</b>
+        <button class="btn btn-circle">
+            <svg>?</svg>
+        </button>
+    </span>
+</option>

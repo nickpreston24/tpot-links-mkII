@@ -1,0 +1,22 @@
+@model IList<TPOT_Links.Models.Paper>
+
+@{
+    var papers = Model;
+}
+
+@if (papers.Any())
+{
+    @foreach (var paper in papers)
+    {
+        <ul>
+            <partial name="PaperCard" model="@paper"/>
+
+            @* <li class='text-primary'>@paper.Id</li> *@
+            @* <li class='text-accent'>@paper.Title</li> *@
+            @* <li class='text-secondary'>@paper.Status</li> *@
+            @* <li class='text-secondary'>@paper.Author</li> *@
+            @* <li class='text-accent'>@paper.Categories</li> *@
+            @* <li class='text-secondary'>@paper.Excerpt</li> *@
+        </ul>
+    }
+}

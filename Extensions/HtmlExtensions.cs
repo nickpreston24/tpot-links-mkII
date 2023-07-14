@@ -1,21 +1,11 @@
 using System.Text;
 using CodeMechanic.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Html;
 
 namespace TPOT_Links;
 
 public static class HtmlExtensions
 {
-
-
-    // public static IActionResult RenderHtml<T>(this string html) => Content(html.ToString(), "text/html");
-    // public static Func<T, IActionResult> CreateRender<T>(this string html)
-    // {
-    //     // return Microsoft.AspNetCore.Mvc.RazorPages.Content(html, null);
-    //     return null;
-    // }
-
     private const string fallback = "p";
 
     /// <summary>
@@ -48,4 +38,21 @@ public static class HtmlExtensions
 
         return html;
     }
+
+    /// <summary>
+    /// Quick wrapper for creating safe HTML strings on the backend.
+    /// </summary>
+    public static HtmlString AsHTMLString(this string raw_text)
+    {
+        var clone = new StringBuilder(raw_text); // lazy clone.
+        var result = new HtmlString(clone.ToString());
+        return result;
+    }
+
+    // public static IActionResult RenderHtml<T>(this string html) => Content(html.ToString(), "text/html");
+    // public static Func<T, IActionResult> CreateRender<T>(this string html)
+    // {
+    //     // return Microsoft.AspNetCore.Mvc.RazorPages.Content(html, null);
+    //     return null;
+    // }
 }

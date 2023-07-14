@@ -1,4 +1,5 @@
-
+# Creates a new release based on the value 
+# passed in, e.g. "1.2.0"
 function nurelease(){
 dotnet clean;
 rm -rf obj/ bin/;

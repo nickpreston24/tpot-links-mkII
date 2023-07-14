@@ -1,0 +1,14 @@
+@using Htmx.TagHelpers
+@model List<TPOT_Links.Models.Paper>
+@{
+    var papers = Model;
+}
+
+<div
+    hx-get
+    hx-trigger='load'
+    hx-page-handler="Recommendations"
+    hx-swap="outerHTML"
+    hx-indicator="recommended_papers_loader">
+    <span id="#recommended_papers_loader">Loading recommended papers...</span>
+</div>
