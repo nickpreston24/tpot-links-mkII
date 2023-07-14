@@ -15,6 +15,7 @@ and because I can'think of a better name
 */
 
 
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
 using CodeMechanic.Neo4j.Extensions;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -45,6 +46,7 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
     public async Task<IList<T>> SearchNeo4J<T>(
         string query
         , object parameters
+        // , string label = "_fields"
         , Func<IRecord, T> mapper = null
         , bool debug_mode = false
     )
@@ -53,7 +55,14 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
         // parameters.Dump("Hello from params");
 
         if (mapper == null)
-            mapper = record => record.MapTo<T>();
+            mapper = delegate(IRecord record)
+            {
+                if (debug_mode)
+                {
+                    record.Values.Dump("record values");
+                }
+                return record.MapTo<T>();
+            };
 
         var collection = new List<T>();
 
@@ -90,13 +99,13 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
         // , string batch_command = ":param {}"
         , object parameters = null
         , Func<IRecord, T> mapper = null
-    ) 
+    )
         where T : class, new()
     {
         if (parameters == null) throw new ArgumentNullException(nameof(parameters));
-        
+
         await using var session = driver.AsyncSession();
-        
+
         try
         {
             var results = await session.ExecuteWriteAsync(async tx =>
@@ -108,14 +117,15 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
 
             return results;
         }
-        
+
         // Capture any errors along with the query and data for traceability
         catch (Neo4jException ex)
         {
             Console.WriteLine($"{query} - {ex}");
             throw;
         }
-        finally {
+        finally
+        {
             session.CloseAsync();
         }
     }

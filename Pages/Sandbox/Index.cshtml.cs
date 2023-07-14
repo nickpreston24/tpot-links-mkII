@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using NSpecifications;
 using TPOT_Links.Models;
-using TypeExtensions = CodeMechanic.Extensions.TypeExtensions;
 
 namespace TPOT_Links.Pages.Sandbox;
 
@@ -34,7 +33,7 @@ public class IndexModel : HighSpeedPageModel
     public Paper SelectedPaper { get; set; } = new Paper();
     private static List<Paper> _current_recommendations = new List<Paper>();
     public List<Paper> RecommendedPapers => _current_recommendations;
-    
+
     public User CurrentUser { get; set; } = new User();
 
     // public List<Panel> Panels { get; set; } = new List<Panel>()
@@ -182,9 +181,8 @@ public class IndexModel : HighSpeedPageModel
     public async Task<IActionResult> OnPostRecommendations()
     {
         Console.WriteLine("Recommendations...".Dump());
-        string query = "...";
 
-        query = await embeddedResourceQuery
+        string query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
 
         var is_query_empty = new Spec<string>(myquery => string.IsNullOrWhiteSpace(myquery));
@@ -206,9 +204,37 @@ public class IndexModel : HighSpeedPageModel
             ;
 
         // search_parameters.Dump("s");
-        // var recommended_papers = await SearchNeo4J<Paper>(query, search_parameters);
+        var recommended_papers = await SearchNeo4J<Paper>(query, search_parameters);
+        recommended_papers.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.Title)).Dump("recommendations");
+
         var users_who_liked_papers = await SearchNeo4J<User>(query, search_parameters);
-        // recommended_papers.FirstOrDefault().Dump("recommendations");
+        users_who_liked_papers.FirstOrDefault(user => !string.IsNullOrWhiteSpace(user.last_name))
+            .Dump("first user found")
+            ;
+
+        /*SELECT users.username, group_concat(movies.name), count(movies.name)
+FROM user_fave_movies t1
+INNER JOIN user_fave_movies t2 ON (t2.movie_id = t1.movie_id) 
+INNER JOIN users ON users.user_id = t2.user_id
+INNER JOIN movies ON movies.id = t1.movie_id 
+WHERE t1.user_id = 1 
+AND t2.user_id <> 1
+*/
+
+        var common_likes = Enumerable
+            .MaxBy(recommended_papers
+                    .Where(p => !string.IsNullOrWhiteSpace(p.Title))
+                , p => p.Title);
+
+        //     from papers1 in recommended_papers
+        //     join papers2 in recommended_papers on papers1.Title equals papers2.Title
+        //     join user1 in users 
+        // join users in users_who_liked_papers
+
+        // on papers.Title = 
+
+        // var recommended_by_users = await SearchNeo4J<UserRecommendedPapers>(query, search_parameters);
+        // recommended_by_users.FirstOrDefault().Dump("recommended reading");
 
         // if (recommended_papers.Where(has_no_recommendations))
         //     return Partial("_Alert", new CustomAlert()
@@ -220,8 +246,40 @@ public class IndexModel : HighSpeedPageModel
         // return Partial("_PaperList", recommended_papers);
         return Partial("_Modal", new CustomModal()
         {
-            // Message = $"{recommended_papers.Count} papers with likes."
             Message = $"{users_who_liked_papers.Count} total Likes."
+                .Prepend($"{recommended_papers.Count} total recommendations."),
+
+            Render = users_who_liked_papers
+                .DistinctBy(x => x.last_name)
+                .ToList()
+                .Aggregate(new StringBuilder(), (sb, next_user) =>
+                {
+                    // <button class='btn btn-accent'>View</button>
+                    sb.AppendLine($"""
+                        <span class="card-title text-2xl"><b>Name: </b>{next_user.FullName.Tag()}</span>
+                        <span class=""><b>Age: </b>{next_user.Age.ToString().Tag()}</span>
+                        <span class=""><b>Email: </b>{next_user.Email.Tag()}</span>
+                """.Tag("div", className: "card-body")
+                    );
+                    return sb;
+                })
+                .ToString()
+                // .AppendEach<User>(new List<User>(), () => "")
+                // .FirstOrDefault()
+                // .ToMaybe()
+                // .IfSome(user => { return $"{user.last_name}, {user.first_name}".Tag("li"); })
+                .Tag("ul", className: "card w-96 bg-base-100 shadow-xl")
+                .Tag("div", className: "")
+                .Tag("div", className: "flex flex-row items-center")
+                .Prepend(
+                    new StringBuilder("Users liked the Paper entitled: '")
+                        .AppendEach(common_likes.AsList(),
+                            (shared_paper) => shared_paper.Title.Tag("h1", className: "text-lg text-secondary"))
+                        .Append("' ")
+                        .ToString()
+                        .Tag("div", className: "text-xl flex-row text-success max-w-128")
+                )
+                .AsHTMLString()
         });
     }
 

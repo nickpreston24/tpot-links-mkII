@@ -10,14 +10,14 @@ public static class StringExtensions
     private const string non_alphas_or_digits = @"\W";
 
     public static string FlattenText(this IEnumerable<string> lines) =>
-            lines?.Aggregate(
+        lines?.Aggregate(
                 new StringBuilder()
-                    , (builder, next) => builder
+                , (builder, next) => builder
                     .Append(next.Trim()
-                    /*.Replace("(\n\r){2,}", "")*/
+                        /*.Replace("(\n\r){2,}", "")*/
                     ))
-                .ToString();
-                
+            .ToString();
+
     // public static bool IsNumeric(this string input) => Regex.IsMatch(input, @"\d+");
 
     public static bool IsDate(this string input)
@@ -87,8 +87,8 @@ public static class StringExtensions
             return 0;
 
         return input.IndexOf(part);
-    }      
-    
+    }
+
 
     /* COMPARISONS */
 
@@ -116,9 +116,13 @@ public static class StringExtensions
         }
 
         // Initialize arrays.
-        for (int i = 0; i <= n; dist[i, 0] = i++) { }
+        for (int i = 0; i <= n; dist[i, 0] = i++)
+        {
+        }
 
-        for (int j = 0; j <= m; dist[0, j] = j++) { }
+        for (int j = 0; j <= m; dist[0, j] = j++)
+        {
+        }
 
         // Begin looping.
         for (int i = 1; i <= n; i++)
@@ -133,6 +137,7 @@ public static class StringExtensions
                 );
             }
         }
+
         // Return cost.
         return dist[n, m];
     }
@@ -170,6 +175,7 @@ public static class StringExtensions
             text = text.ToUpperInvariant();
             match = match.ToUpperInvariant();
         }
+
         //Keeps track of our position in the primary string - s.
         int j = 0;
         //Used to keep track of multi-character wildcards.
@@ -201,6 +207,7 @@ public static class StringExtensions
                     matchanymulti = true;
                     continue;
                 }
+
                 //If this is a single character wildcard advance one character.
                 if (match[i] == '_')
                 {
@@ -210,6 +217,7 @@ public static class StringExtensions
                     j++;
                     continue;
                 }
+
                 if (match[i] == '[')
                 {
                     var endbracketidx = match.IndexOf(']', i);
@@ -238,19 +246,23 @@ public static class StringExtensions
                             first = last;
                             last = multicharmask[0];
                         }
+
                         var c = first;
                         while (c <= last)
                         {
                             newmask += c;
                             c++;
                         }
+
                         multicharmask = newmask;
                     }
+
                     //If the mask is invalid we cannot find a mask for it.
                     if (endbracketidx == -1)
                         return false;
                 }
             }
+
             //Keep track of match finding for this character of the mask.
             var matched = false;
             while (j < text.Length)
@@ -262,6 +274,7 @@ public static class StringExtensions
                     matched = true;
                     break;
                 }
+
                 //If we need to check for multiple charaters to do.
                 if (multicharmask != null)
                 {
@@ -277,22 +290,27 @@ public static class StringExtensions
                             j++;
                             continue;
                         }
+
                         return false;
                     }
+
                     j++;
                     matched = true;
                     //Consumse our mask.
                     multicharmask = null;
                     break;
                 }
+
                 //We are in an multiple any-character mask, proceed to the next character.
                 if (matchanymulti)
                 {
                     j++;
                     continue;
                 }
+
                 break;
             }
+
             //We've found a match - proceed.
             if (matched)
             {
@@ -303,6 +321,7 @@ public static class StringExtensions
             //If no match our mask fails
             return false;
         }
+
         //Some characters are left - our mask check fails.
         if (j < text.Length)
             return false;
@@ -332,6 +351,7 @@ public static class StringExtensions
 
         return char.ToUpperInvariant(value[0]) + (value.Length > 1 ? value.Substring(1) : "");
     }
+
     public static string ToCamelCase(this string value)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -376,4 +396,3 @@ public static class StringExtensions
     //     //return new StringBuilder(text).Prepend(line).ToString();
     // }
 }
-
