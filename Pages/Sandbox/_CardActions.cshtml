@@ -34,21 +34,25 @@
         </div>
     </div>
 
-    <div class="control">
+    
 
-    <a target="_" href="@paper.Url">
-        <button class="btn btn-secondary">Read</button>
-    </a>
+    <div class="control join join-vertical lg:join-horizontal">
+
+        <button class="btn  btn-sm btn-secondary join-item rounded-l-full">
+            <a target="_blank" href="@paper.Url">
+                Read
+            </a>
+        </button>
+
         <button
             x-on:click="confirm('Sorry, this feature is not ready!')"
-            id="submitButton" type="submit" class="btn btn-accent">
-            <span class="htmx-indicator">
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                <span class="visually-hidden">Loading...</span>
-            </span>
+            id="submitButton" type="submit"
+            class="btn btn-sm btn-accent join-item rounded-r-full">
+            
             Like
 
             <svg
+                x-show="true"
                 width="8mm"
                 height="8mm"
                 viewBox="0 0 210 297">
@@ -70,8 +74,13 @@
                 </g>
             </svg>
         </button>
+        
+        @* <button class="btn btn-sm join-item rounded-r-full">Subscribe</button> *@
+        
+    
+    
 
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
     </div>
 
 </form>

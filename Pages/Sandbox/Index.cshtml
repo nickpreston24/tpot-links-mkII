@@ -37,16 +37,21 @@
             <tr>
 
                 <th scope="row" class="col-span-4 border-2">
-                   
-                    <div class="join flex-row flex">
-                        <div>
-                            <div hx-ext="include-vals">
-                                @* <pre x-text="current_partial"></pre> *@
 
+                    @* <pre x-text="current_partial"></pre> *@
+                    <div class="join flex-row flex">
+                        <div x-data="{
+        message2 : '_PaperList'
+}">
+                            <div hx-ext="include-vals">
+
+                                       @* hx-vars='js:{partial_name: $card_options.message}' *@
+                                       @* hx-include="partial_name: '_PaperList'" *@
                                 <input class="input input-bordered join-item"
+                                       type="text" name="term" id="query" autocomplete="off"
                                        hx-get
-                                       include-vals="partial_name: '_PaperList'"
                                        hx-page="Index"
+                                       include-vals="partial_name: '_PaperList'"
                                        hx-page-handler="SearchByRegex"
                                        hx-target="#search_results"
                                        hx-swap="innerHTML"
@@ -137,6 +142,7 @@
 <script>
     function setup() {
       return {
+        message: '_PaperList',
         search_placeholder: "E.g.: 'What is Faith?'",
         search_button_text: "Search for Papers",
         card_options: {
