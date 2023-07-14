@@ -68,7 +68,7 @@
                 search_by_categories: false
             },
             get grid_class() {
-                let cols = this.options ? this.routes.length || 5;
+                let cols = this.options ? this.routes.length : 5;
                 return `grid grid-cols-${cols}`;
             }
         }

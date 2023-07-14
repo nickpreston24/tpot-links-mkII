@@ -6,6 +6,7 @@ using CodeMechanic.RazorPages;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
+using NSpecifications;
 using TPOT_Links.Models;
 using TypeExtensions = CodeMechanic.Extensions.TypeExtensions;
 
@@ -66,8 +67,7 @@ public class IndexModel : HighSpeedPageModel
         return Content("<p>boop!</p>");
     }
 
-    
-    
+
     public async Task<IActionResult> OnGetLikePaper(
         // [FromBody] Paper selected_paper
     )
@@ -76,9 +76,9 @@ public class IndexModel : HighSpeedPageModel
         user.Dump("dis user");
         string query = "";
 
-        return Content("<p class='alert alert-success'>Liked!</p>");
+        return Content("<p x-on:init='show_modal=true' class='alert alert-success'>Liked!</p>");
     }
-    
+
     //
     // public async Task<IActionResult> OnPostLikePaper(
     //     // [FromBody] Paper selected_paper
@@ -175,28 +175,49 @@ public class IndexModel : HighSpeedPageModel
         return Content(alert("hey", "success"));
     }
 
-    public async Task<IActionResult> OnGetRecommendations()
+    // public async Task<IActionResult> OnGetRecommendations()
+    public async Task<IActionResult> OnPostRecommendations()
     {
+        Console.WriteLine("Recommendations...".Dump());
         string query = "...";
 
         query = await embeddedResourceQuery
             .GetQueryAsync<IndexModel>(new StackTrace());
 
-        if (string.IsNullOrEmpty(query))
-            return
-                Partial("_Alert");
+        var is_query_empty = new Spec<string>(myquery => string.IsNullOrWhiteSpace(myquery));
+        var has_no_recommendations = new Spec<Paper>(paper => string.IsNullOrWhiteSpace(paper.Url));
+
+        query.Dump("query");
+        if (is_query_empty.IsSatisfiedBy(query))
+            return Partial("_Alert", new CustomAlert()
+            {
+                AlertCssClass = AlertType.Warning,
+                Message = "No query found.  Contact your admin."
+            });
+
         var search_parameters = new PaperSearch
                 {
-                    category = category,
+                    // category = category,
                 }
                 .Dump()
             ;
 
         // search_parameters.Dump("s");
-        var pages = await SearchNeo4J<Paper>(query, search_parameters);
-        pages.FirstOrDefault().Dump("recommendations");
+        var recommended_papers = await SearchNeo4J<Paper>(query, search_parameters);
+        recommended_papers.FirstOrDefault().Dump("recommendations");
 
-        return Partial("_PaperList", pages);
+        // if (recommended_papers.Where(has_no_recommendations))
+        //     return Partial("_Alert", new CustomAlert()
+        //     {
+        //         AlertCssClass = AlertType.Error,
+        //         Message = "No query found.  Contact your admin."
+        //     });
+
+        // return Partial("_PaperList", recommended_papers);
+        return Partial("_Modal", new CustomModal()
+        {
+            Message = $"{recommended_papers.Count} papers with likes."
+        });
     }
 
 

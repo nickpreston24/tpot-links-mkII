@@ -8,21 +8,24 @@
         .IfNone(new CustomAlert()
             .With(my_alert =>
             {
-                my_alert.Text = "An Error Occurred...  But fret not! Our team of intelligent lab mice are on the job!";
-                my_alert.AlertCssClass = AlertType.Failure;
+                my_alert.Message = "An Error Occurred...  But fret not! Our team of intelligent lab mice are on the job!";
+                my_alert.AlertCssClass = AlertType.Success;
             }));
+
+    string GetCssClass()
+    {
+        return $"alert alert-{alert.AlertCssClass.Name} border-alert border-2";
+    }
 
     var alert_render = (CustomAlert alert)
         => $@"""
-            <div class='alert alert-{alert.AlertCssClass.Name}'>
-                <p class='text-3xl text-warning text-sh'>
-                    {alert.Text}
-                </p>
-                <span>
-                    {alert.Text}
-                <span>
-            </div>
-""";
+                <div class='{@GetCssClass()}'>
+                    <span>
+                        {@alert.Message}
+                    <span>
+                </div>
+            """
+            .Replace("\"", "");
 }
 <div>
     @(new HtmlString(alert_render(alert)))

@@ -4,9 +4,6 @@
     var paper = Model;
 }
 
-@* hx-get hx-page="Sandbox/Index" *@
-@* hx-page-handler="LikePaper" *@
-@* hx-swap="outerHTML" *@
 <form
 
     class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
@@ -18,13 +15,13 @@
         </div>
     </div>
 
-    <div class="mb-3">
-        <label class="form-label" asp-for="Url"></label>
-        <input type="text" class="form-control" asp-for="Url">
-        <div class="invalid-feedback">
-            <span asp-validation-for="Url"></span>
-        </div>
-    </div>
+    @* <div class="mb-3"> *@
+    @*     <label class="form-label" asp-for="Url"></label> *@
+    @*     <input type="text" class="form-control" asp-for="Url"> *@
+    @*     <div class="invalid-feedback"> *@
+    @*         <span asp-validation-for="Url"></span> *@
+    @*     </div> *@
+    @* </div> *@
 
     <div class="mb-3">
         <label class="form-label" asp-for="Id"></label>
@@ -34,7 +31,6 @@
         </div>
     </div>
 
-    
 
     <div class="control join join-vertical lg:join-horizontal">
 
@@ -43,12 +39,15 @@
                 Read
             </a>
         </button>
-
+        @* x-on:click="confirm('Sorry, this feature is not ready!')" *@
         <button
-            x-on:click="confirm('Sorry, this feature is not ready!')"
-            id="submitButton" type="submit"
-            class="btn btn-sm btn-accent join-item rounded-r-full">
-            
+            type="button"
+            hx-get 
+            hx-page="/Sandbox/Index"
+            hx-page-handler="LikePaper"
+            hx-swap="outerHTML"
+            class="btn btn-md btn-accent join-item">
+
             Like
 
             <svg
@@ -74,13 +73,26 @@
                 </g>
             </svg>
         </button>
-        
-        @* <button class="btn btn-sm join-item rounded-r-full">Subscribe</button> *@
-        
-    
-    
 
-    @Html.AntiForgeryToken()
+
+        <div class="avatar indicator"
+             x-data="{
+                syncing: false
+            }">
+            <span x-show="syncing" class="indicator-item badge badge-secondary">syncing…</span>
+            <div class="w-20 h-20 rounded-lg">
+                <button
+                    type="button"
+                    x-on:click="syncing = true"
+                    class="btn btn-sm join-item rounded-r-full">
+                    🔄 Sync
+                </button>
+                @* <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" /> *@
+            </div>
+        </div>
+
+
+        @Html.AntiForgeryToken()
     </div>
 
 </form>

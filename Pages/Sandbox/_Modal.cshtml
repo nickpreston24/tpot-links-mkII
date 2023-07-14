@@ -1,0 +1,44 @@
+@model CustomModal
+
+@{
+    var modal = Model ?? new CustomModal()
+    {
+        Title = "Test"
+    };
+
+    string GetCssClass()
+    {
+        return $"{modal.BadgeCSS}";
+    }
+}
+
+<div x-data="{
+    show_modal:false
+    , get for_class(){
+        return this.show_modal ? 'my_modal' : '';    
+    }
+}">
+
+    <pre x-text="for_class"></pre>
+
+    <!-- The button to open modal -->
+    <label
+        :for="for_class"
+        x-on:click="show_modal=true"
+        class="btn">
+        open modal
+    </label>
+
+    <!-- Put this part before </body> tag -->
+    <input type="checkbox" id="my_modal" class="modal-toggle"/>
+    <div class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">@modal.Title</h3>
+            <p class="py-4">@modal.Message</p>
+            <div class="modal-action">
+                <label x-on:click="show_modal=false" for="my_modal" class="btn">Close!</label>
+            </div>
+        </div>
+    </div>
+
+</div>
