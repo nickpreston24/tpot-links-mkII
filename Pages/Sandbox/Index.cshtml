@@ -36,7 +36,20 @@
     <div class="h-screen w-4/6">
 
         @* <pre x-text="routes"></pre> *@
-        <table x-show="true" class="table table-zebra border-0 border-red-700 ">
+
+
+        <label class="swap">
+            <input type="checkbox"/>
+            <div class="swap-on">ON</div>
+            <div class="swap-off">OFF</div>
+
+
+        </label>
+        <pre x-text="view_mode"></pre>
+
+        <table
+            x-show="true"
+            class="table table-zebra border-0 border-red-700 ">
             <thead>
             <tr>
 
@@ -56,7 +69,7 @@
                                        type="text" name="term" id="query" autocomplete="off"
                                        hx-get
                                        hx-page="Index"
-                                       include-vals="partial_name: '_PaperList'"
+                                       :include-vals="vals_to_include()"
                                        hx-page-handler="SearchByRegex"
                                        hx-target="#search_results"
                                        hx-swap="innerHTML"
@@ -90,8 +103,7 @@
                                 </h1>
                             </button>
                         </div>
-                        @* <partial name="_CardOptionsPanel"/> *@
-                        @* <div class=""></div> *@
+
                     </div>
                     @*
                     <input type="text" name="term" id="query" autocomplete="off"
@@ -108,16 +120,10 @@
                            aria-describedby="search-addon"/>
                     <div class="htmx-indicator" id='loading'>loading...</div>
                     *@
-                    @* <div class="border-2 border-cyan-500"> *@
-                    @*     <partial name="_CardOptionsPanel"/> *@
-                    @* </div> *@
                     <div class="htmx-indicator" id='loading'>loading...</div>
                 </th>
 
-                @* <th x-show="false" *@
-                @*     class=""> *@
-                @*     <partial name="_CardOptionsPanel"/> *@
-                @* </th> *@
+
             </tr>
             @* <tr> *@
             @*     $1$ <th>Id</th> #1# *@
@@ -140,6 +146,12 @@
         <div class="hero-content flex flex-col lg:flex-col">
             <partial name="_UserAvatar" model="new User()"/>
             <partial name="_CardOptionsPanel"/>
+            <select name="view_modes_select" id="view_modes_select">
+                <option value="Pick One">Pick One</option>
+                <template x-cloak x-for="mode in Object.entries(VIEWS)">
+                    <option x-text="mode[0]" :value="mode[1]"></option>
+                </template>
+            </select>
             @* <partial x-show="false" name="_AccordionPanel"/> *@
             @await Html.PartialAsync("_RecommendationsPanel"
                        , Enumerable.Empty<Paper>().ToList())
@@ -166,9 +178,16 @@
 
 </body>
 <script>
+    
+    const VIEWS = {
+      LIST_MODE: "_PaperList",
+      GRID_MODE: "_PaperTable"
+    }
+
     function setup() {
       return {
-        message: '_PaperList',
+        view_mode: VIEWS.LIST_MODE,
+        // message: '_PaperList',
         show_modal: true,
         search_placeholder: "E.g.: 'What is Faith?'",
         search_button_text: "Search for Papers",
@@ -186,6 +205,11 @@
             'Religion',
             'Tithes & Offerings',
         ],
+        
+        vals_to_include() {
+           return `partial_name: '${this.view_mode}'`          
+        },
+        
         apply_tippies(){    
             console.log('dippy tippy')
             tippy('[data-tippy-content]'); 

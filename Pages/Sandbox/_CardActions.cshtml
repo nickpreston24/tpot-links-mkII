@@ -6,7 +6,6 @@
 }
 
 <form
-
     class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
     <div
         x-show="@edit_mode"
@@ -28,7 +27,7 @@
         </div>
     </div>
 
-    <div 
+    <div
         x-show="@edit_mode"
         class="mb-3">
         <label class="form-label" asp-for="Id"></label>
@@ -49,7 +48,7 @@
         @* x-on:click="confirm('Sorry, this feature is not ready!')" *@
         <button
             type="button"
-            hx-get 
+            hx-get
             hx-page="/Sandbox/Index"
             hx-page-handler="LikePaper"
             hx-swap="outerHTML"

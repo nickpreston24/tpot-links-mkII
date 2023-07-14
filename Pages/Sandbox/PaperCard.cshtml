@@ -9,6 +9,7 @@
     <div class="card-body text-secondary">
         <h2 x-show="!@edit_mode" class="card-title text-primary">@paper.Title</h2>
         <p class="max-w-full">@paper.Description</p>
+        <p class="max-w-64 overflow-ellipsis overflow-auto "><b>Excerpt:</b> <br> @paper.Excerpt</p>
         <div class="card-actions justify-end flex flex-col">
             <partial name="_CardActions"/>
         </div>
