@@ -1,0 +1,21 @@
+@model TPOT_Links.Models.User
+
+@{
+    var user = Model;
+    string avatar_pic = string.IsNullOrWhiteSpace(@user.AvatarPic)
+        ? "~/img/my_fb_avatar.jpg"
+        : @user.AvatarPic;
+
+    string GetImgCSS()
+    {
+        return $"{@avatar_pic}";
+    }
+}
+
+<div class="avatar">
+    <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+        <img src="~/img/my_fb_avatar.jpg" alt="avatar_img">
+    </div>
+</div>
+
+@* <pre>@avatar_pic</pre> *@

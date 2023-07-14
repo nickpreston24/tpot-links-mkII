@@ -46,6 +46,7 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
         string query
         , object parameters
         , Func<IRecord, T> mapper = null
+        , bool debug_mode = false
     )
         where T : class, new()
     {

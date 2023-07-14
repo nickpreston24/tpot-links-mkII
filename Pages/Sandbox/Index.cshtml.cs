@@ -203,8 +203,9 @@ public class IndexModel : HighSpeedPageModel
             ;
 
         // search_parameters.Dump("s");
-        var recommended_papers = await SearchNeo4J<Paper>(query, search_parameters);
-        recommended_papers.FirstOrDefault().Dump("recommendations");
+        // var recommended_papers = await SearchNeo4J<Paper>(query, search_parameters);
+        var users_who_liked_papers = await SearchNeo4J<Paper>(query, search_parameters);
+        // recommended_papers.FirstOrDefault().Dump("recommendations");
 
         // if (recommended_papers.Where(has_no_recommendations))
         //     return Partial("_Alert", new CustomAlert()
@@ -216,10 +217,10 @@ public class IndexModel : HighSpeedPageModel
         // return Partial("_PaperList", recommended_papers);
         return Partial("_Modal", new CustomModal()
         {
-            Message = $"{recommended_papers.Count} papers with likes."
+            // Message = $"{recommended_papers.Count} papers with likes."
+            Message = $"{users_who_liked_papers.Count} total Likes."
         });
     }
-
 
     public string? IsSelectedClassName(string panel_name, string cssClass)
     {

@@ -1,6 +1,6 @@
 namespace TPOT_Links.Models;
 
-public partial class User
+public class User
 {
     public string Id { get; set; } = string.Empty;
 
@@ -9,4 +9,8 @@ public partial class User
     public string Name { get; set; } = string.Empty;
 
     public int Age { get; set; } = -1;
+
+    public string AvatarPic { get; set; } = string.Empty;
+    
+    public bool IsOnline { get; set; } = true;
 }
