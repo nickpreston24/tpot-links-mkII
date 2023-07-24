@@ -38,11 +38,22 @@ public class Neo4JRepo : IDisposable, INeo4JRepo
         // , IConnectionSettings settings
     )
     {
-        // this.driver = GraphDatabase.Driver(settings.Uri, settings.AuthToken);
-        this.driver = driver;
+        string uri = Environment.GetEnvironmentVariable("NEO4J_URI") ?? string.Empty;
+        string user = Environment.GetEnvironmentVariable("NEO4J_USER") ?? string.Empty;
+        string password = Environment.GetEnvironmentVariable("NEO4J_PASSWORD") ?? string.Empty;
+        //Doing this because I keep disposing driver
+        this.driver = GraphDatabase.Driver(
+            uri
+            , AuthTokens.Basic(
+                user,
+                password
+            )
+        );
+        // this.driver = driver;
+        // driver = GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));
     }
 
-    
+
     public async Task<IList<T>> SearchNeo4J<T>(
         string query
         , object parameters
@@ -61,6 +72,7 @@ public class Neo4JRepo : IDisposable, INeo4JRepo
                 {
                     record.Values.Dump("record values");
                 }
+
                 return record.MapTo<T>();
             };
 
@@ -129,8 +141,8 @@ public class Neo4JRepo : IDisposable, INeo4JRepo
             session.CloseAsync();
         }
     }
-    
-    
+
+
     public async Task CreateIndices()
     {
         string[] queries =

@@ -1,0 +1,16 @@
+POST https://localhost:5002/tpotpaper/searchbyregex
+content-type: application/json
+
+{
+    "term": "Faith",
+    "limit": 10
+}
+
+###
+POST https://tpot-links-mkii-production.up.railway.app/tpotpaper/searchbyregex
+content-type: application/json
+
+{
+"term": "Faith",
+"limit": 10
+}

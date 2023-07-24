@@ -17,10 +17,13 @@ using Newtonsoft.Json;
 using NSpecifications;
 using PuppeteerSharp;
 using TPOT_Links.Models;
+using TPOT_Links.Pages.Sandbox;
 
 namespace tpot_links_seeder.Controllers;
+//
+// [ApiController]
 
-[ApiController]
+[Produces("application/json")]
 [Route("[controller]")]
 public partial class TPOTPaperController : ControllerBase
 {
@@ -40,7 +43,7 @@ public partial class TPOTPaperController : ControllerBase
         , IEmbeddedResourceQuery embeddedResources
     )
     {
-        this.neo4JRepo = neo4j_repo;
+        neo4JRepo = neo4j_repo;
         this.embeddedResources = embeddedResources;
         logger = logs;
         env = environment_vars;
@@ -61,11 +64,46 @@ public partial class TPOTPaperController : ControllerBase
     //     public string Title { get; set; } = "What is Faith?";
     // }
 
+    // GET: api/Car
+    [HttpGet]
+    public IEnumerable<Paper> Get()
+    {
+        return new Paper()
+        {
+            Title = "Test", Description = "Your api is working."
+        }.AsList();
+    }
 
+    [HttpPost(nameof(SearchByRegex))]
     public async Task<IEnumerable<Paper>> SearchByRegex([FromBody] PaperSearch search_parameters)
     {
+        string expected_name = "SearchByRegex.cypher";
         string query = await embeddedResources
-            .GetQueryAsync<ITPOTPaperRepository>(new StackTrace());
+            .GetQueryAsync<IndexModel>(new StackTrace());
+        // var query = await embeddedResources
+        //     .Read("TPOT Links mkII", "SearchByRegex.cypher")
+        //     // .Read<TPOT_Links.Pages.Sandbox.IndexModel>("SearchByRegex.cypher")
+        //     .ReadAllLinesFromStreamAsync();
+
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            string cwd = Directory.GetCurrentDirectory();
+            cwd.Dump("current dir");
+
+            var fs = new Grepper()
+            {
+                RootPath = cwd,
+                FileSearchMask = "*.cypher"
+            };
+
+            string found_file = fs.GetFileNames()
+                .Dump("all found")
+                .FirstOrDefault(filename => filename.Contains(expected_name, StringComparison.OrdinalIgnoreCase));
+            found_file.Dump("file found ");
+            query = System.IO.File.ReadAllText(found_file);
+        }
+
+        // query.Dump("query found: ");
 
         var papers = await neo4JRepo.SearchNeo4J<Paper>(query, search_parameters);
         return papers;
@@ -188,12 +226,14 @@ public partial class TPOTPaperController : ControllerBase
 
         var neo_papers = wordpressPapers
             .Select(wp_paper => wp_paper
-                .Map(wp => new Paper
+                .Map(wordpress => new Paper
                 {
-                    Content = wp?.content?.rendered, Title = wp?.title?.rendered, Excerpt = wp?.excerpt?.rendered,
-                    Categories = string.Join(",", wp.categories), Slug = wp?.slug, Type = wp?.type, Url = wp?.link,
-                    AuthorId = wp.author, Id = wp.id.ToString(), last_modified_at_wp = wp.modified,
-                    created_at_wp = wp.date, created = DateTime.Now.ToString()
+                    Content = wordpress?.content?.rendered, Title = wordpress?.title?.rendered,
+                    Excerpt = wordpress?.excerpt?.rendered,
+                    Categories = string.Join(",", wordpress.categories), Slug = wordpress?.slug, Type = wordpress?.type,
+                    Url = wordpress?.link,
+                    AuthorId = wordpress.author, Id = wordpress.id.ToString(), last_modified_at_wp = wordpress.modified,
+                    created_at_wp = wordpress.date, created = DateTime.Now.ToString()
                 }));
 
         neo_papers.Count().Dump("all neo papers");

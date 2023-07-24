@@ -1,5 +1,6 @@
 using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
+using CodeMechanic.Neo4j.Repos;
 using TPOT_Links.Controllers;
 using TPOT_Links.Pages.Admin.Emails;
 
@@ -10,12 +11,14 @@ DotEnv.Load();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
-builder.Services.AddTransient<IEmailSender, EmailSender>();
-builder.Services.AddScoped<ICarService, CarService>();
 
 builder.Services.ConfigureAirtable();
 builder.Services.ConfigureNeo4j();
+
+builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddTransient<INeo4JRepo, Neo4JRepo>();
 
 builder.Services.AddControllers();
 
