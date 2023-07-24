@@ -1,10 +1,35 @@
 using System.Text;
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Neo4j.Extensions;
 using Neo4j.Driver;
 using TPOT_Links.Models;
 using Category = TPOT_Links.Models.Category;
 
-public class Neo4JRepo : IDisposable
+namespace CodeMechanic.Neo4j.Repos;
+
+public interface INeo4JRepo
+{
+    Task<IList<T>> SearchNeo4J<T>(
+        string query
+        , object parameters
+        // , string label = "_fields"
+        , Func<IRecord, T> mapper = null
+        , bool debug_mode = false
+    )
+        where T : class, new();
+
+    Task<IList<T>> BulkCreateNodes<T>(
+        string query = ""
+        // , string batch_command = ":param {}"
+        , object parameters = null
+        , Func<IRecord, T> mapper = null
+    )
+        where T : class, new();
+
+    Task CreateIndices();
+}
+
+public class Neo4JRepo : IDisposable, INeo4JRepo
 {
     private readonly IDriver driver;
 
@@ -17,6 +42,95 @@ public class Neo4JRepo : IDisposable
         this.driver = driver;
     }
 
+    
+    public async Task<IList<T>> SearchNeo4J<T>(
+        string query
+        , object parameters
+        // , string label = "_fields"
+        , Func<IRecord, T> mapper = null
+        , bool debug_mode = false
+    )
+        where T : class, new()
+    {
+        // parameters.Dump("Hello from params");
+
+        if (mapper == null)
+            mapper = delegate(IRecord record)
+            {
+                if (debug_mode)
+                {
+                    record.Values.Dump("record values");
+                }
+                return record.MapTo<T>();
+            };
+
+        var collection = new List<T>();
+
+        if (parameters == null || string.IsNullOrWhiteSpace(query))
+            return collection;
+
+        await using var session = driver.AsyncSession();
+
+        try
+        {
+            var results = await session.ExecuteReadAsync(async tx =>
+            {
+                var result = await tx.RunAsync(query, parameters);
+                return await result.ToListAsync<T>(mapper);
+            });
+
+            return results;
+        }
+
+        // Capture any errors along with the query and data for traceability
+        catch (Neo4jException ex)
+        {
+            Console.WriteLine($"{query} - {ex}");
+            throw;
+        }
+        finally
+        {
+            session.CloseAsync();
+        }
+    }
+
+    public async Task<IList<T>> BulkCreateNodes<T>(
+        string query = ""
+        // , string batch_command = ":param {}"
+        , object parameters = null
+        , Func<IRecord, T> mapper = null
+    )
+        where T : class, new()
+    {
+        if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+
+        await using var session = driver.AsyncSession();
+
+        try
+        {
+            var results = await session.ExecuteWriteAsync(async tx =>
+            {
+                // var _ = await tx.RunAsync(batch_command, null);
+                var result = await tx.RunAsync(query, parameters);
+                return await result.ToListAsync<T>(record => record.MapTo<T>());
+            });
+
+            return results;
+        }
+
+        // Capture any errors along with the query and data for traceability
+        catch (Neo4jException ex)
+        {
+            Console.WriteLine($"{query} - {ex}");
+            throw;
+        }
+        finally
+        {
+            session.CloseAsync();
+        }
+    }
+    
+    
     public async Task CreateIndices()
     {
         string[] queries =
