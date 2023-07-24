@@ -30,17 +30,20 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
 {
     protected readonly IEmbeddedResourceQuery embeddedResourceQuery;
     protected readonly IDriver driver;
-    protected readonly IAirtableRepo airtable_repo;
+    protected readonly INeo4JRepo Neo4JNeo4JRepo;
+    private readonly IAirtableRepo airtable_repo;
 
     public HighSpeedPageModel(
         IEmbeddedResourceQuery embeddedResourceQuery
         , IDriver driver = null
-        , IAirtableRepo repo = null
+        , IAirtableRepo airtableRepo = null
+        , INeo4JRepo neo4JRepo = null
     )
     {
         this.embeddedResourceQuery = embeddedResourceQuery;
         this.driver = driver;
-        this.airtable_repo = repo;
+        this.Neo4JNeo4JRepo = neo4JRepo;
+        this.airtable_repo = airtableRepo;
     }
 
     public async Task<IList<T>> SearchNeo4J<T>(
@@ -61,6 +64,7 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
                 {
                     record.Values.Dump("record values");
                 }
+
                 return record.MapTo<T>();
             };
 

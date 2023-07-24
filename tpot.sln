@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpot-links-mkII", "tpot-links-mkII.csproj", "{386989AF-5EE8-4CC0-B191-C528895FE768}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpot-links-seeder", "dirty-tpot-links-seeder\tpot-links-seeder.csproj", "{E920581E-A822-45B9-AAE6-E5D235D5B91A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpot-links-models", "tpot-links-models\tpot-links-models.csproj", "{CCDD6A59-B780-4EF3-A11F-02399284C22C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpot-links-services", "tpot-links-services\tpot-links-services.csproj", "{28EB1DB9-6579-4B9C-875B-776782257708}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{386989AF-5EE8-4CC0-B191-C528895FE768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{386989AF-5EE8-4CC0-B191-C528895FE768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{386989AF-5EE8-4CC0-B191-C528895FE768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{386989AF-5EE8-4CC0-B191-C528895FE768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E920581E-A822-45B9-AAE6-E5D235D5B91A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E920581E-A822-45B9-AAE6-E5D235D5B91A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E920581E-A822-45B9-AAE6-E5D235D5B91A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E920581E-A822-45B9-AAE6-E5D235D5B91A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCDD6A59-B780-4EF3-A11F-02399284C22C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCDD6A59-B780-4EF3-A11F-02399284C22C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCDD6A59-B780-4EF3-A11F-02399284C22C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCDD6A59-B780-4EF3-A11F-02399284C22C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28EB1DB9-6579-4B9C-875B-776782257708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28EB1DB9-6579-4B9C-875B-776782257708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28EB1DB9-6579-4B9C-875B-776782257708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28EB1DB9-6579-4B9C-875B-776782257708}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

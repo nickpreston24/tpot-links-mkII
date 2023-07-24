@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <RootNamespace>tpot_links_models</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="CodeMechanic.Regex">
+        <HintPath>..\..\..\..\.nuget\packages\codemechanic.regex\1.0.1\lib\net7.0\CodeMechanic.Regex.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.Data.SqlClient">
+        <HintPath>..\..\..\..\.nuget\packages\microsoft.data.sqlclient\2.1.4\ref\netcoreapp3.1\Microsoft.Data.SqlClient.dll</HintPath>
+      </Reference>
+      <Reference Include="NSpecifications">
+        <HintPath>..\..\..\..\.nuget\packages\nspecifications\1.1.0\lib\netstandard1.0\NSpecifications.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+    </ItemGroup>
+
+</Project>

@@ -139,11 +139,12 @@ public class IndexModel : HighSpeedPageModel
 
         watch.Start();
 
-        var pages = await SearchNeo4J<Paper>(query, search_parameters);
+        // var papers = await SearchNeo4J<Paper>(query, search_parameters); // NOTE: moved to INeo4jRepository
+
+        var papers = await Neo4JNeo4JRepo.SearchNeo4J<Paper>(query, search_parameters);
         watch.Stop();
 
-        return Partial(partial_name, pages);
-        // return Partial("_PaperList", pages);
+        return Partial(partial_name, papers);
     }
 
     public async Task<IActionResult> OnPostBulkCreatePapers(

@@ -1,11 +1,12 @@
-using Insight.Database.MissingExtensions;
 using NSpecifications;
 
 namespace TPOT_Links.Models;
 
 public class AvatarDetails
 {
-    public object CheckOnlineStatus = new Spec<User>(u => u.IsOnline && u.last_name.IsNullOrWhiteSpace() );
+    public Spec<User> IsOnline =
+        new Spec<User>(user => user.IsOnline && string.IsNullOrWhiteSpace(user.last_name));
+
     public string Image { get; set; } = "/img/my_fb_avatar.jpg";
 
     public bool avatar_exists => !string.IsNullOrWhiteSpace(Image);

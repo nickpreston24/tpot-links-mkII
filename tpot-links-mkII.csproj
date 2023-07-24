@@ -45,4 +45,9 @@
     <Folder Include="Pages\Admin\Shared\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\tpot-links-models\tpot-links-models.csproj" />
+  </ItemGroup>
+
 </Project> 
