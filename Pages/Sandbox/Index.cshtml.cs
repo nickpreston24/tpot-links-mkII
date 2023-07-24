@@ -6,6 +6,7 @@ using CodeMechanic.RazorPages;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
+using Newtonsoft.Json;
 using NSpecifications;
 using TPOT_Links.Models;
 
@@ -62,6 +63,15 @@ public class IndexModel : HighSpeedPageModel
     //     return Content("<p>boop!</p>");
     // }
 
+
+    public async Task<JsonResult> OnGetHelloWorld()
+    {
+        // return JsonConvert.SerializeObject(new Paper()
+        // {
+        //     Title = "Test Paper"
+        // });
+        return default;
+    }
 
     public async Task<IActionResult> OnPostBloopf()
     {

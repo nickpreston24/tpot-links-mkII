@@ -1,7 +1,6 @@
-using Neo4j.Driver;
 using CodeMechanic.Embeds;
-using CodeMechanic.Types;
 using CodeMechanic.FileSystem;
+using TPOT_Links.Pages.Admin.Emails;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,36 +10,16 @@ DotEnv.Load();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
-// builder.UseElectron(args);
 
+builder.Services.ConfigureAirtable();
+builder.Services.ConfigureNeo4j();
 
-static void ConfigureServices(IServiceCollection services)
-{
-    string uri = Environment.GetEnvironmentVariable("NEO4J_URI") ?? string.Empty;
-    string user = Environment.GetEnvironmentVariable("NEO4J_USER") ?? string.Empty;
-    string password = Environment.GetEnvironmentVariable("NEO4J_PASSWORD") ?? string.Empty;
-
-    string airtable_bearer_token = Environment.GetEnvironmentVariable("TPOT_PAT") ?? string.Empty;
-
-    bool devmode = Environment.GetEnvironmentVariable("DEVMODE").ToBoolean();
-
-    services.AddControllers();
-    services.ConfigureAirtable();
-
-    services.AddSingleton(GraphDatabase.Driver(
-        uri
-        , AuthTokens.Basic(
-            user,
-            password
-        )
-    ));
-
-    // services.AddTransient<IAirtableRepo, AirtableRepo>();
-}
-
-ConfigureServices(builder.Services);
+builder.Services.AddControllers();
 
 var app = builder.Build();
+
+// source: https://github.com/tutorialseu/sending-emails-in-asp/blob/main/Program.cs
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -58,5 +37,9 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

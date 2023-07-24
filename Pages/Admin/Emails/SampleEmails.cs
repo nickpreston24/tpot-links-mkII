@@ -4,9 +4,9 @@ using CodeMechanic.FileSystem;
 
 namespace TPOT_Links.Pages.Admin.Emails;
 
-public class MassEmail
+public class SampleEmails
 {
-    public MassEmail(
+    public SampleEmails(
         string firstName
         , string body
         , params string[] recipients) =>
@@ -26,7 +26,7 @@ public class MassEmail
     }
 
 
-    public MassEmail Prepare(string hint = ".*Resume.*")
+    public SampleEmails Prepare(string hint = ".*Resume.*")
     {
         var grepper = new Grepper()
         {

@@ -11,7 +11,7 @@ public class MassEmailer
     private static StringBuilder error_messages = new StringBuilder();
     public string Errors => error_messages.ToString();
 
-    public MassEmailer Send(MassEmail email)
+    public MassEmailer Send(SampleEmails email)
     {
         try
         {
@@ -33,7 +33,7 @@ public class MassEmailer
             mail_client.EnableSsl = true;
             mail_client.DeliveryMethod = SmtpDeliveryMethod.Network;
             mail_client.Credentials = new NetworkCredential(
-                MassEmail.MyEmail
+                SampleEmails.MyEmail
                 , gmail_passphrase);
 
             mail_client.Send(mail_message);
