@@ -1,0 +1,8 @@
+@model HxButtonProps
+@{
+    var props = Model;
+}
+<button
+    @props.Attributes
+    class="btn @props.ClassName">
+</button>

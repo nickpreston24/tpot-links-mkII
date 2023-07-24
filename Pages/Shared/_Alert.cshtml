@@ -1,0 +1,32 @@
+@using Microsoft.AspNetCore.Html
+@using CodeMechanic.Types
+@model CustomAlert
+
+@{
+    var alert = Model
+        .ToMaybe()
+        .IfNone(new CustomAlert()
+            .With(my_alert =>
+            {
+                my_alert.Message = "An Error Occurred...  But fret not! Our team of intelligent lab mice are on the job!";
+                my_alert.AlertCssClass = AlertType.Success;
+            }));
+
+    string GetCssClass()
+    {
+        return $"alert alert-{alert.AlertCssClass.Name} border-alert border-2";
+    }
+
+    var alert_render = (CustomAlert alert)
+        => $@"""
+                <div class='{@GetCssClass()}'>
+                    <span>
+                        {@alert.Message}
+                    <span>
+                </div>
+            """
+            .Replace("\"", "");
+}
+<div>
+    @(new HtmlString(alert_render(alert)))
+</div>

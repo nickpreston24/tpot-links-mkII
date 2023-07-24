@@ -1,0 +1,38 @@
+@page
+@model IndexModel
+@{
+}
+
+<div x-data="setup()" class="flex flex-col items-center justify-center">
+
+    <div class="flex flex-center hero min-h-screen bg-base-200">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+
+            <ul>
+                <li>
+
+                    <h1 x-text="message" class="text-5xl font-bold"></h1>
+                    <a href="Admin/FeatureRequest">
+                        <button class="btn btn-primary">Ask for a Feature</button>
+                    </a>
+                </li>
+
+                <li>
+
+                    <h1 x-text="message" class="text-5xl font-bold"></h1>
+                    <a href="Admin/Checkup">
+                        <button class="btn btn-primary">Checkup Time!</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<script>
+  function setup() {
+    return {
+      message: "Admin Options",
+    };
+  }
+</script>

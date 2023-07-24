@@ -1,0 +1,30 @@
+{
+  "scripts": {
+    "dev": "dotnet watch --project tpot-links-mkII.csproj --launch-profile hotreloadprofile",
+    "build_routes": "node wwwroot/js/build_routes.js",
+    "build": "yarn && npm i && dotnet build tpot-links-mkII.csproj && yarn buildcss:linux && yarn build_routes",
+    "restore": "dotnet restore",
+    "buildcss:dev": "cross-env TAILWIND_MODE=build postcss ./Styles/app.css -o ./wwwroot/css/app.css",
+    "buildcss:release": "cross-env NODE_ENV=production postcss ./Styles/app.css -o ./wwwroot/css/app.css",
+    "buildcss:linux": "npx tailwindcss -i ./Styles/app.css -o ./wwwroot/css/site.css",
+    "electron": "electronize-h5 start /watch",
+    "nuke": "rm -rf node_modules wwwroot/lib wwwroot/css",
+    "reinstall": "npm run nuke && yarn && npm i"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.9",
+    "autoprefixer": "^10.2.6",
+    "cross-env": "^7.0.3",
+    "daisyui": "^2.6.0",
+    "postcss": "^8.4.18",
+    "postcss-cli": "^8.3.1",
+    "tailwindcss": "^3.0.23"
+  },
+  "dependencies": {
+    "alpinejs": "^3.11.1",
+    "animejs": "^3.2.1",
+    "axios": "^1.2.4",
+    "htmx.org": "^1.8.5",
+    "xregexp": "^5.1.1"
+  }
+}

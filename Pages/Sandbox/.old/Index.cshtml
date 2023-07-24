@@ -1,0 +1,200 @@
+@page
+@using Htmx.TagHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IndexModel
+@{
+    // C# vars go here!
+    var current_query = Model.Query;
+    var watch = Model.watch;
+}
+
+<style>
+    [x-cloak] { display: none !important; }
+
+</style>
+<div x-data='setup()'>
+
+
+    <section class="h-screen">
+        <template x-cloak x-for="[key, value] of Object.entries(options)">
+
+            <div class="mb-3">
+                <label class="form-label" :asp-for='key'></label>
+                <span x-text='key' class="label-text"></span>
+
+
+                <input x-bind:name='key' x-bind:value='value' :asp-for="key" type="checkbox"
+                       class="form-control toggle toggle-primary" x-bind:checked="value" @@change='options[key]=!value'>
+                <div class="invalid-feedback">
+                    <span :asp-validation-for='key'></span>
+                </div>
+            </div>
+
+
+        </template>
+    </section>
+
+    <!-- <h1 class='glowing text-xl' x-text='title'></h1> -->
+
+    @* @if (!string.IsNullOrEmpty(@current_query)) *@
+    @* { *@
+    @*     <div class='text-ghost'> *@
+    @*         <label class='text-2xl'>Current Query: </label> *@
+    @*         <div class="mockup-code"> *@
+    @*             @current_query *@
+    @*         </div> *@
+    @*     </div> *@
+    @* } *@
+
+    <a href="/Sandbox/AlpineXFT">
+        <button class="btn">Alpine test</button>
+    </a>
+    <div class="card p-5 mb-4 text-ocean-500">
+        <div class="d-flex justify-content-between">
+
+
+            <div id="recommendations">
+                <!-- Recommended papers get injected here -->
+            </div>
+
+
+            <!-- Search Results -->
+            @* style="width: max-content" *@
+            <table class="table table-zebra">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="text" name="term" id="query" autocomplete="off"
+                               hx-get
+                               hx-page="Index"
+                               hx-page-handler="SearchByRegex"
+                               hx-target="#search_results"
+                               hx-trigger="keyup changed delay:250ms"
+                               hx-indicator="#loading"
+                               class="input input-bordered input-ghost"
+                               aria-label="SEARCH"
+                               :placeholder="search_placeholder"
+                               aria-describedby="search-addon"/>
+                    </th>
+
+                    <th>
+
+                        <template x-cloak x-for="[key, value] of Object.entries(options)">
+
+                            <div class="mb-3">
+                                <label class="form-label" :asp-for='key'></label>
+                                <span x-text='key' class="label-text"></span>
+
+
+                                <input x-bind:name='key' x-bind:value='value' :asp-for="key" type="checkbox"
+                                       class="form-control toggle toggle-primary" x-bind:checked="value" @@change='options[key]=!value'>
+                                <div class="invalid-feedback">
+                                    <span :asp-validation-for='key'></span>
+                                </div>
+                            </div>
+
+
+                        </template>
+                    </th>
+                </tr>
+                <tr>
+                    @* <th>Id</th> *@
+                    <th>Title</th>
+                    <th>Link</th>
+                    <th>Excerpt</th>
+                    @* <th>Content</th> *@
+                    @* <th>Status</th> *@
+                    @* <th>Author</th> *@
+                    @* <th>Categories</th> *@
+                </tr>
+                </thead>
+                <tbody id='search_results'>
+                </tbody>
+
+            </table>
+            <div class="htmx-indicator" id='loading'>loading...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+       function setup() {
+        return {
+            title: "Teachings",
+            selected_category: "Chinese",
+            btn_width: 2,
+            loading: false,
+            search_placeholder: "Search for a phrase",
+            options: {
+                key: true
+                // categories: categories,
+                // {key: "show_slugs", value: true},
+                // {key: "show_excerpts", value: true},
+                // {key: "show_urls",  value: true},
+                // {key: "case_insensitive", value: true}
+            },
+            get bulk_button_class() {
+                let is_loading = this.loading ? 'loading' : '';
+                return `${is_loading} btn btn-accent w-[${this.btn_width}rem]`;
+            }
+        }
+    }
+    
+     // const categories = [
+        //     'Chinese', 'Faith', 'Catholicism', 'Letters', 'French', 'Proverbs'
+        // ]
+</script>
+
+
+<!-- <template x-if="false">
+
+    <div class="grid grid-cols-5">
+        <form
+            hx-post
+            hx-page-handler="Validate"
+            hx-page="Index"
+            hx-swap="outerHTML"
+            class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+
+            <select name="number">
+                <option value="">Select a number</option>
+                <option value="366">366</option>
+                <option value="367">367</option>
+                <option value="368">368</option>
+            </select>
+        </form>
+    </div>
+</template>
+
+<div x-ignore>
+    <template>
+        <form
+            action='post'
+
+        <div class='grid grid-cols-3 grid-rows-auto'>
+
+            <template x-for="[key, value] of Object.entries(options)">
+                <label class="cursor-pointer label flex-1">
+                    <span x-text="key" class="label-text"></span>
+
+                    <input
+                        name='key'
+                        x-bind:checked="options[key]"
+                        x-on:change="options[key]=!options[key]"
+                        type="checkbox"
+                        class="toggle toggle-primary"/>
+                </label>
+            </template>
+        </div>
+
+
+        <input type=hidden id="word" value='{{word}}'>
+
+        <button class="btn btn-primary" type="submit"
+                hx-include="#word">
+            Translate your word?
+        </button>
+
+        </form>
+    </template>
+</div> -->

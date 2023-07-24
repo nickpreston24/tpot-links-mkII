@@ -1,0 +1,39 @@
+@model TPOT_Links.Models.Paper
+
+@{
+    var paper = Model;
+    string edit_mode = "false";
+}
+
+<div class="card w-84 bg-ghost border-2 border-accent">
+    <div class="card-body text-secondary">
+        <h2 x-show="!@edit_mode" class="card-title text-primary">@paper.Title</h2>
+        <p class="max-w-full">@paper.Description</p>
+        <p class="max-w-64 overflow-ellipsis overflow-auto "><b>Excerpt:</b> <br> @paper.Excerpt</p>
+        <div class="card-actions justify-end flex flex-col">
+            <partial name="_CardActions"/>
+        </div>
+    </div>
+</div>
+@* *@
+@* <script> *@
+@* *@
+@* anime({ *@
+@*   targets: '.function-based-values-demo .el .svg', *@
+@*   translateX: function(el) { *@
+@*     return el.getAttribute('data-x'); *@
+@*   }, *@
+@*   translateY: function(el, i) { *@
+@*     return 50 + (-50 * i); *@
+@*   }, *@
+@*   scale: function(el, i, l) { *@
+@*     return (l - i) + .25; *@
+@*   }, *@
+@*   rotate: function() { return anime.random(-360, 360); }, *@
+@*   borderRadius: function() { return ['50%', anime.random(10, 35) + '%']; }, *@
+@*   duration: function() { return anime.random(1200, 1800); }, *@
+@*   delay: function() { return anime.random(0, 400); }, *@
+@*   direction: 'alternate', *@
+@*   loop: true *@
+@* }); *@
+@* </script> *@

@@ -1,0 +1,103 @@
+@model TPOT_Links.Models.Paper
+
+@{
+    var paper = Model;
+    string edit_mode = "false";
+}
+
+<form
+    class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+    <div
+        x-show="@edit_mode"
+        class="mb-3">
+        <label class="form-label" asp-for="Title"></label>
+        <input type="text" class="form-control" asp-for="Title">
+        <div class="invalid-feedback">
+            <span asp-validation-for="Title"></span>
+        </div>
+    </div>
+
+    <div
+        x-show="@edit_mode"
+        class="mb-3">
+        <label class="form-label" asp-for="Url"></label>
+        <input type="text" class="form-control" asp-for="Url">
+        <div class="invalid-feedback">
+            <span asp-validation-for="Url"></span>
+        </div>
+    </div>
+
+    <div
+        x-show="@edit_mode"
+        class="mb-3">
+        <label class="form-label" asp-for="Id"></label>
+        <input type="number" class="form-control" asp-for="Id">
+        <div class="invalid-feedback">
+            <span asp-validation-for="Id"></span>
+        </div>
+    </div>
+
+
+    <div class="control join join-vertical lg:join-horizontal">
+
+        <button class="btn  btn-sm btn-secondary join-item rounded-l-full">
+            <a target="_blank" href="@paper.Url">
+                Read
+            </a>
+        </button>
+        @* x-on:click="confirm('Sorry, this feature is not ready!')" *@
+        <button
+            type="button"
+            hx-get
+            hx-page="/Sandbox/Index"
+            hx-page-handler="LikePaper"
+            hx-swap="outerHTML"
+            class="btn btn-md btn-accent join-item">
+
+            Like
+
+            <svg
+                x-show="true"
+                width="8mm"
+                height="8mm"
+                viewBox="0 0 210 297">
+                <g>
+                    <path
+                        id="path31"
+                        style="fill:yellow;stroke:#fff;stroke-width:11.3386"
+                        inkscape:transform-center-x="-5.0023518"
+                        inkscape:transform-center-y="-2.8101725"
+                        transform="matrix(1.1752482,0,0,1.1752482,-191.16165,-496.60446)"
+                        d="m 276.59879,609.25529 -35.37937,-28.93397 -43.89222,12.74157 16.58502,-42.58887 -25.6814,-37.80661 45.62948,2.6126 28.02024,-36.10735 11.61555,44.20355 42.99886,15.49105 -38.45067,24.70669 z"/>
+                    <path
+                        style="fill:yellow;stroke:#fff;stroke-width:11.3386"
+                        inkscape:transform-center-x="-5.0023518"
+                        inkscape:transform-center-y="-2.8101725"
+                        transform="matrix(1.1752482,0,0,1.1752482,-191.16165,-496.60446)"
+                        d="m 276.59879,609.25529 -35.37937,-28.93397 -43.89222,12.74157 16.58502,-42.58887 -25.6814,-37.80661 45.62948,2.6126 28.02024,-36.10735 11.61555,44.20355 42.99886,15.49105 -38.45067,24.70669 z"/>
+                </g>
+            </svg>
+        </button>
+
+
+        <div class="avatar indicator"
+             x-data="{
+                syncing: false
+            }">
+            <span x-show="syncing" class="indicator-item badge badge-secondary">syncing…</span>
+            <div class="w-20 h-20 rounded-lg">
+                <button
+                    type="button"
+                    x-on:click="syncing = true"
+                    class="btn btn-sm join-item rounded-r-full">
+                    🔄 Sync
+                </button>
+                @* <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" /> *@
+            </div>
+        </div>
+
+
+        @Html.AntiForgeryToken()
+    </div>
+
+</form>

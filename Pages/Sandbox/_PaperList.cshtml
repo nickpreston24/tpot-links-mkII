@@ -1,0 +1,36 @@
+@model IList<TPOT_Links.Models.Paper>
+
+@{
+    var papers = Model;
+    int rowz = (int)(@papers.Count > 0
+        ? Math.Ceiling(papers.Count / Math.Log10(@papers.Count) * 1.0)
+        : papers.Count);
+
+    int cols = (int)(@papers.Count > 0
+        ? Math.Ceiling(Math.Log10(@papers.Count) * 1.0)
+        : 1);
+
+    string GetCssClass()
+    {
+        return $"grid sm:grid-cols-{@cols} grid-rows-{@rowz} gap-x-2";
+    }
+
+}
+@if (papers.Any())
+{
+    <div x-show="card_options.dev_mode">
+
+        <div class="text-tiny text-red-600">
+            <h2 >cols: @cols, rows: @rowz, total papers: @papers.Count</h2>
+        </div>
+    </div>
+
+    @* <div class="grid grid-flow-col grid-rows-6 grid-cols-@cols"> *@
+    <div class="@GetCssClass()">
+
+        @foreach (var paper in papers)
+        {
+            <partial name="PaperCard" model="@paper"/>
+        }
+    </div>
+}

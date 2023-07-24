@@ -3,7 +3,6 @@ using CodeMechanic.Diagnostics;
 using CodeMechanic.Neo4j.Extensions;
 using Neo4j.Driver;
 using TPOT_Links.Models;
-using Category = TPOT_Links.Models.Category;
 
 public class Neo4JRepo : IDisposable, INeo4JRepo
 {
@@ -130,61 +129,61 @@ public class Neo4JRepo : IDisposable, INeo4JRepo
         }
     }
 
-    public async Task CreatePersons(IList<Person> persons)
-    {
-        string cypher = new StringBuilder()
-            .AppendLine("UNWIND {persons} AS person")
-            .AppendLine("MERGE (p:Person {name: person.name})")
-            .AppendLine("SET p = person")
-            .ToString();
-
-        await using var session = driver.AsyncSession();
-        await session.RunAsync(cypher,
-            new Dictionary<string, object>()
-            {
-                {
-                    "persons",
-                    ParameterSerializer.ToDictionary(persons)
-                }
-            });
-    }
-
-    public async Task CreateCategories(IList<Category> categories)
-    {
-        string cypher = new StringBuilder()
-            .AppendLine("UNWIND {categories} AS category")
-            .AppendLine("MERGE (g:Category {name: category.name})")
-            .AppendLine("SET g = category")
-            .ToString();
-
-        await using var session = driver.AsyncSession();
-        await session.RunAsync(cypher,
-            new Dictionary<string, object>()
-            {
-                {
-                    "categories", ParameterSerializer.ToDictionary(categories)
-                }
-            });
-    }
-
-    public async Task CreatePages(IList<Paper> pages)
-    {
-        string cypher = new StringBuilder()
-            .AppendLine("UNWIND {pages} AS page")
-            .AppendLine("MERGE (m:Page {id: page.id})")
-            .AppendLine("SET m = page")
-            .ToString();
-
-        await using var session = driver.AsyncSession();
-
-        await session.RunAsync(cypher,
-            new Dictionary<string, object>()
-            {
-                {
-                    "pages", ParameterSerializer.ToDictionary(pages)
-                }
-            });
-    }
+    // public async Task CreatePersons(IList<Person> persons)
+    // {
+    //     string cypher = new StringBuilder()
+    //         .AppendLine("UNWIND {persons} AS person")
+    //         .AppendLine("MERGE (p:Person {name: person.name})")
+    //         .AppendLine("SET p = person")
+    //         .ToString();
+    //
+    //     await using var session = driver.AsyncSession();
+    //     await session.RunAsync(cypher,
+    //         new Dictionary<string, object>()
+    //         {
+    //             {
+    //                 "persons",
+    //                 ParameterSerializer.ToDictionary(persons)
+    //             }
+    //         });
+    // }
+    //
+    // public async Task CreateCategories(IList<Category> categories)
+    // {
+    //     string cypher = new StringBuilder()
+    //         .AppendLine("UNWIND {categories} AS category")
+    //         .AppendLine("MERGE (g:Category {name: category.name})")
+    //         .AppendLine("SET g = category")
+    //         .ToString();
+    //
+    //     await using var session = driver.AsyncSession();
+    //     await session.RunAsync(cypher,
+    //         new Dictionary<string, object>()
+    //         {
+    //             {
+    //                 "categories", ParameterSerializer.ToDictionary(categories)
+    //             }
+    //         });
+    // }
+    //
+    // public async Task CreatePages(IList<Paper> pages)
+    // {
+    //     string cypher = new StringBuilder()
+    //         .AppendLine("UNWIND {pages} AS page")
+    //         .AppendLine("MERGE (m:Page {id: page.id})")
+    //         .AppendLine("SET m = page")
+    //         .ToString();
+    //
+    //     await using var session = driver.AsyncSession();
+    //
+    //     await session.RunAsync(cypher,
+    //         new Dictionary<string, object>()
+    //         {
+    //             {
+    //                 "pages", ParameterSerializer.ToDictionary(pages)
+    //             }
+    //         });
+    // }
 
     // public async Task UpdateExistingNodeBatch<T>(NodeBatch<T> batch_of_nodes = null)
     // {
