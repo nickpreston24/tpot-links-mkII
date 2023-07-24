@@ -1,5 +1,6 @@
 using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
+using TPOT_Links.Controllers;
 using TPOT_Links.Pages.Admin.Emails;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ DotEnv.Load();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<ICarService, CarService>();
 
 builder.Services.ConfigureAirtable();
 builder.Services.ConfigureNeo4j();
@@ -19,7 +22,6 @@ builder.Services.AddControllers();
 var app = builder.Build();
 
 // source: https://github.com/tutorialseu/sending-emails-in-asp/blob/main/Program.cs
-builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

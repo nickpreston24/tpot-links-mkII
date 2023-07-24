@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using TPOT_Links.Models;
 
 namespace TPOT_Links.Controllers;
 
@@ -19,15 +20,4 @@ public class CarController : Controller
     {
         return _carService.ReadAll();
     }
-}
-
-public interface ICarService
-{
-    IEnumerable<Car> ReadAll();
-}
-
-public class Car
-{
-    public string Make { get; set; } = "Acura";
-    public string Model { get; set; } = "TL";
 }
