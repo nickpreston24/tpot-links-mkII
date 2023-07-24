@@ -1,0 +1,18 @@
+@model TPOT_Links.Models.User
+
+@{
+    var user = Model;
+}
+
+<div class="card lg:card-side bg-base-100 shadow-xl">
+    <figure>
+        <img src="https://i.pravatar.cc/300" alt="Album"/>
+    </figure>
+    <div class="card-body">
+        <h2 class="card-title">Hello, @user.FullName!</h2>
+        <p>You entered @user.Age as your age, is this correct?</p>
+        <div class="card-actions justify-end">
+            <button class="btn btn-primary">Confirm</button>
+        </div>
+    </div>
+</div>

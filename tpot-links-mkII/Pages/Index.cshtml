@@ -1,0 +1,75 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<div x-data="setup()">
+    <section class="font-['Space Mono'] min-h-screen flex flex-col items-center justify-center text-2xl text-secondary">
+
+        <div class="hero">
+            <div class="hero-content text-center flex flex-col">
+                <h1 x-text='hero_title' class="text-5xl font-bold"></h1>
+
+                 <div class="max-w-md flex flex-col gap-4"> 
+                     <a x-show='!admin' :href="button_link" class='text-3xl text-primary'> 
+                         <button 
+                             class="btn btn-accent hover:scale-125"> 
+                             <h1 x-on:mouseover="hacky_text" :data-value="hero_title"> 
+                                 Start Searching
+                             </h1> 
+                         </button> 
+                     </a> 
+                 </div> 
+            </div>
+
+        </div>
+
+        <div
+            x-show='false'
+            :class="grid_class">
+            <template x-for="route in $store.notifications.routes">
+                <div :class="route.class" class="">
+                    <a :target="route.external?'_blank':'_self'" :href="route.url" class='text-3xl text-primary'>
+                        <button class="btn btn-primary hover:scale-125">
+                            <h1 x-on:mouseover="hacky_text" :data-value="route.text" x-text="route.text"></h1>
+                        </button>
+                    </a>
+                </div>
+            </template>
+
+        </div>
+
+        
+        <template x-if='admin'>
+            <div id="temp_routes_loader_div"
+                hx-get
+                hx-trigger="init,load"
+                hx-swap="outerHTML"
+                hx-page-handler="myroutes"
+                >
+            </div>
+        </template>
+
+    </section>
+</div>
+
+<script type="module">
+    
+</script>
+
+<script>
+    function setup() {
+        return {
+            admin: false,
+            hero_title: "Welcome to TPOT LINKS!",
+            button_link: "/Sandbox",
+            get grid_class() {
+                console.log('my routes: ', this.routes)
+                let column_count = 5; //this.routes ? .length % 2;
+                let row_count = 5;
+                console.table(["cols", column_count, "rows", row_count]);
+                return `grid grid-cols-${column_count} lg:grid-cols-${column_count} lg:grid-rows-${row_count}`;
+            },
+        }
+    }
+</script>

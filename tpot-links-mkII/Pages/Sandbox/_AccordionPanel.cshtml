@@ -1,0 +1,90 @@
+@model IndexModel
+@{
+    // var user = Model.CurrentUser;
+    // var card_options = Model.CardOptions;
+}
+
+<div class="flex flex-col"
+     x-data="{
+        active_section : 0,
+        getActiveStatus(id){
+            return id === this.active_section
+        },
+        sections: [
+            { 
+                title: 'Card Options',     
+                message: 'These are the Card Options',
+                panel_name: '_CardOptionsPanel'    
+            },
+            { 
+                title: 'Recommended Papers',     
+                panel_name: '_CardOptionsPanel',
+                message: 'blarf'    
+            },
+            { 
+                title: 'Section 3',     
+                panel_name: '_CardOptionsPanel', 
+                message: 'blarf'    
+            }
+        ],
+        debug: false
+    }">
+
+    <div x-show="debug">
+        <label for=""> Active</label>
+        <pre x-text="active_section"></pre>
+    </div>
+
+    @* hx-post="@Url.Page("Index", "Bloopf")" *@
+
+    <form
+        hx-post hx-page="Index" hx-page-handler="Bloopf" hx-swap="outerHTML"
+        class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+        <template
+
+            x-cloak x-for="(item, index) of sections" :key="index">
+            <div class="collapse collapse-arrow bg-base-200 glass"
+                 @@click="active_section = index">
+                <input
+                    type="radio"
+                    name="'accordion_'+index"
+                    hx-post
+                    hx-page-handler="Bloopf"
+                    hx-trigger="change"
+                    hx-target="closest div.bloopf"
+                    hidden
+                    :checked="index === this.active_section"/>
+                <div class="collapse-title text-xl font-medium">
+                    <span :class="{'border-2 border-amber-500' : getActiveStatus(index)}" x-text="item.title"></span>
+                </div>
+
+                @* <button *@
+                @*     hx-get *@
+                @*     hx-page-handler="Bloopf" *@
+                @*     hx-target="closest div.bloopf" *@
+                @*     class="btn" type="submit"> *@
+                @*     go *@
+                @* </button> *@
+
+                <div :class="{'collapse-content': !getActiveStatus(index)}">
+                    <p x-text="item.message"></p>
+                    <div class="bloopf">...replace mee...</div>
+                    @* <partial :name="item.panel_name"/> *@
+                </div>
+
+
+                @* @(new HtmlString("<partial :name='item.panel_name' />")) *@
+                @* <span x-text="item.panel_name"></span> *@
+                @* <div *@
+                @*     x-if="index === this.active_section"> *@
+                @*     <div> *@
+                @*         $1$ <span>bully!</span> #1# *@
+                @*     </div> *@
+                @* </div> *@
+
+
+            </div>
+        </template>
+    </form>
+
+</div>

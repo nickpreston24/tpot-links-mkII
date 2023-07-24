@@ -1,0 +1,62 @@
+@page
+@model TPOT_Links.Pages.Admin.Checkup.Index
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html data-theme="halloween" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/daisyui@2.50.0/dist/full.css"
+        rel="stylesheet"
+        type="text/css"/>
+    <link
+        href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css"
+        rel="stylesheet"
+        type="text/css"/>
+
+    <script src="https://unpkg.com/htmx.org@1.8.5"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <title>What's Taters, Precious?</title>
+</head>
+<body>
+<div x-data="setup()" class="flex flex-row items-center justify-center">
+    <section class="h-screen w-5/6 flex overflow-x-clip">
+        <div>
+            <h1>Hello from CHECKUP options!</h1>
+            <template x-cloak x-for="[key, value] of Object.entries(checkup_options)">
+                <div class="mb-3">
+                    <label class="form-label" :asp-for="key.replace('_',' ')"></label>
+                    <span x-text='key' class="label-text"></span>
+                    <input x-bind:name='key' x-bind:value='value' :asp-for="key" type="checkbox"
+                           class="form-control toggle toggle-primary" x-bind:checked="value" @@change='options[key]=!value'>
+                    <div class="invalid-feedback">
+                        <span :asp-validation-for='key'></span>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+
+</div>
+</body>
+<script>
+    function setup() {
+      return {
+        message: "Have a Potato Day! 🥔 ",
+        search_placeholder: "E.g.: 'What is Faith?'",
+        checkup_options: {
+            scan_wordpress: true,
+            toot: false,
+            bag: true
+        }
+      };
+    }
+  </script>
+</html>

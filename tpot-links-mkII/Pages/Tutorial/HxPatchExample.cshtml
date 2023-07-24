@@ -1,0 +1,87 @@
+@page
+@model TPOT_Links.Pages.Tutorial.HxPatchExample
+@{
+
+}
+
+<div x-data="setup()" class="flex flex-col items-center justify-center">
+
+    <div x-if='options.show_hero' class="flex flex-center hero min-h-screen bg-base-200">
+
+        <template>
+            <div class="hero-content flex-col lg:flex-row-reverse">
+                <div x-cloak>
+                    <template x-for="(key, value) of fields">
+                        <div class="mb-3">
+                            <label class="form-label" :for="key" x-text="key" />
+                            <input type="checkbox" class="form-toggle" :name="key" x-model="value" />
+                        </div>
+                    </template>
+
+                    <template x-for="[key, value] of Object.entries(options)">
+                        <div class="mb-3">
+                            <label class="form-label" :for="key" x-text="key" />
+                            <input type="checkbox" class="form-toggle" :name="key" x-model="value" />
+                        </div>
+                    </template>
+                </div>
+
+                <div>
+                    <h1 x-text="message" class="text-5xl font-bold"></h1>
+                    <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
+                        exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+
+                    <a href="https://www.youtube.com/shorts/jOH3r2X_k7U">
+                        <button class="btn btn-primary">🥔 Go</button>
+                    </a>
+                </div>
+            </div>
+        </template>
+
+    </div>
+
+    <div class="fab-wrapper">
+        <input id="fabCheckbox" type="checkbox" class="fab-checkbox" />
+        <label class="fab" for="fabCheckbox">
+            <span class="fab-dots fab-dots-1"></span>
+            <span class="fab-dots fab-dots-2"></span>
+            <span class="fab-dots fab-dots-3"></span>
+        </label>
+        <div class="fab-wheel">
+            <a class="fab-action fab-action-1">
+                <i class="fas fa-question"></i>
+            </a>
+            <a class="fab-action fab-action-2">
+                <i class="fas fa-book"></i>
+            </a>
+            <a class="fab-action fab-action-3">
+                <i class="fas fa-address-book"></i>
+            </a>
+            <a class="fab-action fab-action-4">
+                <i class="fas fa-info"></i>
+            </a>
+        </div>
+    </div>
+
+</div>
+<script>
+    function setup() {
+        return {
+            options: {
+                show_comments: true,
+                show_hero: false,
+                // show_comments_form: false,
+            },
+            message: "Have a Potato Day! 🥔 ",
+            fields: {
+                key: "foo",
+                value: 'bar'
+            },
+            // options: {
+            //     key: "value",
+            //     foo: "bar",
+            //     show_hero: false
+            // }
+        };
+    }
+</script>

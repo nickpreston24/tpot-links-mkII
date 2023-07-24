@@ -1,0 +1,59 @@
+@page
+@model ScriptureHighlighterModel
+@{
+    // C# vars go here!
+}
+
+@* hx-post='@Url.Page("", "ExtractedScriptures")' *@
+@* action='post' *@
+<div
+    x-data='setup()'>
+
+    <div
+    >
+
+        <div class="flex flex-col items-center justify-center gap-2 p-4">
+            <button
+                hx-get
+                hx-page="ScriptureHighlighter"
+                hx-page-handler="ExtractedScriptures"
+                hx-target='#extracted'
+                hx-swap="outerHTML"
+                class='btn-active btn btn-md btn btn-outline-primary float-end'
+                x-on:click='btn_width = 4; loading=true'
+                :class="loading_button"
+                type='submit'>
+                <span x-show="loading" class="htmx-indicator">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="visually-hidden">Loading...</span>
+                </span>
+                Run Parse
+            </button>
+         
+            <div id='extracted'></div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function setup() {
+      // const patterns = {
+      //   prefix:
+      //     /(?<Name>[a-zA-Z]+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]+\r*\n)(?<Text>.*?)(?:\r*\n){2}/gms,
+      //   postfix:
+      //     /^(?<Text>.*?)(?<Name>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?)/gm,
+      // };
+
+
+      return {
+        loading: false,
+        get loading_button() {
+            let is_loading = this.loading ? 'loading' : '';
+            return `${is_loading} btn btn-accent w-[${this.btn_width}rem]`;
+        },
+        
+      };
+    }
+</script>

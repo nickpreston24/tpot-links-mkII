@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html data-theme="forest" lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.50.0/dist/full.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css"/>
+
+    <script src="https://unpkg.com/htmx.org@1.8.5"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <title>What's Taters, Precious?</title>
+</head>
+
+<body>
+<div x-data="setup()" class="flex flex-col items-center justify-center gap-2">
+
+    <table class="table table-zebra">
+        <thead>
+        <tr>
+            <th>blah</th>
+            <th>blah</th>
+            <th>blah</th>
+            <th>blah</th>
+            <th>blah</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr hx-patch='@Url.Page("HxPatchExample", "Validate")'
+            hx-swap="outerHTML"
+            class="form-horizontal needs-validation flex-1"
+            _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+
+            <td>
+
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Title</span>
+                    </label>
+                    <label class="input-group input-group-vertical">
+                        <input type="text" placeholder="What is Faith?" class="input input-bordered"/>
+                    </label>
+                </div>
+            </td>
+            <td>
+
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Blah</span>
+                    </label>
+                    <label class="input-group input-group-vertical">
+                        <input type="text" placeholder="info@site.com" class="input input-bordered"/>
+                    </label>
+                </div>
+            </td>
+            <td>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Url</span>
+                    </label>
+                    <label class="input-group input-group-vertical">
+                        <input type="text" placeholder="thepathoftruth.com/..." class="input input-bordered"/>
+                    </label>
+                </div>
+
+            </td>
+            <td>
+
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Blah</span>
+                    </label>
+                    <label class="input-group input-group-vertical">
+
+                        <select class="select select-bordered w-full max-w-xs">
+                            <option disabled selected>Normal</option>
+                            <option>Normal Apple</option>
+                            <option>Normal Orange</option>
+                            <option>Normal Tomato</option>
+                        </select>
+                    </label>
+                </div>
+
+            </td>
+
+            <td>
+                <button class="btn btn-accent" type="submit">Submit</button>
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+</div>
+</body>
+<script>
+    function setup() {
+        return {
+            message: "Have a Potato Day! 🥔 ",
+        };
+    }
+</script>
+
+</html>

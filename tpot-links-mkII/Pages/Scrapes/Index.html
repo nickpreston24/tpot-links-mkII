@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html data-theme="dark" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.50.0/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+
+    <script src="https://unpkg.com/htmx.org@1.8.5"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <title>What's Taters, Precious?</title>
+  </head>
+  <body>    
+
+
+
+
+    <div
+        x-show="true"
+    x-data="setup()" class="flex flex-col items-center justify-center">
+
+      <div class="flex flex-center hero min-h-screen bg-base-200">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+          <div 
+            id="results"
+            class="border-2 border-accent w-[240px] h-[746px]"
+            >
+            ...Content...
+            </div>
+
+          <div>
+            <!-- <h1 x-text="id_search_url" class="text-5xl font-bold"></h1> -->
+            <h3 class="text-lg" x-text="slug"></h3>
+            <h3 class="text-lg" x-text="id"></h3>
+            <h3 class="text-lg" x-text="term"></h3>
+            <!-- <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p> -->
+
+
+            <!-- 
+
+                 http://127.0.0.1:5500/Pages/Links/term_search_url?term=roman
+             -->
+            <input type="text"
+                id="term"
+                name="term"
+                autocomplete="off"
+                hx-get="https://www.thepathoftruth.com/wp-json/wp/v2/pages/6399"
+                hx-target="#results"
+                hx-trigger="keyup changed delay:250ms"
+                hx-indicator="#loading"
+                placeholder="Search"
+                class="form-control"
+            >
+
+                <div id="loading" class="hx-indicator"><Loading class=""></Loading></div>
+                <!-- <div id="results"></div> -->
+                <!-- <a :href="id_search_url" target="_blank">
+                    <button 
+                        class="btn btn-primary">🥔 Sync</button> -->
+            </a>
+          </div>
+        </div>
+      </div>   
+
+    </div>
+  </body>
+  <script>
+     /*
+        https://www.thepathoftruth.com/wp-json/wp/v2/pages/6399
+
+        ### 
+
+        https://www.thepathoftruth.com/wp-json/wp/v2/pages?slug=spanish___opinion_spanish-htm
+
+        ###
+        https://www.thepathoftruth.com/wp-json/wp/v2/search?search=Roman
+    */
+    function setup() {
+        return {
+            ids: [6562],
+            id: 6562,
+            term: 'Roman',
+            slug: 'spanish___opinion_spanish-htm',
+            get slug_url() {
+                return `https://www.thepathoftruth.com/wp-json/wp/v2/pages?slug=${this.slug}`;
+            },
+            get term_search_url() {
+                return `https://www.thepathoftruth.com/wp-json/wp/v2/search?search=${this.term}`;
+            },
+            get id_search_url () {
+                return `https://www.thepathoftruth.com/wp-json/wp/v2/pages/${this.id}`;
+            }
+        }
+    }
+  </script>
+</html>

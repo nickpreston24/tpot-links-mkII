@@ -1,0 +1,135 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model TPOT_Links.Pages.Tutorial.HxPostExample
+@{
+
+}
+<div x-data='setup()'>
+    <form hx-post hx-page="HxPostExample" hx-page-handler="Validate" hx-swap="outerHTML"
+        class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+        <div class="mb-3">
+            <label class="form-label" asp-for="Name"></label>
+            <input type="text" class="form-control" asp-for="Name">
+            <div class="invalid-feedback">
+                <span asp-validation-for="Name"></span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Age"></label>
+            <input type="text" class="form-control" asp-for="Age">
+            <div class="invalid-feedback">
+                <span asp-validation-for="Age"></span>
+            </div>
+        </div>
+
+        <div>
+
+            <template x-for="[key, value] of Object.entries(options)">
+                <div class="mb-3">
+                    <label class="form-label" :for="key"></label>
+                    <span x-text="key">This is for debugging only and can be omitted</span>
+                    <input type="checkbox" class="form-control toggle toggle-accent" :for="key">
+                </div>
+            </template>
+        </div>
+
+        <div class="control">
+            <button id="submitButton" type="submit" class="btn btn-primary">
+                <span class="htmx-indicator">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="visually-hidden">Loading...</span>
+                </span>
+                Submit
+            </button>
+
+            @Html.AntiForgeryToken()
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+    const categories = [
+        'Chinese', 'Faith', 'Catholicism', 'Letters', 'French', 'Proverbs'
+    ]
+
+    function setup() {
+        return {
+            title: "Teachings",
+            selected_category: "Chinese",
+            categories: categories,
+            options: {
+                // show_slugs: true,
+                // show_excerpts: true,
+                // show_urls: true,
+                // case_insensitive: true,
+                search_by_categories: false
+            },
+            get grid_class() {
+                let cols = this.options ? this.routes.length : 5;
+                return `grid grid-cols-${cols}`;
+            }
+        }
+    }
+</script>
+
+<!--
+
+<div x-data='options' class="mb-3">
+
+    <label asp-for="show_urls"></label>
+    <input type="checkbox"
+           :value="show_urls"
+           x-on:change="options.show_urls=!options.show_urls"/>
+    <span x-text="show_urls"></span>
+
+    <label class="form-label" asp-for='show_urls'>Show Urls?</label>
+    <span x-text='show_urls'></span>
+
+    <label class="form-label" asp-for="show_urls"></label>
+    <input
+        type="checkbox"
+
+        :checked="show_urls"
+        @@change='show_urls=!show_urls'
+
+        class="form-control toggle toggle-accent"
+        asp-for="show_urls">
+    <div class="invalid-feedback">
+        <span asp-validation-for="show_urls"></span>
+    </div>
+</div>
+-->
+
+<!-- TODO: asp-for binding is broken and won't bind the key's name. -->
+<!--
+
+<template
+    x-ignore
+    x-for="[key, value] of Object.entries(options)">
+
+    <div class="mb-3">
+        <label class="form-label" :asp-for='key'></label>
+        <span x-text='key' class="label-text"></span>
+
+
+        <input
+            x-bind:name='key'
+            x-bind:value='value'
+
+            :asp-for="key"
+            type="checkbox"
+            class="form-control toggle toggle-primary"
+            x-bind:checked="value"
+            @@change='options[key]=!value'>
+        <div class="invalid-feedback">
+            <span :asp-validation-for='key'></span>
+        </div>
+    </div>
+
+
+</template>
+
+-->

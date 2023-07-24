@@ -1,0 +1,28 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IndexModel
+@{
+  // C# vars go here!
+}
+
+<form action="post">
+    <div class="card p-5 mb-4 text-ocean-500">
+
+        <div x-data="{ open: false }">
+            <button @@click="open = true">Expand</button>
+
+            <span x-text='foo' x-show="open">
+            </span>
+        </div>
+
+    </div>
+</form>
+
+
+<script>
+    function setup() {
+        return {
+            value: "foo"
+        }
+    }
+</script>

@@ -1,0 +1,92 @@
+@using CodeMechanic.Types
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using TPOT_Links.Models
+@model List<TPOT_Links.Models.Paper>
+@{
+    var papers = new Paper().AsList();
+    PaperSearch search = new PaperSearch();
+}
+
+<div class="flex-col flex">
+
+    @if (papers.Any(paper => !string.IsNullOrWhiteSpace(paper.Url)))
+    {
+        // hx-trigger='load'
+        <h1 class="text-2xl">Found @papers.Count Papers for you!</h1>
+    }
+    else
+    {
+        <div x-show="card_options.dev_mode" x-transition class="alert focus:alert-info">
+            Nothing to recommend...
+        </div>
+
+        <form hx-post
+              hx-swap="outerHTML"
+              hx-page="/Sandbox/Index"
+              hx-page-handler="Recommendations"
+              class="form-horizontal needs-validation"
+              _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+
+            <div
+                x-show="false"
+                class="mb-3">
+                <label class="form-label" asp-for="@search.term"></label>
+                <input type="text" class="form-control" asp-for="@search.term">
+                <div class="invalid-feedback">
+                    <span asp-validation-for="@search.term"></span>
+                </div>
+            </div>
+            @* *@
+            @* <div class="mb-3"> *@
+            @*     <label class="form-label" asp-for="Age"></label> *@
+            @*     <input type="text" class="form-control" asp-for="Age"> *@
+            @*     <div class="invalid-feedback"> *@
+            @*         <span asp-validation-for="Age"></span> *@
+            @*     </div> *@
+            @* </div> *@
+
+            <div class="control" x-data="{show_icon:true}">
+                <button id="submitButton" type="submit" class="btn btn-primary">
+                       
+                    <span class="mask mask-star-2 bg-green-500">
+                        
+                        
+                    </span>
+                    
+                    <span class="htmx-indicator">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="visually-hidden">Loading...</span>
+                    </span>
+                    Get Recommendations
+                </button>
+
+                @Html.AntiForgeryToken()
+            </div>
+
+        </form>
+
+
+@*
+        <form>
+            
+        </form>
+        <h2>Hey</h2>
+        <div
+            hx-get
+            hx-page-handler="Recommendations"
+            hx-swap="outerHTML"
+            hx-indicator="recommended_papers_loader">
+        </div>
+        <button
+            class="btn btn-ghost"
+            hx-get
+            hx-page="Index"
+            hx-indicator="#recommended_papers_loader"
+            hx-page-hander="Recommendations"
+            type="button">
+            Load Recommendations
+        </button>
+        <span id="#recommended_papers_loader">Loading recommended papers...</span>
+        *@
+    }
+</div>
