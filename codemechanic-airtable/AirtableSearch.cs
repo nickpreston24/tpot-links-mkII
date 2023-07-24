@@ -1,6 +1,8 @@
 using AirtableApiClient;
 using CodeMechanic.Diagnostics;
 
+namespace CodeMechanic.Airtable;
+
 // public record AirtableSearch(
 
 //     string table_name, 

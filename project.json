@@ -1,9 +1,0 @@
-{
-  "buildOptions": {
-    "embed": {
-      "include": [
-        "Pages/**/*.cypher"    
-      ]
-    } 
-  }
-}

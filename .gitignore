@@ -1,5 +1,5 @@
-node_modules
-wwwroot/lib
+**/*node_modules
+**/*wwwroot/lib
 **/*.rest
 bin
 obj
