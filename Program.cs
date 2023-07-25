@@ -8,12 +8,6 @@ var policyName = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Load and inject .env files & values
-DotEnv.Load();
-
-// Add services to the container.
-builder.Services.AddRazorPages();
-
 // Allow CORS: https://www.stackhawk.com/blog/net-cors-guide-what-it-is-and-how-to-enable-it/#enable-cors-and-fix-the-problem
 builder.Services.AddCors(options =>
 {
@@ -27,6 +21,12 @@ builder.Services.AddCors(options =>
                 .AllowAnyHeader();
         });
 });
+
+// Load and inject .env files & values
+DotEnv.Load();
+
+// Add services to the container.
+builder.Services.AddRazorPages();
 
 builder.Services.ConfigureAirtable();
 builder.Services.ConfigureNeo4j();
@@ -51,6 +51,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(policyName);
 app.UseStaticFiles();
 
 app.UseRouting();
