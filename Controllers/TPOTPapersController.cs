@@ -10,6 +10,7 @@ using CodeMechanic.Neo4j.Repos;
 using CodeMechanic.PuppeteerExtensions;
 using CodeMechanic.Reflection;
 using CodeMechanic.Types;
+using Htmx;
 using Insight.Database;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
@@ -18,6 +19,9 @@ using NSpecifications;
 using PuppeteerSharp;
 using TPOT_Links.Models;
 using TPOT_Links.Pages.Sandbox;
+using System.Web;
+
+// using System.Web.Mvc;
 
 namespace tpot_links_seeder.Controllers;
 //
@@ -75,7 +79,7 @@ public partial class TPOTPaperController : ControllerBase
     }
 
     [HttpPost(nameof(SearchByRegex))]
-    public async Task<IEnumerable<Paper>> SearchByRegex([FromBody] PaperSearch search_parameters)
+    public async Task<IActionResult> SearchByRegex([FromBody] PaperSearch search_parameters)
     {
         string expected_name = "SearchByRegex.cypher";
         string query = await embeddedResources
@@ -107,10 +111,9 @@ public partial class TPOTPaperController : ControllerBase
 
         var papers = await neo4JRepo.SearchNeo4J<Paper>(query, search_parameters);
 
-        if (true)
-            return papers;
-        // else
-        //     return Content("<h2>Hello, From Named Route</h2>");
+        return Request.IsHtmx() 
+            ? Content("<h2>Hello, From Named Route</h2>") 
+            : Ok(papers);
     }
 
     [HttpPost(nameof(SaveLog))]

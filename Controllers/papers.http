@@ -14,3 +14,10 @@ content-type: application/json
 "term": "Faith",
 "limit": 10
 }
+
+###
+
+GET https://localhost:5002/api/car
+
+
+###

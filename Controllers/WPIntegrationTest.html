@@ -29,13 +29,16 @@
             <div x-data="{ open: false }">
                 <button @click="open = !open">Expand</button>
              
-                <span x-show="open">
+                <span class="flex" x-show="open">
                     <div hx-target="this">
                 <button hx-get="https://tpot-links-mkii-production.up.railway.app/api/car"
                         hx-swap="outerHTML"
+                        hx-headers="{'Access-Control-Allow-Origin': 'https://tpot-links-mkii-production.up.railway.app'}"
             >
                     Click Me (Controller)
                 </button>
+
+               
             </div>
                 </span>
             </div>
