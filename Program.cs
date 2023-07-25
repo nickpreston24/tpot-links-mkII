@@ -4,6 +4,8 @@ using CodeMechanic.Neo4j.Repos;
 using TPOT_Links.Controllers;
 using TPOT_Links.Pages.Admin.Emails;
 
+var policyName = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Load and inject .env files & values
@@ -12,13 +14,27 @@ DotEnv.Load();
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+// Allow CORS: https://www.stackhawk.com/blog/net-cors-guide-what-it-is-and-how-to-enable-it/#enable-cors-and-fix-the-problem
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: policyName,
+        builder =>
+        {
+            builder
+                // .WithOrigins("http://localhost:3000", "tpot-links-mkii")
+                .AllowAnyOrigin()
+                .WithMethods("GET")
+                .AllowAnyHeader();
+        });
+});
+
 builder.Services.ConfigureAirtable();
 builder.Services.ConfigureNeo4j();
 
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddTransient<INeo4JRepo, Neo4JRepo>();
+builder.Services.AddTransient<ICarService, CarService>();
 
 builder.Services.AddControllers();
 

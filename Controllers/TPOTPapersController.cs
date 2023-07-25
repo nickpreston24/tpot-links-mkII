@@ -106,14 +106,18 @@ public partial class TPOTPaperController : ControllerBase
         // query.Dump("query found: ");
 
         var papers = await neo4JRepo.SearchNeo4J<Paper>(query, search_parameters);
-        return papers;
+
+        if (true)
+            return papers;
+        // else
+        //     return Content("<h2>Hello, From Named Route</h2>");
     }
 
-    // [HttpPost(nameof(SearchPapers))]
-    // public async Task<string> SearchPapers([FromBody] PaperSearch paperapisearch)
-    // {
-    //     return paperapisearch.Title;
-    // }
+    [HttpPost(nameof(SaveLog))]
+    public async Task<string> SaveLog([FromBody] LogRecord log_record)
+    {
+        return string.Empty;
+    }
 
     [HttpGet(nameof(GetCommentsFromLocalHtml))]
     public async Task<List<FacebookComment>> GetCommentsFromLocalHtml()
