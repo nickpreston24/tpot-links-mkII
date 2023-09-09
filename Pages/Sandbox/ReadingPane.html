@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html data-theme="corporate" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.50.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+
+
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script src="https://unpkg.com/htmx.org@1.8.5"></script>
+
+    <title>Reading Pane</title>
+</head>
+
+<body x-data="setup()">
+
+
+
+
+    <div class="drawer drawer-end">
+        <input id="reader-drawer" type="checkbox" class="drawer-toggle" />
+
+        <!-- DRAWER -->
+        <div class="drawer-content">
+            <!-- Page content here -->
+
+            <template x-for="post in posts">
+                <div class="flex flex-row items-center justify-center gap-2">
+
+                    <section class="max-h-full hover:max-h-screen border-2 border-accent"
+                        x-intersect.threshold.30="post.has_been_read = true">
+
+                        <div class="flex flex-col items-center justify-center">
+
+                            <div class="flex flex-center hero min-h-screen bg-base-200">
+                                <div class="hero-content flex-col lg:flex-row-reverse">
+                                    <div>
+                                        <h1 x-text="post.title" class="text-5xl font-bold"></h1>
+
+
+
+                                        <div class="flex flex-col gap-2">
+                                            <template x-for="text in post.contents.split(/\n/)">
+                                                <p x-text="text" class="py-6"></p>
+                                            </template>
+                                        </div>
+
+
+                                        <input type="checkbox" x-model="post.has_been_read"
+                                            :checked="post.has_been_read"
+                                            class="checkbox checkbox-accent checkbox-lg" />
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- <div x-intersect.exit="show_drawer = false"></div> -->
+
+
+
+                    </section>
+
+                </div>
+            </template>
+
+
+            <section>
+
+                <div>
+
+                    <h1>Completed Teachings: </h1>
+                    <div class="flex flex-row items-center justify-center gap-2">
+                        <template x-for="post in posts">
+                            <div>
+
+                                <h2 x-text="post.title"></h2>
+                                <input type="checkbox" x-model="post.has_been_read" :checked="post.has_been_read"
+                                    class="checkbox checkbox-accent checkbox-lg" />
+                                <!-- <p x-text="post.has_been_read ? 'Y':'N'"></p> -->
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+
+            <section hidden class="h-screen">
+                ...
+            </section>
+
+            <section hidden class="h-screen bg-pink-300" x-intersect:enter="show_drawer = true">
+                <!-- <div x-show="show_drawer" x-transition> -->
+
+                <!-- <div class="bg-accent h-10 w-32" x-text="show_drawer"></div> -->
+
+                <!-- <label :for="drawer_toggled" class="btn btn-primary drawer-button">
+                        Open drawer
+                    </label> -->
+
+                <!-- </div> -->
+            </section>
+
+
+
+
+            <section hidden x-intersect:enter="show_drawer = true" class="h-screen">
+                ...
+            </section>
+
+            <section hidden class="h-screen">
+                ...
+            </section>
+
+        </div>
+        <div :class="drawer_toggled">
+            <label for="reader-drawer" class="drawer-overlay"></label>
+            <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                <!-- Sidebar content here -->
+                <li><a>Sidebar Item 1</a></li>
+                <li><a>Sidebar Item 2</a></li>
+            </ul>
+        </div>
+
+
+
+
+
+
+    </div>
+</body>
+
+
+<script>
+    function setup() {
+        const paragraphs = 10
+        return {
+            message: "Main page",
+
+            show_drawer: false,
+            get drawer_toggled() {
+                return this.show_drawer ? 'drawer-side' : ""
+            },
+
+            posts: [
+                {
+                    title: 'What is Faith?',
+                    has_been_read: false,
+                    contents: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus odio laboriosam at ut vero alias possimus, omnis aperiam quae cum, enim, laborum ullam saepe velit inventore amet blanditiis fugit! Id.
+                    `.repeat(paragraphs)
+                },
+
+                {
+                    has_been_read: false,
+
+                    title: 'Repentance',
+                    contents: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo, iste architecto cupiditate in iure debitis porro consequuntur vel corrupti neque. Vero provident culpa modi! Esse harum culpa aspernatur qui exercitationem!
+                    `.repeat(paragraphs)
+
+                },
+
+                {
+                    has_been_read: false,
+
+                    title: 'Obedience',
+                    contents: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum accusamus voluptatem inventore! Beatae, totam! Laboriosam ullam dignissimos porro sapiente dicta, placeat temporibus consequuntur consectetur perferendis maxime debitis repudiandae, iste tempora?
+                    `.repeat(paragraphs)
+                },
+
+                {
+                    has_been_read: false,
+
+                    title: 'Holy Waters',
+                    contents: `Lorem ipsum dolor sit amet consectetur adipisicing elit. A qui blanditiis illo vitae dolores perspiciatis voluptates accusamus odio adipisci, laudantium voluptas nulla dolore, vel eaque. Placeat eos aliquam ipsa esse!
+                    `.repeat(paragraphs),
+                }
+            ]
+        };
+    }
+</script>
+
+</html>

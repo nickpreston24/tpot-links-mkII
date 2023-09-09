@@ -1,0 +1,269 @@
+OnGetAllPartsFromCSV()
+# of lines:
+        
+                1980
+OnGetAllPartsFromCSV()
+headers:
+        
+                [
+  "Name",
+  "Cost",
+  "Attachments",
+  "URL",
+  "Calibers",
+  "WeightInOz",
+  "Demo",
+  "Type",
+  "Kind",
+  "Notes",
+  "Combo",
+  "ComboCost",
+  "Builds",
+  "Requests",
+  "Donations",
+  "CreatedBy",
+  "Created",
+  "LastModifiedBy",
+  "LastModified",
+  "ProductCode",
+  "Id",
+  "Roles"
+]
+OnGetAllPartsFromCSV()
+first lines:
+        
+                [
+  "Epoch 18650 3500mAh 8A USB Rechargeable Protected Battery - 18650 Battery Store,$12.99,Social media image from www.18650batterystore.com on 2023-07-29 at 1.38.47 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/fqqY2L1PnAGnC_1ZW2VZrg/QkvtYnMGL_EA-rEkTRTw8XBCT27kcDaLHVsF7dcYQnC7ekMajhVry2rp0HMoX5ILBhAr8FHBTaBbECUOSkBzAYbrwjhUA9rMSfv-Vq70lW4aXj5zt0TCtgikXU4Q8FeY0k5_ea8_z0QfQ2dvU43QcwBk1nrB99pKmWh7tdd-oQxcGzVucilOzLgMlkDOuFPC/jqavGGuNMy-OC5qh1TwF0ZPdNz6XvCF_noqZ07n0H0c),https://www.18650batterystore.com/collections/18650-batteries/products/epoch-18650-3500mah-usb-pcb,,,,,,,,$0.00,,,,Nicholas Preston,7/29/2023 1:38pm,Nicholas Preston,7/29/2023 1:38pm,,1005,",
+  "5W CIGS Solar Cloth - Seeed Studio,$39.90,Social media image from www.seeedstudio.com on 2023-07-29 at 1.14.47 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/EBqVaB9EaPDdvL5Pxg_X_Q/p_KUMCPzryL5R-3nG6ubKk9xabGSQm4RkMk_bFsuVFNU-girC4f88SiudR6ENdkr3kEHznNhIvOzw7uPlJYlxAkhwmkIpAADSYxAWT48dcWeK4sciUn0QWLI-QWD57fKfBLmKyIAZ-7WIDgZ4dGLM8LZIHIp7zil1aaiMcQxfNM/o-II4s2QTgDWFQMLoU46NhoPF4Akp_mxBgb6yX38Luk),https://www.seeedstudio.com/5W-CIGS-Solar-Cloth.html?utm_source=blog&utm_medium=blog,,,,,,,,$0.00,,,,Nicholas Preston,7/29/2023 1:15pm,Nicholas Preston,7/29/2023 1:15pm,,1004,",
+  "Epoch 18650 3500mAh 8A USB Rechargeable Protected Battery - 18650 Battery Store,,Social media image from www.18650batterystore.com on 2023-07-29 at 1.09.04 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/ppdwrALlSHnPvHxvhvtMUQ/QaXLPtm50JnQRb3aAqbIjLnvSac0fVNQOnMxhMbSG2s63fWNH1UMlkHOG8lgdUmBiSGIDutBulxt3UwKQT2fdcqu5en-uKSuCJiZC_StZ0j9-0oXKGDzwaY8loZHwpMdEEPTcduXjkgN5GiUhhS7dczUbzhjicoAymXQpcOJ2CM9ThsCQ9TZczjt3KBxlU0M/ulzkYAyOTIr5D8j4jtgxzkqNiu48YgtU3RIY7dZ85Mk),https://www.18650batterystore.com/collections/18650-batteries/products/epoch-18650-3500mah-usb-pcb,,,,,,,,$0.00,,,,Nicholas Preston,7/29/2023 1:09pm,Nicholas Preston,7/29/2023 1:09pm,,1003,",
+  "Wraith Mini Thermal Riflescope,\"$2,099.90\",Social media image from sightmark.com on 2023-07-27 at 1.59.13 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/vUmKySVeKrc5GilG63VE6A/SGsrd7vWBUo-E7p3S1nw80RjnUJ9Zq5z3lm4vLtybu7cTuPRE0JRQIXOJWpy9t9Xjva9p9H1ajxJSvgvCponwOHSEc8QFbLqo96Ig7YGEutkA79RThCTVvdbUSFJz2wdIPAt3BcNoN0Pl0JWkwczY2D3Wy6UpKEu5vcUFwX41bE/EhcdRqTFxYy09Ld3s8EfDhtp18K6SDir7K-SEG1JCKY),https://sightmark.com/products/wraiththermal?pr_prod_strat=use_description&pr_rec_id=65d8ed83e&pr_rec_pid=8153931415789&pr_ref_pid=7327934546157&pr_seq=uniform,,,,,,,,$0.00,,,,Nicholas Preston,7/27/2023 1:59pm,Nicholas Preston,7/27/2023 1:59pm,,1002,",
+  "\"12\"\" 6mm ARC Barrel | 416R Stainless Steel Barrel | AR Barrel\",$235.00,Social media image from faxonfirearms.com on 2023-07-27 at 1.49.16 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/19DIQ8mv5mwbWqikUePGOA/mz_of_cj8TdZ84vQUKcDEhLEcUOKibYv57U8TLw4gfi-XARE9ABD18I5dhAg4qdZ4fmQilDitEWWCbEiZfArCZiAiW813zUHBA3WnD6x6tqkIekiI-EB2WE4P0Q3h8NFgV-cmhba7uh23kzSCA-o83Ex9IkDJPJkc4mQVuIenNA/v3WsaCQNz-3rgLKPUgoqzcGQKmRyZ1-OcvN2nGgHBiE),https://faxonfirearms.com/faxon-match-series-12-5-gunner-6mm-arc-carbine-length-416r-nitride-5r-nickel-teflon-extension-1-7-5-twist-ar-15-barrel/,6mm ARC,,,,,,,$0.00,,,,Nicholas Preston,7/27/2023 1:49pm,Nicholas Preston,7/27/2023 1:49pm,,1001,",
+  "\"6.8SPC. 6.8MM 6.8, .224 Valkyrie, Magazine, 6.8 Magazine, Mag,\",$39.00,Social media image from www.precisionreflex.com on 2023-07-27 at 1.00.49 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/bfqZEPe-YB2LB7fpV97TRw/pgGy1wJWrwRMiUrWw4_1Qww-dH5hs_vD_ga8e4xfAOCdis-L2XtIHzUUAiVDqXzm5ZFmM-fr2h0spatk7f97-plnF7bKTgUwGYC8hGZMgOkWjp04m9L-T_w1rN7P0gJwNONF2aqc_18K7hjoTaLFfC5CGxUG1y-Mz1qnfTPIj0U/oqL-94bE4p4X8sfNTB_hQEsx1Z56TEOxlIoEMhOW5-s),https://www.precisionreflex.com/magazines/2184-68mm-224-valkyrie-25-round-capacity-magazine.html,.224 Valkyrie,,,,,,,$0.00,,,,Nicholas Preston,7/27/2023 1:01pm,Nicholas Preston,7/27/2023 1:01pm,,1000,",
+  "E-Lander 6.8 SPC 24 Round Magazine | Black | Palmetto State Armory,$19.99,Social media image from palmettostatearmory.com on 2023-07-27 at 12.58.47 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/17iA1h-U0bRPRuUQIOGMhw/r6ujy91rluTrRNGXGCYdLyNU-kBmqe2FbESjagitAnp-jbzPTrKbheQOZvKz4tGofnMkXmhu6ZhnYZq7W10tcsfkrMlXTu4nWo36GepAdo26UzpPZi-3PZSjTZt8AdULJGadSW2qYFj2FRz_eSBR_015vdRbLExEcsYftiEaHTs/FRKwUD2OtQ_WSmbvODCEHHyUz1qSwBM8ZjXsCC35OyI),https://palmettostatearmory.com/e-lander-6-8-spc-24-round-magazine-black-f-99913460.html,.224 Valkyrie,,,,,,,$0.00,,,,Nicholas Preston,7/27/2023 12:59pm,Nicholas Preston,7/27/2023 12:59pm,5165501850,999,",
+  "BROWNELLS AR-15/M16 ACCU-WEDGE | Brownells,,Social media image from www.brownells.com on 2023-07-25 at 12.47.13 AM.png (https://v5.airtableusercontent.com/v1/19/19/1690689600000/z46EYqs67Rm4Uw6xvSrnog/0glx9TnnXut2uhE0i1SHxMX8yuhq6q0S23drK-h17-ivblqmU_PcVtmnlw61ALdYAscnkbc-XIdWBUlyVMeHplR8SKSFqz8SZQfRozVvYEOxqk5nogn013SjCTszW-o8cHbY1POXUP-uy5KysOvkLLSFz9vNs6JxQWauHYp36xs/dPE6i4GIdM9CzYSzJK7XPw3NHI4-aSOR2O0dQzdEOD4),https://www.brownells.com/gun-parts/rifle-parts/rifle-receivers-parts/ar-15m16-accu-wedge/,,,,,,,,$0.00,,,,Nicholas Preston,7/25/2023 12:47am,Nicholas Preston,7/25/2023 12:47am,,998,",
+  "BROWNELLS RMR SLIDE FOR GLOCK®20 GEN 3 SS NITRIDE | Brownells,$208.99,Social media image from www.brownells.com on 2023-07-24 at 11.57.00 PM.png (https://v5.airtableusercontent.com/v1/19/19/1690689600000/KNxtSUE-NDGlmS21BUp5bA/VKco2Jjih4GE0QDT9E2luf3AAlxBVDW8Yjg0MP41PF-_veEDg8ERjTXrtqMy1kqJ6I5cXjaDPcRabhJdLLH5U60ADXGQXVb3rMCwZqXoUjnz3IRrJCJQffdAT8bysv4JCLAH8yLdUNvJtRn_xymr8WcbNvY6FnwnrJe8m4mVPRM/FqWZLCL7sorf9md1kC9xW37TP2Q6BLt2tB5iJH2g3DQ),https://www.brownells.com/gun-parts/handgun-parts/handgun-slides-parts/rmr-slide-for-glock20-gen-3-ss-nitride/,10mm,,,,,,,$0.00,,,,Nicholas Preston,7/24/2023 11:57pm,Nicholas Preston,7/24/2023 11:57pm,,997,",
+  "Sightmark Wraith 4K Mini 2-16x32 Digital Riflescope – Outdoor Legacy,$799.00,Social media image from outdoorlegacygear.com on 2023-07-22 at 5.52.41 AM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/aFccjL9CzXQL5W0_tx4rOg/NRGFBEUO2pdiwOQXAK4XE9H1x8wZvMpIoJL4V7nTDNuS4RdVah3c19ib2IYwGLJ0z4AYzUa4GGUcdMuVME3_o5rvqKAyb2H1ALHT5JNExWCR_qu6pY0xgOvtYEsDnFVTp50-P0TU7NfOxSnxFD8YIuZv8bwZopshLrTV1c__CW8/pX1GYoJ8fHV2FPL1oWDNBYDgRsTD0N_Z8xkocx9cpgo),https://outdoorlegacygear.com/products/sightmark-wraith-4k-mini-2-16x32-digital-riflescope?variant=39435062771786,,,,,,,,$0.00,Glock Mobster (Nick's - Banish variant),,,Nicholas Preston,7/22/2023 5:52am,Nicholas Preston,7/22/2023 5:53am,,996,"
+]
+OnGetAllPartsFromCSV()
+parts from csv:
+        
+                {
+  "Id": null,
+  "createdTime": "0001-01-01T00:00:00",
+  "Name": "Epoch 18650 3500mAh 8A USB Rechargeable Protected Battery - 18650 Battery Store",
+  "Kind": null,
+  "Type": null,
+  "Notes": null,
+  "ProductCode": null,
+  "Cost": 0.0,
+  "WeightInOz": 0.0,
+  "Attachments": null,
+  "Calibers": null,
+  "Builds": null,
+  "Url": null,
+  "Demo": null,
+  "ComboCost": 0,
+  "CreatedBy": null,
+  "Created": "0001-01-01T00:00:00+00:00",
+  "Combo": null,
+  "LastModifiedBy": null,
+  "LastModified": "0001-01-01T00:00:00+00:00"
+}
+OnGetAllPartsFromCSV()
+total found parts:
+        
+                220
+
+dotnet watch ⌚ Exited
+dotnet watch ⌚ File changed: /home/nick/Desktop/projects/personal/nugs-net6/Experimental/RegexExtensions.cs
+dotnet watch 🚀 Started
+/home/nick/Desktop/projects/personal/nugs-net6/DotEnv.cs(52,15): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [/home/nick/Desktop/projects/personal/nugs-net6/nugsnet6.csproj]
+/home/nick/Desktop/projects/personal/nugs-net6/Models/NugsSettings.cs(8,18): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [/home/nick/Desktop/projects/personal/nugs-net6/nugsnet6.csproj]
+/home/nick/Desktop/projects/personal/nugs-net6/Pages/Error.cshtml.cs(11,18): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [/home/nick/Desktop/projects/personal/nugs-net6/nugsnet6.csproj]
+/home/nick/Desktop/projects/personal/nugs-net6/Pages/Loadouts/Index.cshtml.cs(24,22): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [/home/nick/Desktop/projects/personal/nugs-net6/nugsnet6.csproj]
+/home/nick/Desktop/projects/personal/nugs-net6/Pages/Loadouts/Index.cshtml.cs(48,56): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [/home/nick/Desktop/projects/personal/nugs-net6/nugsnet6.csproj]
+/home/nick/Desktop/projects/personal/nugs-net6/Pages/Loadouts/Index.cshtml.cs(48,22): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [/home/nick/Desktop/projects/personal/nugs-net6/nugsnet6.csproj]
+/home/nick/Desktop/projects/personal/nugs-net6/Extensions/Neo4jExtensions.cs(78,91): warning CS0436: The type 'CustomDictionaryConverter' in '/home/nick/Desktop/projects/personal/nugs-net6/Extensions/Neo4jExtensions.cs' conflicts with the imported type 'CustomDictionaryConverter' in 'CodeMechanic.RazorHAT, Version=0.0.1.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in '/home/nick/Desktop/projects/personal/nugs-net6/Extensions/Neo4jExtensions.cs'. [/home/nick/Desktop/projects/personal/nugs-net6/nugsnet6.csproj]
+/home/nick/Desktop/projects/personal/nugs-net6/Program.cs(42,9): warning ASP0014: Suggest using top level route registrations instead of UseEndpoints [/home/nick/Desktop/projects/personal/nugs-net6/nugsnet6.csproj]
+Load()
+List`1:
+        Enumerator
+                [
+  {
+    "Left": "NEO4J_URI",
+    "Right": "neo4j+s://05c14156.databases.neo4j.io"
+  },
+  {
+    "Left": "NEO4J_USER",
+    "Right": "neo4j"
+  },
+  {
+    "Left": "NEO4J_PASSWORD",
+    "Right": "zc8p-EEheXd8PEPiz40b9ARqVRnS68fR0aieLBL9IYI"
+  },
+  {
+    "Left": "NEO4J_DBNAME",
+    "Right": "nugs"
+  },
+  {
+    "Left": "AIRTABLE_API_KEY",
+    "Right": "keyl5Wo5ETa4HR4tt"
+  },
+  {
+    "Left": "NUGS_BASE_KEY",
+    "Right": "app33DDBeyXEGRflo"
+  },
+  {
+    "Left": "NUGS_LOADOUTS_TABLE",
+    "Right": "tbl0YHxWPZXxD9QmR"
+  },
+  {
+    "Left": "NUGS_PAT",
+    "Right": "pat1V8rf7PWExWmzB.b6493ef4ffcf1b958092da934a0247117f58bcf4b95da503a003e6b12765fb95"
+  },
+  {
+    "Left": "https",
+    "Right": "://airtable.com/create/tokens"
+  },
+  {
+    "Left": "NIXPACKS_CSHARP_SDK_VERSION",
+    "Right": "7.0"
+  },
+  {
+    "Left": "MYSQL_CONNECTIONSTRING",
+    "Right": "Server=containers-us-west-168.railway.app;User ID=root;Password=Xbq90AHTs56c9xMX5ccx;Database=railway;Port=5483"
+  }
+]
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://127.1.1.0:8080
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /home/nick/Desktop/projects/personal/nugs-net6
+warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]
+      Failed to determine the https port for redirect.
+OnGetAllPartsFromCSV()
+# of lines:
+        
+                1980
+OnGetAllPartsFromCSV()
+headers:
+        
+                [
+  "Name",
+  "Cost",
+  "Attachments",
+  "URL",
+  "Calibers",
+  "WeightInOz",
+  "Demo",
+  "Type",
+  "Kind",
+  "Notes",
+  "Combo",
+  "ComboCost",
+  "Builds",
+  "Requests",
+  "Donations",
+  "CreatedBy",
+  "Created",
+  "LastModifiedBy",
+  "LastModified",
+  "ProductCode",
+  "Id",
+  "Roles"
+]
+OnGetAllPartsFromCSV()
+first lines:
+        
+                [
+  "Epoch 18650 3500mAh 8A USB Rechargeable Protected Battery - 18650 Battery Store,$12.99,Social media image from www.18650batterystore.com on 2023-07-29 at 1.38.47 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/fqqY2L1PnAGnC_1ZW2VZrg/QkvtYnMGL_EA-rEkTRTw8XBCT27kcDaLHVsF7dcYQnC7ekMajhVry2rp0HMoX5ILBhAr8FHBTaBbECUOSkBzAYbrwjhUA9rMSfv-Vq70lW4aXj5zt0TCtgikXU4Q8FeY0k5_ea8_z0QfQ2dvU43QcwBk1nrB99pKmWh7tdd-oQxcGzVucilOzLgMlkDOuFPC/jqavGGuNMy-OC5qh1TwF0ZPdNz6XvCF_noqZ07n0H0c),https://www.18650batterystore.com/collections/18650-batteries/products/epoch-18650-3500mah-usb-pcb,,,,,,,,$0.00,,,,Nicholas Preston,7/29/2023 1:38pm,Nicholas Preston,7/29/2023 1:38pm,,1005,",
+  "5W CIGS Solar Cloth - Seeed Studio,$39.90,Social media image from www.seeedstudio.com on 2023-07-29 at 1.14.47 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/EBqVaB9EaPDdvL5Pxg_X_Q/p_KUMCPzryL5R-3nG6ubKk9xabGSQm4RkMk_bFsuVFNU-girC4f88SiudR6ENdkr3kEHznNhIvOzw7uPlJYlxAkhwmkIpAADSYxAWT48dcWeK4sciUn0QWLI-QWD57fKfBLmKyIAZ-7WIDgZ4dGLM8LZIHIp7zil1aaiMcQxfNM/o-II4s2QTgDWFQMLoU46NhoPF4Akp_mxBgb6yX38Luk),https://www.seeedstudio.com/5W-CIGS-Solar-Cloth.html?utm_source=blog&utm_medium=blog,,,,,,,,$0.00,,,,Nicholas Preston,7/29/2023 1:15pm,Nicholas Preston,7/29/2023 1:15pm,,1004,",
+  "Epoch 18650 3500mAh 8A USB Rechargeable Protected Battery - 18650 Battery Store,,Social media image from www.18650batterystore.com on 2023-07-29 at 1.09.04 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/ppdwrALlSHnPvHxvhvtMUQ/QaXLPtm50JnQRb3aAqbIjLnvSac0fVNQOnMxhMbSG2s63fWNH1UMlkHOG8lgdUmBiSGIDutBulxt3UwKQT2fdcqu5en-uKSuCJiZC_StZ0j9-0oXKGDzwaY8loZHwpMdEEPTcduXjkgN5GiUhhS7dczUbzhjicoAymXQpcOJ2CM9ThsCQ9TZczjt3KBxlU0M/ulzkYAyOTIr5D8j4jtgxzkqNiu48YgtU3RIY7dZ85Mk),https://www.18650batterystore.com/collections/18650-batteries/products/epoch-18650-3500mah-usb-pcb,,,,,,,,$0.00,,,,Nicholas Preston,7/29/2023 1:09pm,Nicholas Preston,7/29/2023 1:09pm,,1003,",
+  "Wraith Mini Thermal Riflescope,\"$2,099.90\",Social media image from sightmark.com on 2023-07-27 at 1.59.13 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/vUmKySVeKrc5GilG63VE6A/SGsrd7vWBUo-E7p3S1nw80RjnUJ9Zq5z3lm4vLtybu7cTuPRE0JRQIXOJWpy9t9Xjva9p9H1ajxJSvgvCponwOHSEc8QFbLqo96Ig7YGEutkA79RThCTVvdbUSFJz2wdIPAt3BcNoN0Pl0JWkwczY2D3Wy6UpKEu5vcUFwX41bE/EhcdRqTFxYy09Ld3s8EfDhtp18K6SDir7K-SEG1JCKY),https://sightmark.com/products/wraiththermal?pr_prod_strat=use_description&pr_rec_id=65d8ed83e&pr_rec_pid=8153931415789&pr_ref_pid=7327934546157&pr_seq=uniform,,,,,,,,$0.00,,,,Nicholas Preston,7/27/2023 1:59pm,Nicholas Preston,7/27/2023 1:59pm,,1002,",
+  "\"12\"\" 6mm ARC Barrel | 416R Stainless Steel Barrel | AR Barrel\",$235.00,Social media image from faxonfirearms.com on 2023-07-27 at 1.49.16 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/19DIQ8mv5mwbWqikUePGOA/mz_of_cj8TdZ84vQUKcDEhLEcUOKibYv57U8TLw4gfi-XARE9ABD18I5dhAg4qdZ4fmQilDitEWWCbEiZfArCZiAiW813zUHBA3WnD6x6tqkIekiI-EB2WE4P0Q3h8NFgV-cmhba7uh23kzSCA-o83Ex9IkDJPJkc4mQVuIenNA/v3WsaCQNz-3rgLKPUgoqzcGQKmRyZ1-OcvN2nGgHBiE),https://faxonfirearms.com/faxon-match-series-12-5-gunner-6mm-arc-carbine-length-416r-nitride-5r-nickel-teflon-extension-1-7-5-twist-ar-15-barrel/,6mm ARC,,,,,,,$0.00,,,,Nicholas Preston,7/27/2023 1:49pm,Nicholas Preston,7/27/2023 1:49pm,,1001,",
+  "\"6.8SPC. 6.8MM 6.8, .224 Valkyrie, Magazine, 6.8 Magazine, Mag,\",$39.00,Social media image from www.precisionreflex.com on 2023-07-27 at 1.00.49 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/bfqZEPe-YB2LB7fpV97TRw/pgGy1wJWrwRMiUrWw4_1Qww-dH5hs_vD_ga8e4xfAOCdis-L2XtIHzUUAiVDqXzm5ZFmM-fr2h0spatk7f97-plnF7bKTgUwGYC8hGZMgOkWjp04m9L-T_w1rN7P0gJwNONF2aqc_18K7hjoTaLFfC5CGxUG1y-Mz1qnfTPIj0U/oqL-94bE4p4X8sfNTB_hQEsx1Z56TEOxlIoEMhOW5-s),https://www.precisionreflex.com/magazines/2184-68mm-224-valkyrie-25-round-capacity-magazine.html,.224 Valkyrie,,,,,,,$0.00,,,,Nicholas Preston,7/27/2023 1:01pm,Nicholas Preston,7/27/2023 1:01pm,,1000,",
+  "E-Lander 6.8 SPC 24 Round Magazine | Black | Palmetto State Armory,$19.99,Social media image from palmettostatearmory.com on 2023-07-27 at 12.58.47 PM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/17iA1h-U0bRPRuUQIOGMhw/r6ujy91rluTrRNGXGCYdLyNU-kBmqe2FbESjagitAnp-jbzPTrKbheQOZvKz4tGofnMkXmhu6ZhnYZq7W10tcsfkrMlXTu4nWo36GepAdo26UzpPZi-3PZSjTZt8AdULJGadSW2qYFj2FRz_eSBR_015vdRbLExEcsYftiEaHTs/FRKwUD2OtQ_WSmbvODCEHHyUz1qSwBM8ZjXsCC35OyI),https://palmettostatearmory.com/e-lander-6-8-spc-24-round-magazine-black-f-99913460.html,.224 Valkyrie,,,,,,,$0.00,,,,Nicholas Preston,7/27/2023 12:59pm,Nicholas Preston,7/27/2023 12:59pm,5165501850,999,",
+  "BROWNELLS AR-15/M16 ACCU-WEDGE | Brownells,,Social media image from www.brownells.com on 2023-07-25 at 12.47.13 AM.png (https://v5.airtableusercontent.com/v1/19/19/1690689600000/z46EYqs67Rm4Uw6xvSrnog/0glx9TnnXut2uhE0i1SHxMX8yuhq6q0S23drK-h17-ivblqmU_PcVtmnlw61ALdYAscnkbc-XIdWBUlyVMeHplR8SKSFqz8SZQfRozVvYEOxqk5nogn013SjCTszW-o8cHbY1POXUP-uy5KysOvkLLSFz9vNs6JxQWauHYp36xs/dPE6i4GIdM9CzYSzJK7XPw3NHI4-aSOR2O0dQzdEOD4),https://www.brownells.com/gun-parts/rifle-parts/rifle-receivers-parts/ar-15m16-accu-wedge/,,,,,,,,$0.00,,,,Nicholas Preston,7/25/2023 12:47am,Nicholas Preston,7/25/2023 12:47am,,998,",
+  "BROWNELLS RMR SLIDE FOR GLOCK®20 GEN 3 SS NITRIDE | Brownells,$208.99,Social media image from www.brownells.com on 2023-07-24 at 11.57.00 PM.png (https://v5.airtableusercontent.com/v1/19/19/1690689600000/KNxtSUE-NDGlmS21BUp5bA/VKco2Jjih4GE0QDT9E2luf3AAlxBVDW8Yjg0MP41PF-_veEDg8ERjTXrtqMy1kqJ6I5cXjaDPcRabhJdLLH5U60ADXGQXVb3rMCwZqXoUjnz3IRrJCJQffdAT8bysv4JCLAH8yLdUNvJtRn_xymr8WcbNvY6FnwnrJe8m4mVPRM/FqWZLCL7sorf9md1kC9xW37TP2Q6BLt2tB5iJH2g3DQ),https://www.brownells.com/gun-parts/handgun-parts/handgun-slides-parts/rmr-slide-for-glock20-gen-3-ss-nitride/,10mm,,,,,,,$0.00,,,,Nicholas Preston,7/24/2023 11:57pm,Nicholas Preston,7/24/2023 11:57pm,,997,",
+  "Sightmark Wraith 4K Mini 2-16x32 Digital Riflescope – Outdoor Legacy,$799.00,Social media image from outdoorlegacygear.com on 2023-07-22 at 5.52.41 AM.jpeg (https://v5.airtableusercontent.com/v1/19/19/1690689600000/aFccjL9CzXQL5W0_tx4rOg/NRGFBEUO2pdiwOQXAK4XE9H1x8wZvMpIoJL4V7nTDNuS4RdVah3c19ib2IYwGLJ0z4AYzUa4GGUcdMuVME3_o5rvqKAyb2H1ALHT5JNExWCR_qu6pY0xgOvtYEsDnFVTp50-P0TU7NfOxSnxFD8YIuZv8bwZopshLrTV1c__CW8/pX1GYoJ8fHV2FPL1oWDNBYDgRsTD0N_Z8xkocx9cpgo),https://outdoorlegacygear.com/products/sightmark-wraith-4k-mini-2-16x32-digital-riflescope?variant=39435062771786,,,,,,,,$0.00,Glock Mobster (Nick's - Banish variant),,,Nicholas Preston,7/22/2023 5:52am,Nicholas Preston,7/22/2023 5:53am,,996,"
+]
+ExtractFromCsv()
+final pattern:
+        
+                "(?<=^|,)(?<Name>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Cost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Attachments>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Url>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Calibers>(\"[^\"]*\")|([^,]*))(?=$|,)(?<WeightInOz>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Demo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Type>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Kind>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Notes>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Combo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ComboCost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Builds>(\"[^\"]*\")|([^,]*))(?=$|,)(?<CreatedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Created>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModifiedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModified>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ProductCode>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Id>(\"[^\"]*\")|([^,]*))(?=$|,)(?<createdTime>(\"[^\"]*\")|([^,]*))(?=$|,)"
+ExtractFromCsv()
+final pattern:
+        
+                "(?<=^|,)(?<Name>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Cost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Attachments>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Url>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Calibers>(\"[^\"]*\")|([^,]*))(?=$|,)(?<WeightInOz>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Demo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Type>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Kind>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Notes>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Combo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ComboCost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Builds>(\"[^\"]*\")|([^,]*))(?=$|,)(?<CreatedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Created>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModifiedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModified>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ProductCode>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Id>(\"[^\"]*\")|([^,]*))(?=$|,)(?<createdTime>(\"[^\"]*\")|([^,]*))(?=$|,)"
+ExtractFromCsv()
+final pattern:
+        
+                "(?<=^|,)(?<Name>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Cost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Attachments>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Url>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Calibers>(\"[^\"]*\")|([^,]*))(?=$|,)(?<WeightInOz>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Demo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Type>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Kind>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Notes>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Combo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ComboCost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Builds>(\"[^\"]*\")|([^,]*))(?=$|,)(?<CreatedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Created>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModifiedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModified>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ProductCode>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Id>(\"[^\"]*\")|([^,]*))(?=$|,)(?<createdTime>(\"[^\"]*\")|([^,]*))(?=$|,)"
+ExtractFromCsv()
+final pattern:
+        
+                "(?<=^|,)(?<Name>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Cost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Attachments>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Url>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Calibers>(\"[^\"]*\")|([^,]*))(?=$|,)(?<WeightInOz>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Demo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Type>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Kind>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Notes>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Combo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ComboCost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Builds>(\"[^\"]*\")|([^,]*))(?=$|,)(?<CreatedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Created>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModifiedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModified>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ProductCode>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Id>(\"[^\"]*\")|([^,]*))(?=$|,)(?<createdTime>(\"[^\"]*\")|([^,]*))(?=$|,)"
+ExtractFromCsv()
+final pattern:
+        
+                "(?<=^|,)(?<Name>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Cost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Attachments>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Url>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Calibers>(\"[^\"]*\")|([^,]*))(?=$|,)(?<WeightInOz>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Demo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Type>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Kind>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Notes>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Combo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ComboCost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Builds>(\"[^\"]*\")|([^,]*))(?=$|,)(?<CreatedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Created>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModifiedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModified>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ProductCode>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Id>(\"[^\"]*\")|([^,]*))(?=$|,)(?<createdTime>(\"[^\"]*\")|([^,]*))(?=$|,)"
+ExtractFromCsv()
+final pattern:
+        
+                "(?<=^|,)(?<Name>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Cost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Attachments>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Url>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Calibers>(\"[^\"]*\")|([^,]*))(?=$|,)(?<WeightInOz>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Demo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Type>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Kind>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Notes>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Combo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ComboCost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Builds>(\"[^\"]*\")|([^,]*))(?=$|,)(?<CreatedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Created>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModifiedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModified>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ProductCode>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Id>(\"[^\"]*\")|([^,]*))(?=$|,)(?<createdTime>(\"[^\"]*\")|([^,]*))(?=$|,)"
+ExtractFromCsv()
+final pattern:
+        
+                "(?<=^|,)(?<Name>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Cost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Attachments>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Url>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Calibers>(\"[^\"]*\")|([^,]*))(?=$|,)(?<WeightInOz>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Demo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Type>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Kind>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Notes>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Combo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ComboCost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Builds>(\"[^\"]*\")|([^,]*))(?=$|,)(?<CreatedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Created>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModifiedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModified>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ProductCode>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Id>(\"[^\"]*\")|([^,]*))(?=$|,)(?<createdTime>(\"[^\"]*\")|([^,]*))(?=$|,)"
+ExtractFromCsv()
+final pattern:
+        
+                "(?<=^|,)(?<Name>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Cost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Attachments>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Url>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Calibers>(\"[^\"]*\")|([^,]*))(?=$|,)(?<WeightInOz>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Demo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Type>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Kind>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Notes>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Combo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ComboCost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Builds>(\"[^\"]*\")|([^,]*))(?=$|,)(?<CreatedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Created>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModifiedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModified>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ProductCode>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Id>(\"[^\"]*\")|([^,]*))(?=$|,)(?<createdTime>(\"[^\"]*\")|([^,]*))(?=$|,)"
+ExtractFromCsv()
+final pattern:
+        
+                "(?<=^|,)(?<Name>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Cost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Attachments>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Url>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Calibers>(\"[^\"]*\")|([^,]*))(?=$|,)(?<WeightInOz>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Demo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Type>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Kind>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Notes>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Combo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ComboCost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Builds>(\"[^\"]*\")|([^,]*))(?=$|,)(?<CreatedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Created>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModifiedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModified>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ProductCode>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Id>(\"[^\"]*\")|([^,]*))(?=$|,)(?<createdTime>(\"[^\"]*\")|([^,]*))(?=$|,)"
+ExtractFromCsv()
+final pattern:
+        
+                "(?<=^|,)(?<Name>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Cost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Attachments>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Url>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Calibers>(\"[^\"]*\")|([^,]*))(?=$|,)(?<WeightInOz>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Demo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Type>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Kind>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Notes>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Combo>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ComboCost>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Builds>(\"[^\"]*\")|([^,]*))(?=$|,)(?<CreatedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Created>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModifiedBy>(\"[^\"]*\")|([^,]*))(?=$|,)(?<LastModified>(\"[^\"]*\")|([^,]*))(?=$|,)(?<ProductCode>(\"[^\"]*\")|([^,]*))(?=$|,)(?<Id>(\"[^\"]*\")|([^,]*))(?=$|,)(?<createdTime>(\"[^\"]*\")|([^,]*))(?=$|,)"
+OnGetAllPartsFromCSV()
+parts from csv:
+        
+                {
+  "Id": null,
+  "createdTime": "0001-01-01T00:00:00",
+  "Name": "Epoch 18650 3500mAh 8A USB Rechargeable Protected Battery - 18650 Battery Store",
+  "Kind": null,
+  "Type": null,
+  "Notes": null,
+  "ProductCode": null,
+  "Cost": 0.0,
+  "WeightInOz": 0.0,
+  "Attachments": null,
+  "Calibers": null,
+  "Builds": null,
+  "Url": null,
+  "Demo": null,
+  "ComboCost": 0,
+  "CreatedBy": null,
+  "Created": "0001-01-01T00:00:00+00:00",
+  "Combo": null,
+  "LastModifiedBy": null,
+  "LastModified": "0001-01-01T00:00:00+00:00"
+}
+OnGetAllPartsFromCSV()
+total found parts:
+        
+                220
+^Cinfo: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+dotnet watch 🛑 Shutdown requested. Press Ctrl+C again to force exit.
+
+nick@nick-framework:~/Desktop/projects/personal/nugs-net6$ 
+dotnet watch ⌚ Exited
+
+
