@@ -1,3 +1,6 @@
+using CodeMechanic.Extensions;
+using CodeMechanic.Types;
+
 public static class AirtableConfigurations
 {
     public static void ConfigureAirtable(this IServiceCollection services)
@@ -7,8 +10,10 @@ public static class AirtableConfigurations
 
         services.AddHttpClient<IAirtableRepo, AirtableRepo>(client =>
         {
-            client.BaseAddress = new Uri($"https://api.airtable.com/v0/{PAT}");
-            return new AirtableRepo(client, tpot_base_key, PAT);
+            client.BaseAddress = new Uri($"https://api.airtable.com/v0/{tpot_base_key}");
+            return new AirtableRepo(client
+                , tpot_base_key
+                , PAT);
         });
     }
 }

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Net.Http.Headers;
 using System.Text;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
@@ -51,8 +52,9 @@ public class IndexModel : HighSpeedPageModel
 
     public IndexModel(
         IEmbeddedResourceQuery embeddedResourceQuery
-        , IDriver driver)
-        : base(embeddedResourceQuery, driver)
+        , IDriver driver
+        , IAirtableRepo repo)
+        : base(embeddedResourceQuery, driver, repo)
     {
     }
 
@@ -122,28 +124,60 @@ public class IndexModel : HighSpeedPageModel
         , int limit = 20
     )
     {
-        partial_name.Dump("yo");
-        string query = await embeddedResourceQuery
-            .GetQueryAsync<IndexModel>(new StackTrace());
+        try
+        {
+            if (debug_mode)
+                partial_name.Dump("partial selected");
 
-        var category = search_by_categories ? CategoryNumber.ToString() : "";
-        var search_parameters = new PaperSearch
-                {
-                    regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
-                    term = term,
-                    category = category,
-                    limit = limit
-                }
-                .Dump("paper search")
-            ;
 
-        watch.Start();
+            // string personal_access_token = Environment.GetEnvironmentVariable("TPOT_PAT");
+            // string tpot_base_key = Environment.GetEnvironmentVariable("TPOT_BASE_KEY");
+            //
+            // var airtable_query = @$"https://api.airtable.com/v0/{tpot_base_key}/Regex_Patterns?maxRecords=3&view=Grid%20view";  
+            //
+            // using HttpClient http_client = new HttpClient();
+            // http_client.DefaultRequestHeaders.Authorization =
+            //     new AuthenticationHeaderValue("Bearer", personal_access_token);
 
-        var pages = await SearchNeo4J<Paper>(query, search_parameters);
-        watch.Stop();
 
-        return Partial(partial_name, pages);
-        // return Partial("_PaperList", pages);
+            var airtable_search = new AirtableSearch()
+            {
+                table_name = "Regex_Patterns",
+                // filterByFormula = true.ToString(),
+            };
+
+            // airtable_search.AsQuery().Dump("query");
+
+            var regexes_from_airtable = await airtable_repo
+                .SearchRecords<AirtableRegexPattern>(airtable_search, debug_mode: true);
+
+            string query = await embeddedResourceQuery
+                .GetQueryAsync<IndexModel>(new StackTrace());
+
+            var category = search_by_categories ? CategoryNumber.ToString() : "";
+            var search_parameters = new PaperSearch
+                    {
+                        regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
+                        term = term,
+                        category = category,
+                        // id = 1.ToString(),
+                        limit = limit
+                    }
+                    .Dump("paper search")
+                ;
+
+            // watch.Start();
+
+            var pages = await SearchNeo4J<Paper>(query, search_parameters);
+            // watch.Stop();
+
+            return Partial(partial_name, pages);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return Content(e.Message.Tag("b"));
+        }
     }
 
     public async Task<IActionResult> OnPostBulkCreatePapers(
@@ -160,10 +194,10 @@ public class IndexModel : HighSpeedPageModel
         }.AsList();
 
         string query = """
-            UNWIND $batch AS map
-            CREATE (pages:Page)
-            SET pages = map
-        """;
+                           UNWIND $batch AS map
+                           CREATE (pages:Page)
+                           SET pages = map
+                       """;
 
         var parameters = new
         {
@@ -223,10 +257,10 @@ public class IndexModel : HighSpeedPageModel
 
         /*SELECT users.username, group_concat(movies.name), count(movies.name)
 FROM user_fave_movies t1
-INNER JOIN user_fave_movies t2 ON (t2.movie_id = t1.movie_id) 
+INNER JOIN user_fave_movies t2 ON (t2.movie_id = t1.movie_id)
 INNER JOIN users ON users.user_id = t2.user_id
-INNER JOIN movies ON movies.id = t1.movie_id 
-WHERE t1.user_id = 1 
+INNER JOIN movies ON movies.id = t1.movie_id
+WHERE t1.user_id = 1
 AND t2.user_id <> 1
 */
 
@@ -265,10 +299,10 @@ AND t2.user_id <> 1
                 {
                     // <button class='btn btn-accent'>View</button>
                     sb.AppendLine($"""
-                        <span class="card-title text-2xl"><b>Name: </b>{next_user.FullName.Tag()}</span>
-                        <span class=""><b>Age: </b>{next_user.Age.ToString().Tag()}</span>
-                        <span class=""><b>Email: </b>{next_user.Email.Tag()}</span>
-                """.Tag("div", className: "card-body")
+                                           <span class="card-title text-2xl"><b>Name: </b>{next_user.FullName.Tag()}</span>
+                                           <span class=""><b>Age: </b>{next_user.Age.ToString().Tag()}</span>
+                                           <span class=""><b>Email: </b>{next_user.Email.Tag()}</span>
+                                   """.Tag("div", className: "card-body")
                     );
                     return sb;
                 })
@@ -296,6 +330,15 @@ AND t2.user_id <> 1
     {
         return IsSelected(panel_name) ? cssClass : null;
     }
+}
+
+public class AirtableRegexPattern
+{
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string Resolution { get; set; } = string.Empty;
+    public string Pattern { get; set; } = string.Empty;
+    public string RegexLink { get; set; } = string.Empty;
 }
 
 public class CardOptions

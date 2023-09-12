@@ -5,9 +5,11 @@ paper.Content =~ $regex
   OR paper.Title =~ $regex
   OR paper.Excerpt =~ $regex
   OR paper.Slug =~ $regex
-  // OR paper.Id =~ $regex
-  // OR paper.Categories =~ $regex
-RETURN *
+//  OR paper.Id = $id
+//   OR paper.Categories =~ $regex
+RETURN paper
+order by paper.Title
+
 LIMIT $limit
 
 

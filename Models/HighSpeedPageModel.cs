@@ -1,5 +1,5 @@
-/* 
-This class only exists to reduce boilerplate 
+/*
+This class only exists to reduce boilerplate
 
 and because I can'think of a better name
 
@@ -18,6 +18,7 @@ and because I can'think of a better name
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
 using CodeMechanic.Neo4j.Extensions;
+using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Neo4j.Driver;
 
@@ -31,6 +32,7 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
     protected readonly IEmbeddedResourceQuery embeddedResourceQuery;
     protected readonly IDriver driver;
     protected readonly IAirtableRepo airtable_repo;
+    protected readonly bool debug_mode = false;
 
     public HighSpeedPageModel(
         IEmbeddedResourceQuery embeddedResourceQuery
@@ -40,7 +42,8 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
     {
         this.embeddedResourceQuery = embeddedResourceQuery;
         this.driver = driver;
-        this.airtable_repo = repo;
+        airtable_repo = repo;
+        debug_mode = Environment.GetEnvironmentVariable("DEBUG_MODE").ToBoolean();
     }
 
     public async Task<IList<T>> SearchNeo4J<T>(
@@ -61,6 +64,7 @@ public abstract class HighSpeedPageModel : PageModel //, IQueryNeo4j, IQueryAirt
                 {
                     record.Values.Dump("record values");
                 }
+
                 return record.MapTo<T>();
             };
 

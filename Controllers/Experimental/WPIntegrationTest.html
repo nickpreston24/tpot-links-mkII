@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html data-theme="halloween" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.50.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://unpkg.com/htmx.org@1.8.5"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <title>What's Taters, Precious?</title>
+</head>
+
+<body>
+    <div x-data="setup()" class="flex flex-col items-center justify-center">
+
+        <div class="flex flex-center hero min-h-screen bg-base-200">
+            <div class="hero-content flex-col lg:flex-row-reverse">
+
+
+                    <span class="flex" >
+                        <div hx-target="this">
+                            <button class="btn btn-success" hx-get="https://tpot-links-mkii-production.up.railway.app/api/car"
+                                hx-swap="outerHTML"
+                                hx-headers="{'Access-Control-Allow-Origin': 'https://tpot-links-mkii-production.up.railway.app'}">
+                                Click Me (Controller)
+                            </button>
+
+                        </div>
+
+                        <div hx-target="this">
+
+                            <button class="btn btn-primary" hx-get="https://localhost:5002/api/car" hx-swap="outerHTML"
+                                hx-headers="{'HX-Request', 'HX-Request'}">
+                                Click Me (localhost)
+                            </button>
+                        </div>
+
+                        <div hx-target="this">
+                            <button 
+                                class="btn btn-ghost" 
+                                hx-get="https://tpot-links-mkii-test.up.railway.app/api/car"
+                                hx-swap="outerHTML"
+                                hx-headers="{'Access-Control-Allow-Origin': 'https://tpot-links-mkii-test.up.railway.app'}">
+                                Click Me (Test deployment)
+                            </button>
+                        </div>
+                    </span>
+
+
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+    function setup() {
+        return {
+            message: "Have a Potato Day! 🥔 ",
+        };
+    }
+</script>
+
+</html>

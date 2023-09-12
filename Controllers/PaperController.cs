@@ -19,7 +19,6 @@ using NSpecifications;
 using PuppeteerSharp;
 using TPOT_Links.Models;
 using TPOT_Links.Pages.Sandbox;
-using System.Web;
 
 // using System.Web.Mvc;
 
@@ -68,13 +67,14 @@ public partial class TPOTPaperController : ControllerBase
     //     public string Title { get; set; } = "What is Faith?";
     // }
 
-    // GET: api/Car
+    // GET: api/Paper
     [HttpGet]
     public IEnumerable<Paper> Get()
     {
         return new Paper()
         {
-            Title = "Test", Description = "Your api is working."
+            Title = "Test",
+            Description = "Your api is working."
         }.AsList();
     }
 
@@ -107,13 +107,12 @@ public partial class TPOTPaperController : ControllerBase
             query = System.IO.File.ReadAllText(found_file);
         }
 
-        // query.Dump("query found: ");
-
         var papers = await neo4JRepo.SearchNeo4J<Paper>(query, search_parameters);
 
-        return Request.IsHtmx() 
-            ? Content("<h2>Hello, From Named Route</h2>") 
+        return Request.IsHtmx()
+            ? Content("<h2>Hello, From Named Route</h2>")
             : Ok(papers);
+        // return Content("<h2>Hello, From Named Route</h2>");
     }
 
     [HttpPost(nameof(SaveLog))]
@@ -251,11 +250,11 @@ public partial class TPOTPaperController : ControllerBase
 
         // https://stackoverflow.com/questions/69200606/merge-with-unwind-issue-neo4j
         string query = """
-            WITH $batch AS batch
-            UNWIND batch as ind
-            MERGE (n:Paper{Title: ind.Title})
-            SET n += ind        
-        """;
+                           WITH $batch AS batch
+                           UNWIND batch as ind
+                           MERGE (n:Paper{Title: ind.Title})
+                           SET n += ind
+                       """;
 
         var created = await neo4JRepo.BulkCreateNodes<Paper>(query, parameters);
 

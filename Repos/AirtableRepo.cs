@@ -1,25 +1,32 @@
 using System.Net.Http.Headers;
 using CodeMechanic.Airtable;
+using CodeMechanic.Extensions;
 using CodeMechanic.Types;
 
 public class AirtableRepo : IAirtableRepo
 {
-    protected string base_id = string.Empty;
-
-    // protected string api_key = string.Empty;
-    protected string personal_access_token = string.Empty;
     private readonly HttpClient http_client;
 
-    public AirtableRepo(HttpClient client, string base_id = "", string personal_access_token = "")
+    private Dictionary<string, string> table_ids = new Dictionary<string, string>()
     {
-        this.base_id = base_id;
-        this.personal_access_token = personal_access_token;
-        this.http_client = client;
-        this.http_client.DefaultRequestHeaders.Authorization =
+        ["Regex_Patterns"] = "tlbSample1234" // todo: load all tables & ids
+    };
+
+    private readonly string base_id = string.Empty;
+
+    public AirtableRepo(HttpClient client
+        , string base_id = ""
+        , string personal_access_token = "")
+    {
+        http_client = client;
+        this.base_id = base_id.Dump("basid");
+        http_client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", personal_access_token);
     }
 
-    public async Task<List<T>> SearchRecords<T>(AirtableSearch search)
+    public async Task<List<T>> SearchRecords<T>(
+        AirtableSearch search
+        , bool debug_mode = false)
     {
         var (
             table_name,
@@ -39,23 +46,30 @@ public class AirtableRepo : IAirtableRepo
         if (string.IsNullOrEmpty(table_name))
             table_name = typeof(T).Name + "s";
 
+        if (debug_mode)
+            search.Dump("search");
+
         var response = await http_client
             .GetAsync(search
                 .With(my_search =>
                 {
-                    my_search.base_id = this.base_id;
-                    my_search.table_name = table_name;
+                    my_search.base_id = base_id;
+                    my_search.table_name = search.table_name;
                 })
+                .Dump("finalsearch")
                 .AsQuery()
             );
 
         response.EnsureSuccessStatusCode();
 
         var json = await response.Content.ReadAsStringAsync();
-        // Console.WriteLine("Here's the raw JSON:");
-        // Console.WriteLine(json);
+        if (debug_mode)
+        {
+            Console.WriteLine("Here's the raw JSON:");
+            Console.WriteLine(json);
+        }
 
-        var list = new RecordList<T>(json);
+        // var list = new RecordList<T>(json);
         var (_, records) = new RecordList<T>(json);
         return records;
     }

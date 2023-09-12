@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using CodeMechanic.Embeds;
+using CodeMechanic.Extensions;
 using CodeMechanic.RazorPages;
 
 namespace TPOT_Links.Pages.Tutorial;
@@ -12,9 +13,12 @@ public class IndexModel : HighSpeedPageModel
 
     public IndexModel(
         IEmbeddedResourceQuery embeddedResourceQuery
-        , IDriver driver) 
-    : base(embeddedResourceQuery, driver)
+        , IDriver driver
+        , IAirtableRepo repo
+        ) 
+    : base(embeddedResourceQuery, driver, repo)
     {
+        repo.Dump("my repo");
     }
 
     public void OnGet(

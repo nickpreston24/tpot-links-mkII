@@ -66,7 +66,7 @@ public class AirtableSearch
 
     public string AsQuery() 
     {
-        string query = $"https://api.airtable.com/v0/{base_id}/{table_name}?maxRecords={maxRecords}&filterByFormula={filterByFormula}"
+        string query = $"https://api.airtable.com/v0/{base_id}{table_name}?maxRecords={maxRecords}&filterByFormula={filterByFormula}"
         .Dump("generated query");
         return query;
     }
