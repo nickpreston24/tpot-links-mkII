@@ -1,6 +1,6 @@
 using Microsoft.Data.SqlClient;
 
-namespace TPOT_Links.Models;
+namespace TPOT_Links;
 
 public sealed record LogRecord
 {

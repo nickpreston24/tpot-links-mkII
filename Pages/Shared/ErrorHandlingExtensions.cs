@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using TPOT_Links.Models;
 
 namespace TPOT_Links.GlobalErrorHandling.Extensions
 {

@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using TPOT_Links.Models;
 
 namespace TPOT_Links.Controllers;
 

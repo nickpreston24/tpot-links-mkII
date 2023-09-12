@@ -1,6 +1,3 @@
-using CodeMechanic.Extensions;
-using CodeMechanic.Types;
-
 public static class AirtableConfigurations
 {
     public static void ConfigureAirtable(this IServiceCollection services)

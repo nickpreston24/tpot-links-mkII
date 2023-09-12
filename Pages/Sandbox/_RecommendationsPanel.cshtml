@@ -1,7 +1,6 @@
+@using Paper = TPOT_Links.Paper
 @using CodeMechanic.Types
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using TPOT_Links.Models
-@model List<TPOT_Links.Models.Paper>
+@model List<Paper>
 @{
     var papers = new Paper().AsList();
     PaperSearch search = new PaperSearch();

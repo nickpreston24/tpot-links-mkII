@@ -1,3 +1,5 @@
+namespace TPOT_Links;
+
 public class TPOTPaperCollection<T>
 {
     private string json;

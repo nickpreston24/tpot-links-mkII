@@ -1,4 +1,4 @@
-namespace TPOT_Links.Models;
+namespace TPOT_Links;
 
 public class Paper
 {
@@ -8,7 +8,6 @@ public class Paper
 
     public string Content { get; set; } = string.Empty;
     public string Rendered_Content { get; set; } = string.Empty;
-
     public string created { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;

@@ -2,8 +2,8 @@ using System.Text;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Neo4j.Extensions;
 using Neo4j.Driver;
-using TPOT_Links.Models;
-using Category = TPOT_Links.Models.Category;
+using TPOT_Links;
+using Category = TPOT_Links.Category;
 
 namespace CodeMechanic.Neo4j.Repos;
 

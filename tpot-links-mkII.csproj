@@ -19,6 +19,7 @@
     <EmbeddedResource Include="Pages\**\*.cypher"></EmbeddedResource>
     <EmbeddedResource Include="Pages\**\*.sql"></EmbeddedResource>
     <EmbeddedResource Include="Pages\**\*.html"></EmbeddedResource>
+    <EmbeddedResource Remove="tpot-links-seeder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,5 +47,29 @@
   <ItemGroup>
     <Folder Include="Pages\Admin\Shared\" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Remove="tpot-links-seeder\Controllers\Paper.cs" />
+    <Compile Remove="tpot-links-seeder\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Remove="tpot-links-seeder\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Remove="tpot-links-seeder\**" />
+  </ItemGroup>
+
+<!-- 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="tpot-links-seeder\nuget.config" />
+    <_ContentIncludedByDefault Remove="tpot-links-seeder\appsettings.Development.json" />
+    <_ContentIncludedByDefault Remove="tpot-links-seeder\appsettings.json" />
+    <_ContentIncludedByDefault Remove="tpot-links-seeder\Properties\launchSettings.json" />
+  </ItemGroup> -->
 
 </Project> 

@@ -2,7 +2,7 @@ using CodeMechanic.Diagnostics;
 using CodeMechanic.Types;
 using PuppeteerSharp;
 
-namespace CodeMechanic.PuppeteerExtensions;
+// namespace CodeMechanic.PuppeteerExtensions;
 
 /// <summary>
 /// Based on:

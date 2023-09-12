@@ -3,7 +3,6 @@ using CodeMechanic.Extensions;
 using CodeMechanic.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
-using TPOT_Links.Models;
 
 namespace TPOT_Links.Pages.Comments;
 

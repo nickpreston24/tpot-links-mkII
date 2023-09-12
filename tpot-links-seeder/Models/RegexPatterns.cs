@@ -1,4 +1,4 @@
-
+namespace TPOT_Links;
 
 public class RegexPatterns
 {

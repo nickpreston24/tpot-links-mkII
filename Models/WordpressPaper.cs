@@ -1,4 +1,4 @@
-namespace tpot_links_seeder;
+namespace TPOT_Links;
 
 public class WordpressPaper
 {
