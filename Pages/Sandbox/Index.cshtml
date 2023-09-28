@@ -41,44 +41,54 @@
         @* <pre x-text="routes"></pre> *@
 
 
-        <div
-            x-show="card_options.dev_mode" x-transition>
 
-            <label
-                class="swap">
-                <input type="checkbox"/>
-                <div class="swap-on">BLUE</div>
-                <div class="swap-off">RED</div>
-            </label>
+        @* swap example  *@
+        <template x-cloak x-if="card_options.dev_mode">
 
-            <pre x-text="view_mode"></pre>
-            <pre x-text="vals_to_include"></pre>
+            <div
+                x-transition>
 
-        </div>
+                <label
+                    class="swap">
+                    <input type="checkbox"/>
+                    <div class="swap-on">BLUE</div>
+                    <div class="swap-off">RED</div>
+                </label>
+
+                <pre x-text="view_mode"></pre>
+                <pre x-text="vals_to_include"></pre>
+
+            </div>
+
+        </template>
 
 
-        <div
-            x-show="card_options.dev_mode" x-transition
-            class="stack">
-            <div class="card shadow-md bg-primary text-primary-content">
-                <div class="card-body">
-                    <h2 class="card-title">Notification 1</h2>
-                    <p>You have 3 unread messages. Tap here to see.</p>
+        <template x-cloak x-if="card_options.dev_mode">
+
+            <div
+                x-transition
+                class="stack">
+                <div class="card x-show='card_options.dev_mode shadow-md bg-primary text-primary-content'">
+                    <div class="card-body">
+                        <h2 class="card-title">Notification 1</h2>
+                        <p>You have 3 unread messages. Tap here to see.</p>
+                    </div>
+                </div>
+                <div class="card shadow bg-primary text-primary-content">
+                    <div class="card-body">
+                        <h2 class="card-title">Notification 2</h2>
+                        <p>You have 3 unread messages. Tap here to see.</p>
+                    </div>
+                </div>
+                <div class="card shadow-sm bg-primary text-primary-content">
+                    <div class="card-body">
+                        <h2 class="card-title">Notification 3</h2>
+                        <p>You have 3 unread messages. Tap here to see.</p>
+                    </div>
                 </div>
             </div>
-            <div class="card shadow bg-primary text-primary-content">
-                <div class="card-body">
-                    <h2 class="card-title">Notification 2</h2>
-                    <p>You have 3 unread messages. Tap here to see.</p>
-                </div>
-            </div>
-            <div class="card shadow-sm bg-primary text-primary-content">
-                <div class="card-body">
-                    <h2 class="card-title">Notification 3</h2>
-                    <p>You have 3 unread messages. Tap here to see.</p>
-                </div>
-            </div>
-        </div>
+
+        </template>
 
 
         <table

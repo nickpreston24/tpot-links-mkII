@@ -19,7 +19,7 @@ public class AirtableRepo : IAirtableRepo
         , string personal_access_token = "")
     {
         http_client = client;
-        this.base_id = base_id.Dump("basid");
+        // this.base_id = base_id.Dump("basid");
         http_client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", personal_access_token);
     }
