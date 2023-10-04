@@ -164,10 +164,7 @@ public class IndexModel : HighSpeedPageModel
                     .Dump("paper search")
                 ;
 
-            // watch.Start();
-
             var pages = await SearchNeo4J<Paper>(query, search_parameters);
-            // watch.Stop();
 
             return Partial(partial_name, pages);
         }

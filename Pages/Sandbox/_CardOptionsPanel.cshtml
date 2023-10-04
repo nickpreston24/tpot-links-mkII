@@ -1,25 +1,10 @@
-<script src='https://unpkg.com/@@popperjs/core@2'></script>
-<script src="https://unpkg.com/tippy.js@6"></script>
-
-@*     x-data="{ *@
-@*      *@
-@*     apply_tippies(){ *@
-@*     console.log('dippy tippy') *@
-@*         tippy('[data-tippy-content]');  *@
-@*         tippy(document.querySelectorAll('.button')); *@
-@*     } *@
-@* }" *@
 
 <div
     x-data="{open: 'true'}"
     class="join join-vertical justify-start flex flex-col">
-    <markdown
-        data-tippy-content="I'm a tooltip! :D">
+    <markdown>
         # Hello there!, you can choose search options below
     </markdown>
-
-    @* <button data-tippy-content="Tooltip">Text</button> *@
-    @* <button data-tippy-content="Another Tooltip bites the dust">Text</button> *@
 
     <template x-cloak x-for="[key, value] of Object.entries(card_options)">
         @* :class="{!value ?  'badge-ghost border-2 border-yellow-500':'border-2 border-yellow-500 badge-accent'}" *@
@@ -29,22 +14,16 @@
             class="btn btn-primary join-item shadow-md shadow-secondary-400/50"
             :class="{'border-2 border-secondary btn-ghost': !value, 'border-2    border-accent': value }">
             <label
-                :data-tippy-content="key"
                 x-text="key"
                 class="form-label badge badge-sm"
                 :asp-for='key'>
             </label>
 
-            @*
-                Unused, b/c i haz a button
-                 @@change='card_options[key]=!value' 
-*@
             <input x-bind:name='key'
                    x-bind:value='value'
                    x-bind:checked="value"
                    type="checkbox"
                    :asp-for="key"
-                   :data-tippy-content="key"
                    class="form-control toggle toggle-primary">
         </button>
 
@@ -81,31 +60,7 @@
 
         </div>
 
-
-        @* <input x-bind:name='key' *@
-        @*        x-bind:value='value' *@
-        @*        x-bind:checked="value" *@
-        @*        type="checkbox" *@
-        @*        :asp-for="key" *@
-        @*        :data-tippy-content="key" *@
-        @*        class="form-control toggle toggle-primary" *@
-        @*        @@change='card_options[key]=!value'> *@
-
-
     </template>
 
 
 </div>
-
-@* <span x-text="key.replace('_',' ')" *@
-@*       data-tippy-content="test" *@
-@*       class="label-text"> *@
-@* </span> *@
-@* <div *@
-@*     x-text="key.replace('_', ' ')" *@
-@*     data-tippy-content="key" *@
-@*     class="badge badge-info gap-2" *@
-@*     x-on:load="this.apply_tippies()"> *@
-@* </div> *@
-
-@* <button class="btn btn-ghost" x-text="key.replace('_',' ')" :data-tippy-content="key"></button> *@

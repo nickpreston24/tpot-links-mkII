@@ -249,7 +249,7 @@
             case_insensitive: true,
             ignore_whitespace: false,
             ignore_special_characters: false,
-            dev_mode: false            
+            // dev_mode: false            
         },
         categories: [
             'Faith',
@@ -262,14 +262,7 @@
         
         vals_to_include() {
            return `partial_name: '${this.view_mode}'`          
-        },
-        
-        apply_tippies(){    
-            console.log('dippy tippy')
-            tippy('[data-tippy-content]'); 
-            tippy(document.querySelectorAll('.button'));
-            tippy(document.querySelectorAll('.btn'));
-        }
+        }      
       }; 
     }
   </script>
