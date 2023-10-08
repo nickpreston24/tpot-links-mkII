@@ -20,14 +20,10 @@ using PuppeteerSharp;
 using TPOT_Links;
 using TPOT_Links.Pages.Sandbox;
 
-
 namespace tpot_links_seeder.Controllers;
-//
-// [ApiController]
-
 [Produces("application/json")]
 [Route("[controller]")]
-public partial class TPOTPaperController : ControllerBase
+public class TPOTPaperController : ControllerBase
 {
     private static readonly IDictionary<Type, ICollection<PropertyInfo>> _propertyCache =
         new Dictionary<Type, ICollection<PropertyInfo>>();
@@ -60,11 +56,6 @@ public partial class TPOTPaperController : ControllerBase
             })
             .Dump("current settings"); // doesn't work on startup.  Who knew?
     }
-    //
-    // public record PaperAPISearch
-    // {
-    //     public string Title { get; set; } = "What is Faith?";
-    // }
 
     // GET: api/Paper
     [HttpGet]
@@ -80,14 +71,19 @@ public partial class TPOTPaperController : ControllerBase
     [HttpPost(nameof(SearchByRegex))]
     public async Task<IActionResult> SearchByRegex([FromBody] PaperSearch search_parameters)
     {
+        /**
+         * Idea:
+         * What if I can just pass the file name and/or file ext, "SearchByRegex.cypher" and run it?
+         * Then, cast the result to a passed in Type (like Paper)
+         *
+         * Pros - This could eliminate the need for many controller endpoints
+         * Cons - This could be very generic, at least at first.
+         */
+        
         string expected_name = "SearchByRegex.cypher";
         string query = await embeddedResources
             .GetQueryAsync<IndexModel>(new StackTrace());
-        // var query = await embeddedResources
-        //     .Read("TPOT Links mkII", "SearchByRegex.cypher")
-        //     // .Read<TPOT_Links.Pages.Sandbox.IndexModel>("SearchByRegex.cypher")
-        //     .ReadAllLinesFromStreamAsync();
-
+        
         if (string.IsNullOrWhiteSpace(query))
         {
             string cwd = Directory.GetCurrentDirectory();
@@ -111,7 +107,6 @@ public partial class TPOTPaperController : ControllerBase
         return Request.IsHtmx()
             ? Content("<h2>Hello, From Named Route</h2>")
             : Ok(papers);
-        // return Content("<h2>Hello, From Named Route</h2>");
     }
 
     [HttpPost(nameof(SaveLog))]
