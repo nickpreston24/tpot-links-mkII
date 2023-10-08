@@ -138,16 +138,16 @@ public class IndexModel : HighSpeedPageModel
             //     new AuthenticationHeaderValue("Bearer", personal_access_token);
 
 
-            var airtable_search = new AirtableSearch()
-            {
-                table_name = "Regex_Patterns",
-                // filterByFormula = true.ToString(),
-            };
+            // var airtable_search = new AirtableSearch()
+            // {
+            //     table_name = "Regex_Patterns",
+            //     // filterByFormula = true.ToString(),
+            // };
 
             // airtable_search.AsQuery().Dump("query");
 
-            var regexes_from_airtable = await airtable_repo
-                .SearchRecords<AirtableRegexPattern>(airtable_search, debug_mode: true);
+            // var regexes_from_airtable = await airtable_repo
+                // .SearchRecords<AirtableRegexPattern>(airtable_search, debug_mode: true);
 
             string query = await embeddedResourceQuery
                 .GetQueryAsync<IndexModel>(new StackTrace());
@@ -163,11 +163,8 @@ public class IndexModel : HighSpeedPageModel
                     }
                     .Dump("paper search")
                 ;
-
-            // watch.Start();
-
+            
             var pages = await SearchNeo4J<Paper>(query, search_parameters);
-            // watch.Stop();
 
             return Partial(partial_name, pages);
         }

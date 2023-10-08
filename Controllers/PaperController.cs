@@ -20,14 +20,10 @@ using PuppeteerSharp;
 using TPOT_Links;
 using TPOT_Links.Pages.Sandbox;
 
-
 namespace tpot_links_seeder.Controllers;
-//
-// [ApiController]
-
 [Produces("application/json")]
 [Route("[controller]")]
-public partial class TPOTPaperController : ControllerBase
+public class TPOTPaperController : ControllerBase
 {
     private static readonly IDictionary<Type, ICollection<PropertyInfo>> _propertyCache =
         new Dictionary<Type, ICollection<PropertyInfo>>();
@@ -60,11 +56,6 @@ public partial class TPOTPaperController : ControllerBase
             })
             .Dump("current settings"); // doesn't work on startup.  Who knew?
     }
-    //
-    // public record PaperAPISearch
-    // {
-    //     public string Title { get; set; } = "What is Faith?";
-    // }
 
     // GET: api/Paper
     [HttpGet]
@@ -80,14 +71,19 @@ public partial class TPOTPaperController : ControllerBase
     [HttpPost(nameof(SearchByRegex))]
     public async Task<IActionResult> SearchByRegex([FromBody] PaperSearch search_parameters)
     {
+        /**
+         * Idea:
+         * What if I can just pass the file name and/or file ext, "SearchByRegex.cypher" and run it?
+         * Then, cast the result to a passed in Type (like Paper)
+         *
+         * Pros - This could eliminate the need for many controller endpoints
+         * Cons - This could be very generic, at least at first.
+         */
+        
         string expected_name = "SearchByRegex.cypher";
         string query = await embeddedResources
             .GetQueryAsync<IndexModel>(new StackTrace());
-        // var query = await embeddedResources
-        //     .Read("TPOT Links mkII", "SearchByRegex.cypher")
-        //     // .Read<TPOT_Links.Pages.Sandbox.IndexModel>("SearchByRegex.cypher")
-        //     .ReadAllLinesFromStreamAsync();
-
+        
         if (string.IsNullOrWhiteSpace(query))
         {
             string cwd = Directory.GetCurrentDirectory();
@@ -111,7 +107,6 @@ public partial class TPOTPaperController : ControllerBase
         return Request.IsHtmx()
             ? Content("<h2>Hello, From Named Route</h2>")
             : Ok(papers);
-        // return Content("<h2>Hello, From Named Route</h2>");
     }
 
     [HttpPost(nameof(SaveLog))]
@@ -450,37 +445,7 @@ public partial class TPOTPaperController : ControllerBase
         }
     }
 
-    // [GeneratedRegex("")]
-    public class FacebookPost
-    {
-        public static FacebookPost CreateInstance(string url = "")
-        {
-            // url.Dump();
-            FacebookPostPattern.Dump("PATTERN");
-            var instance = url.Extract<FacebookPost>(FacebookPostPattern)
-                .SingleOrDefault()
-                .Dump("fb post");
-            return instance;
-        }
-
-        // https://regex101.com/r/vV12pT/1
-        public const string FacebookPostPattern =
-            @"^https?:\/\/www\.facebook\.com\/(?<Name>\w+)(\/posts\/)(?<post_id>[\w\d]+)\?(?<comment_ids>.*)";
-
-        public string OutputPath => ToString();
-
-        public string Extension { get; set; } = ".png";
-        public string comment_ids { get; set; } = string.Empty;
-        public string post_id { get; set; } = string.Empty;
-        public string Name { get; set; }
-
-        // https://www.facebook.com/officialbenshapiro/posts/pfbid0235H6HMsAdpGqULNzW4okjNxc5M31Fr6oof51GusMhMEtHq5tGMGoYdamG1JtHgbwl?comment_id=187601347521345&reply_comment_id=153781794119258&notif_id=1683167179141365&notif_t=comment_mention&ref=notif
-
-        public override string ToString()
-        {
-            return $"{Name}_{post_id}.{Extension ?? ".png"}";
-        }
-    }
+   
 
     [HttpGet(nameof(TakeScreenshot))]
     public async Task<FacebookPost> TakeScreenshot(

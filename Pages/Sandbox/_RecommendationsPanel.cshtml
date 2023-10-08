@@ -15,9 +15,10 @@
     }
     else
     {
-        <div x-show="card_options.dev_mode" x-transition class="alert focus:alert-info">
+        <div x-transition class="alert focus:alert-info">
             Nothing to recommend...
         </div>
+
 
         <form hx-post
               hx-swap="outerHTML"
@@ -46,12 +47,12 @@
 
             <div class="control" x-data="{show_icon:true}">
                 <button id="submitButton" type="submit" class="btn btn-primary">
-                       
+
                     <span class="mask mask-star-2 bg-green-500">
-                        
-                        
+
+
                     </span>
-                    
+
                     <span class="htmx-indicator">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         <span class="visually-hidden">Loading...</span>
