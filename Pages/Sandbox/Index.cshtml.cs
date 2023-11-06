@@ -124,8 +124,8 @@ public class IndexModel : HighSpeedPageModel
     {
         try
         {
-            if (debug_mode)
-                partial_name.Dump("partial selected");
+            // if (debug_mode)
+            //     partial_name.Dump("partial selected");
 
 
             // string personal_access_token = Environment.GetEnvironmentVariable("TPOT_PAT");
@@ -147,23 +147,29 @@ public class IndexModel : HighSpeedPageModel
             // airtable_search.AsQuery().Dump("query");
 
             // var regexes_from_airtable = await airtable_repo
-                // .SearchRecords<AirtableRegexPattern>(airtable_search, debug_mode: true);
+            // .SearchRecords<AirtableRegexPattern>(airtable_search, debug_mode: true);
 
+            // Stopwatch embedwatch = new Stopwatch();
+            // embedwatch.Start();
+            
             string query = await embeddedResourceQuery
                 .GetQueryAsync<IndexModel>(new StackTrace());
+            
+            // embedwatch.Stop();
+            // embedwatch.Elapsed.ToString().Dump("Elapsed");
 
             var category = search_by_categories ? CategoryNumber.ToString() : "";
             var search_parameters = new PaperSearch
                     {
                         regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
-                        term = term,
+                        // term = term,
                         category = category,
                         // id = 1.ToString(),
                         limit = limit
                     }
                     .Dump("paper search")
                 ;
-            
+
             var pages = await SearchNeo4J<Paper>(query, search_parameters);
 
             return Partial(partial_name, pages);

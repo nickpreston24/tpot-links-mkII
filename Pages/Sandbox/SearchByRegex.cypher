@@ -1,10 +1,13 @@
 MATCH (paper:Paper)
 // OPTIONAL MATCH (a)-[r:LINKS_TO]-(x)
 WHERE 
-paper.Content =~ $regex
-  OR paper.Title =~ $regex
-  OR paper.Excerpt =~ $regex
-  OR paper.Slug =~ $regex
+    paper.Title =~ $regex
+//  OR 
+//    paper.Excerpt =~ $regex
+//  OR 
+//    paper.Slug =~ $regex
+//OR 
+// paper.Content =~ $regex
 //  OR paper.Id = $id
 //   OR paper.Categories =~ $regex
 RETURN paper

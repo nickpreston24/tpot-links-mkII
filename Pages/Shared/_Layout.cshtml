@@ -11,15 +11,18 @@
             asp-fallback-test="window.htmx"
             crossorigin="anonymous">
     </script>
+
     <script src="https://unpkg.com/htmx.org/dist/ext/include-vals.js"></script>
 
-    <script
-        src="//unpkg.com/alpinejs"
-        asp-fallback-src="~/lib/alpinejs/dist/cdn.min.js"
-        asp-fallback-test="window.alpinejs"
-        crossorigin="anonymous"
-        defer>
-    </script>
+    <!-- Alpine Plugins -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Alpine Core -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@shoelace-style/shoelace@2.11.2/cdn/themes/light.css"/>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@@shoelace-style/shoelace@2.11.2/cdn/shoelace-autoloader.js"></script>
+
 
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.47.0/dist/full.css" rel="stylesheet" type="text/css"/>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css"/>

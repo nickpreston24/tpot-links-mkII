@@ -1,27 +1,93 @@
 @page
 @model IndexModel
 @{
-  // C# vars go here!
+    // C# vars go here!
 }
 
-<form action="post">
-    <div class="card p-5 mb-4 text-ocean-500">
+<div data-theme="corporate" class="bg-arctic-600">
 
-        <div x-data="{ open: false }">
-            <button @@click="open = true">Expand</button>
+    <div
 
-            <span x-text='foo' x-show="open">
-            </span>
+        class="bg-gray-200">
+        <div class="card p-5 mb-4 text-ocean-500">
+
+            <sl-tab-group>
+                <sl-tab slot="nav" panel="general">General</sl-tab>
+                <sl-tab slot="nav" panel="custom">Custom</sl-tab>
+                <sl-tab slot="nav" panel="advanced">Advanced</sl-tab>
+                <sl-tab slot="nav" panel="disabled" disabled>Disabled</sl-tab>
+
+                <sl-tab-panel name="general">
+
+                    <form hx-post hx-page="Index" hx-page-handler="Validate" hx-swap="outerHTML"
+                          class="form-horizontal needs-validation"
+                          _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="ContactInfo.Name"></label>
+                            <input type="text" class="form-control" asp-for="ContactInfo.Name">
+                            <div class="invalid-feedback">
+                                <span asp-validation-for="ContactInfo.Name"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="ContactInfo.Age"></label>
+                            <input type="text" class="form-control" asp-for="ContactInfo.Age">
+                            <div class="invalid-feedback">
+                                <span asp-validation-for="ContactInfo.Age"></span>
+                            </div>
+                        </div>
+
+                        <div>
+
+                            <template x-for="[key, value] of Object.entries(options)">
+                                <div class="mb-3">
+                                    <label class="form-label" :for="key"></label>
+                                    <span x-text="key">This is for debugging only and can be omitted</span>
+                                    <input type="checkbox" class="form-control toggle toggle-accent" :for="key">
+                                </div>
+                            </template>
+                        </div>
+
+                        <div class="control">
+                            <button id="submitButton" type="submit" class="btn btn-primary">
+                                <span class="htmx-indicator">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Loading...</span>
+                                </span>
+                                Submit
+
+                                <sl-icon-button name="gear"
+                                                label="Settings">
+                                </sl-icon-button>
+                            </button>
+
+                            @Html.AntiForgeryToken()
+                        </div>
+
+
+                    </form>
+
+
+                </sl-tab-panel>
+                <sl-tab-panel name="custom">This is the custom tab panel.</sl-tab-panel>
+                <sl-tab-panel name="advanced">This is the advanced tab panel.</sl-tab-panel>
+                <sl-tab-panel name="disabled">This is a disabled tab panel.</sl-tab-panel>
+            </sl-tab-group>
+
         </div>
-
     </div>
-</form>
+
+
+</div>
 
 
 <script>
     function setup() {
         return {
-            value: "foo"
+             options: {
+                dark_mode: false
+            }
         }
     }
 </script>

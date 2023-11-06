@@ -13,6 +13,14 @@
 
 Production - https://tpot-links-mkii-production.up.railway.app/
 
+## Todos
+
+- [ ] Malformed Titles
+  - Find $nbsp; and other special chars
+  - Place found issues in their own tab
+- [ ] Neo4j Query speeds
+  - Investigate why neo4j is taking a while on production typeahead search
+
 # Tech Stack
 
 |    Technology    |                                    Purpose |

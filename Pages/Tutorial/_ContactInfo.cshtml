@@ -1,0 +1,20 @@
+@model ContactInformation
+
+@{
+    var contact = Model;
+}
+
+<div class="card lg:card-side bg-base-100 shadow-xl">
+    <figure>
+        <img src="https://i.pravatar.cc/300" alt="Album"/>
+    </figure>
+    <div class="card-body">
+        <h2 class="card-title">Hello, @contact.Name! Is this you?</h2>
+        <p>You entered @contact.Age as your age, is this correct?</p>
+        <div class="card-actions justify-start">
+            <button class="btn btn-primary">Confirm</button>
+            <button class="btn btn-secondary">Back</button>
+        </div>
+
+    </div>
+</div>
