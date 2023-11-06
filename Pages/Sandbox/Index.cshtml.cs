@@ -149,14 +149,14 @@ public class IndexModel : HighSpeedPageModel
             // var regexes_from_airtable = await airtable_repo
             // .SearchRecords<AirtableRegexPattern>(airtable_search, debug_mode: true);
 
-            Stopwatch embedwatch = new Stopwatch();
-            embedwatch.Start();
+            // Stopwatch embedwatch = new Stopwatch();
+            // embedwatch.Start();
             
             string query = await embeddedResourceQuery
                 .GetQueryAsync<IndexModel>(new StackTrace());
             
-            embedwatch.Stop();
-            embedwatch.Elapsed.ToString().Dump("Elapsed");
+            // embedwatch.Stop();
+            // embedwatch.Elapsed.ToString().Dump("Elapsed");
 
             var category = search_by_categories ? CategoryNumber.ToString() : "";
             var search_parameters = new PaperSearch
