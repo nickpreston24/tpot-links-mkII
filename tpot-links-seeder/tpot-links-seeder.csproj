@@ -16,13 +16,13 @@
         <PackageReference Include="CodeMechanic.FileSystem" Version="1.0.4" />
         <PackageReference Include="CodeMechanic.Neo4j.Extensions" Version="1.0.1" />
         <PackageReference Include="CodeMechanic.Reflection" Version="1.0.3" />
-        <PackageReference Include="CodeMechanic.Regex" Version="1.0.1" />
-        <PackageReference Include="CodeMechanic.Types" Version="1.0.6" />
+        <PackageReference Include="CodeMechanic.Regex" Version="1.0.2" />
+        <PackageReference Include="CodeMechanic.Types" Version="1.0.7" />
         <PackageReference Include="Insight.Database" Version="6.3.11" />
-        <PackageReference Include="MySqlConnector" Version="2.2.7" />
+        <PackageReference Include="MySqlConnector" Version="2.3.1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="NSpecifications" Version="1.1.0" />
-        <PackageReference Include="PuppeteerSharp" Version="10.1.2" />
+        <PackageReference Include="PuppeteerSharp" Version="13.0.1" />
         <PackageReference Include="Sciensoft.Hateoas" Version="3.2.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
