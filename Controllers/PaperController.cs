@@ -21,6 +21,7 @@ using TPOT_Links;
 using TPOT_Links.Pages.Sandbox;
 
 namespace tpot_links_seeder.Controllers;
+
 [Produces("application/json")]
 [Route("[controller]")]
 public class TPOTPaperController : ControllerBase
@@ -79,11 +80,11 @@ public class TPOTPaperController : ControllerBase
          * Pros - This could eliminate the need for many controller endpoints
          * Cons - This could be very generic, at least at first.
          */
-        
+
         string expected_name = "SearchByRegex.cypher";
         string query = await embeddedResources
             .GetQueryAsync<IndexModel>(new StackTrace());
-        
+
         if (string.IsNullOrWhiteSpace(query))
         {
             string cwd = Directory.GetCurrentDirectory();
@@ -445,7 +446,6 @@ public class TPOTPaperController : ControllerBase
         }
     }
 
-   
 
     [HttpGet(nameof(TakeScreenshot))]
     public async Task<FacebookPost> TakeScreenshot(
@@ -463,7 +463,8 @@ public class TPOTPaperController : ControllerBase
 
         string outfile_path = $"screenshots/{post.OutputPath}";
         using var browserFetcher = new BrowserFetcher();
-        await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
+        // await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
+        await browserFetcher.DownloadAsync();
         var browser = await Puppeteer.LaunchAsync(new LaunchOptions
         {
             Headless = true
@@ -475,7 +476,6 @@ public class TPOTPaperController : ControllerBase
 
         return post;
     }
-
 
     [HttpGet(nameof(SaveFullPageAsPDF))]
     public async Task<FacebookPost> SaveFullPageAsPDF(
@@ -494,7 +494,8 @@ public class TPOTPaperController : ControllerBase
 
         string output_file_path = $"screenshots/{post.OutputPath}".Dump("saving as:");
         using var browserFetcher = new BrowserFetcher();
-        await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
+        // await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
+        await browserFetcher.DownloadAsync();
         var browser = await Puppeteer.LaunchAsync(new LaunchOptions
         {
             Headless = true
@@ -524,7 +525,8 @@ public class TPOTPaperController : ControllerBase
 
         string output_file_path = $"screenshots/{post.OutputPath}".Dump("saving as:");
         using var browserFetcher = new BrowserFetcher();
-        await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
+        // await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
+        await browserFetcher.DownloadAsync();
         var options = new LaunchOptions
         {
             Headless = true

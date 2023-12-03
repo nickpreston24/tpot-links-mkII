@@ -1,16 +1,19 @@
 ﻿using System.Text;
 using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Embeds;
-using CodeMechanic.RazorPages;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Neo4j.Driver;
 using Newtonsoft.Json;
 
 namespace TPOT_Links.Pages;
 
-public class IndexModel : HighSpeedPageModel
+public class IndexModel : PageModel
 {
+    private readonly IEmbeddedResourceQuery embeddedResourceQuery;
+    private readonly IDriver driver;
+    private readonly IAirtableRepo airtable_repo;
     private readonly ILogger<IndexModel> _logger;
     private static List<PageRoute> my_routes = new List<PageRoute>();
     public List<PageRoute> MyRoutes => my_routes;
@@ -18,9 +21,11 @@ public class IndexModel : HighSpeedPageModel
     public IndexModel(
         IEmbeddedResourceQuery embeddedResourceQuery
         , IDriver driver = null
-        , IAirtableRepo repo = null)
-        : base(embeddedResourceQuery, driver, repo)
+        , IAirtableRepo airtableRepo = null)
     {
+        this.embeddedResourceQuery = embeddedResourceQuery;
+        this.driver = driver;
+        this.airtable_repo = airtableRepo;
     }
 
     public async Task OnGet()
@@ -46,7 +51,7 @@ public class IndexModel : HighSpeedPageModel
         // all_routes.Dump("all_routes");
 
         var routes_w_breadcrumbs = all_routes
-            .Select(r => new PageRoute(r))
+                .Select(r => new PageRoute(r))
             // .Dump("routes w/ bread")
             ;
 
@@ -61,14 +66,14 @@ public class IndexModel : HighSpeedPageModel
                 <div class='card'>
                     <div class='card-body flex flex-col'>
 
-                        <h1 class='text-sm'>{route.text}</h1>
-                        <li class='link'>{route?.url ?? "(none)"}</li>
+                        <h1 class='text-sm'>{ route.text} </h1>
+                        <li class='link'>{ route?.url ?? "(none)"} </li>
                     </div>
                 </div>
-            """)
+            """ )
             .ToString()
             .Tag("ul", className: "text-sm flex flex-col gap-4");
-        
+
         return Content(html);
     }
 }

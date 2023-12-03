@@ -20,7 +20,6 @@
     <EmbeddedResource Include="Pages\**\*.cypher"></EmbeddedResource>
     <EmbeddedResource Include="Pages\**\*.sql"></EmbeddedResource>
     <EmbeddedResource Include="Pages\**\*.html"></EmbeddedResource>
-    <EmbeddedResource Remove="tpot-links-seeder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,8 +27,9 @@
     <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.2" />
     <PackageReference Include="CodeMechanic.Embeds" Version="1.0.0" />
     <PackageReference Include="CodeMechanic.FileSystem" Version="1.0.4" />
-    <PackageReference Include="CodeMechanic.Neo4j.Extensions" Version="1.0.1" />
-    <PackageReference Include="CodeMechanic.Reflection" Version="1.0.3" />
+    <PackageReference Include="CodeMechanic.Neo4j" Version="1.0.3" />
+    <PackageReference Include="CodeMechanic.RazorHAT" Version="1.0.6" />
+    <PackageReference Include="CodeMechanic.Reflection" Version="1.0.4" />
     <PackageReference Include="CodeMechanic.Regex" Version="1.0.2" />
     <PackageReference Include="CodeMechanic.Types" Version="1.0.7" />
     <PackageReference Include="ElectronNET.API" Version="23.6.2-alpha-13" />
@@ -46,11 +46,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Pages\Admin\Shared\" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <Compile Remove="tpot-links-seeder\Controllers\Paper.cs" />
     <Compile Remove="tpot-links-seeder\**" />
   </ItemGroup>
@@ -58,11 +53,13 @@
 
   <ItemGroup>
     <Content Remove="tpot-links-seeder\**" />
+    <Content Remove="Pages\Admin\Shared\**" />
   </ItemGroup>
 
 
   <ItemGroup>
     <None Remove="tpot-links-seeder\**" />
+    <None Remove="Pages\Admin\Shared\**" />
   </ItemGroup>
 
 <!-- 

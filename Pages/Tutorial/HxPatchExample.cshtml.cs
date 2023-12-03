@@ -1,14 +1,17 @@
 using CodeMechanic.Embeds;
-using CodeMechanic.RazorPages;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Neo4j.Driver;
 
 namespace TPOT_Links.Pages.Tutorial;
 //Note: to remove all comments, replace this with nothing:  // .*$
 
 [BindProperties]
-public class HxPatchExample : HighSpeedPageModel
+public class HxPatchExample : PageModel
 {
+    private readonly IEmbeddedResourceQuery embeddedResourceQuery;
+
+    private readonly IDriver driver;
     // public string? Name { get; init; } = string.Empty;
     // public int? Age { get; init; } = null!;
     // public bool show_slugs { get; set; }
@@ -21,8 +24,10 @@ public class HxPatchExample : HighSpeedPageModel
     public HxPatchExample(
         IEmbeddedResourceQuery embeddedResourceQuery
         , IDriver driver)
-        : base(embeddedResourceQuery, driver)
+
     {
+        this.embeddedResourceQuery = embeddedResourceQuery;
+        this.driver = driver;
     }
 
     public async Task<IActionResult> OnPatchUpdateRecord()
@@ -31,6 +36,6 @@ public class HxPatchExample : HighSpeedPageModel
             <p class="alert alert-success">
                DONE.
             </p>
-        """);
+        """ );
     }
 }

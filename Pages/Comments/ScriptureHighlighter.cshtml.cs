@@ -1,21 +1,24 @@
 using CodeMechanic.Embeds;
 using CodeMechanic.Extensions;
-using CodeMechanic.RazorPages;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Neo4j.Driver;
 
 namespace TPOT_Links.Pages.Comments;
 
 [BindProperties]
-public class ScriptureHighlighterModel : HighSpeedPageModel
+public class ScriptureHighlighterModel : PageModel
 {
+    private readonly IEmbeddedResourceQuery embeddedResourceQuery;
+    private readonly IDriver driver;
     public List<Scripture> scriptures = new List<Scripture>();
 
     public ScriptureHighlighterModel(
         IEmbeddedResourceQuery embeddedResourceQuery
         , IDriver driver)
-        : base(embeddedResourceQuery, driver)
     {
+        this.embeddedResourceQuery = embeddedResourceQuery;
+        this.driver = driver;
     }
 
     public async Task<IActionResult> OnGetExtractedScriptures()
@@ -26,7 +29,7 @@ public class ScriptureHighlighterModel : HighSpeedPageModel
               <p class='text-xl text-white text-sh'>An Error Occurred... But fret not! Our team of intelligent lab mice are on the
                 job!</p>
             </div>
-            """);
+            """ );
 
         string[] all_sample_text = sample_comments.Concat(sample_teachings).ToArray();
 
@@ -43,21 +46,21 @@ public class ScriptureHighlighterModel : HighSpeedPageModel
                 .Select(scripture => $"""
               <div class="card w-96 bg-base-100 shadow-xl">
                 <div class="card-body">
-                  <h2 class="card-title">{scripture.Name}</h2>
-                  <p>{scripture.Text}</p>
+                  <h2 class="card-title">{ scripture.Name}   </h2>
+                  <p>{ scripture.Text}   </p>
                 </div>
               </div>
-        """) // each scripture is now templated as a daisyui card.
+        """ ) // each scripture is now templated as a daisyui card.
                 .FlattenText();
 
         var regex_button = $"""
         <a href="https://regex101.com/r/HiM1uO/1">
           <button class="btn btn-primary">See the Regex</button>
         </a>
-      """;
+      """ ;
 
         await Task.Delay(1500);
-        
+
         string result = """
             <div x-init='loading=false'">
                 <p>Done.</p>

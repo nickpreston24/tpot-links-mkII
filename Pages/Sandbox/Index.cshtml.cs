@@ -2,9 +2,10 @@ using System.Diagnostics;
 using System.Text;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
-using CodeMechanic.RazorPages;
+using CodeMechanic.Neo4j;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Neo4j.Driver;
 using NSpecifications;
 
@@ -12,8 +13,12 @@ namespace TPOT_Links.Pages.Sandbox;
 
 //Note: to remove all comments, replace this with nothing:  // .*$
 [BindProperties]
-public class IndexModel : HighSpeedPageModel
+public class IndexModel : PageModel
 {
+    private readonly IEmbeddedResourceQuery embeddedResourceQuery;
+    private readonly IDriver driver;
+    private readonly IAirtableRepo repo;
+
     // private static string _query { get; set; } = string.Empty;
     // public string Query => _query;
     //
@@ -52,8 +57,11 @@ public class IndexModel : HighSpeedPageModel
         IEmbeddedResourceQuery embeddedResourceQuery
         , IDriver driver
         , IAirtableRepo repo)
-        : base(embeddedResourceQuery, driver, repo)
+
     {
+        this.embeddedResourceQuery = embeddedResourceQuery;
+        this.driver = driver;
+        this.repo = repo;
     }
 
     // public async Task<IActionResult> OnGetBloopf(string email)
@@ -151,17 +159,17 @@ public class IndexModel : HighSpeedPageModel
 
             // Stopwatch embedwatch = new Stopwatch();
             // embedwatch.Start();
-            
+
             string query = await embeddedResourceQuery
                 .GetQueryAsync<IndexModel>(new StackTrace());
-            
+
             // embedwatch.Stop();
             // embedwatch.Elapsed.ToString().Dump("Elapsed");
 
             var category = search_by_categories ? CategoryNumber.ToString() : "";
             var search_parameters = new PaperSearch
                     {
-                        regex = $"""(?is)(<\w+>)?.*({term}).*(<\w+>)?""",
+                        regex = $"""(?is)(<\w+>)?.*({ term}      ).*(<\w+>)?""" ,
                         // term = term,
                         category = category,
                         // id = 1.ToString(),
@@ -170,7 +178,7 @@ public class IndexModel : HighSpeedPageModel
                     .Dump("paper search")
                 ;
 
-            var pages = await SearchNeo4J<Paper>(query, search_parameters);
+            var pages = await driver.SearchNeo4J<Paper>(query, search_parameters);
 
             return Partial(partial_name, pages);
         }
@@ -206,10 +214,10 @@ public class IndexModel : HighSpeedPageModel
         };
 
         var alert = (string text, string alert)
-            => $"""<p class='alert alert-{alert}' x-init='loading=false'>{text}!<p>""";
+            => $"""<p class='alert alert-{ alert}      ' x-init='loading=false'>{ text}      !<p>""" ;
         try
         {
-            var created = await BulkCreateNodes<Paper>(query, parameters);
+            var created = await driver.BulkCreateNodes<Paper>(query, parameters);
         }
         catch (Exception e)
         {
@@ -248,10 +256,10 @@ public class IndexModel : HighSpeedPageModel
             ;
 
         // search_parameters.Dump("s");
-        var recommended_papers = await SearchNeo4J<Paper>(query, search_parameters);
+        var recommended_papers = await driver.SearchNeo4J<Paper>(query, search_parameters);
         recommended_papers.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.Title)).Dump("recommendations");
 
-        var users_who_liked_papers = await SearchNeo4J<User>(query, search_parameters);
+        var users_who_liked_papers = await driver.SearchNeo4J<User>(query, search_parameters);
         users_who_liked_papers.FirstOrDefault(user => !string.IsNullOrWhiteSpace(user.last_name))
             .Dump("first user found")
             ;
@@ -290,40 +298,41 @@ AND t2.user_id <> 1
         // return Partial("_PaperList", recommended_papers);
         return Partial("_Modal", new CustomModal()
         {
-            Message = $"{users_who_liked_papers.Count} total Likes."
-                .Prepend($"{recommended_papers.Count} total recommendations."),
-
-            Render = users_who_liked_papers
-                .DistinctBy(x => x.last_name)
-                .ToList()
-                .Aggregate(new StringBuilder(), (sb, next_user) =>
-                {
-                    // <button class='btn btn-accent'>View</button>
-                    sb.AppendLine($"""
-                                           <span class="card-title text-2xl"><b>Name: </b>{next_user.FullName.Tag()}</span>
-                                           <span class=""><b>Age: </b>{next_user.Age.ToString().Tag()}</span>
-                                           <span class=""><b>Email: </b>{next_user.Email.Tag()}</span>
-                                   """.Tag("div", className: "card-body")
-                    );
-                    return sb;
-                })
-                .ToString()
-                // .AppendEach<User>(new List<User>(), () => "")
-                // .FirstOrDefault()
-                // .ToMaybe()
-                // .IfSome(user => { return $"{user.last_name}, {user.first_name}".Tag("li"); })
-                .Tag("ul", className: "card w-96 bg-base-100 shadow-xl")
-                .Tag("div", className: "")
-                .Tag("div", className: "flex flex-row items-center")
-                .Prepend(
-                    new StringBuilder("Users liked the Paper entitled: '")
-                        .AppendEach(common_likes.AsList(),
-                            (shared_paper) => shared_paper.Title.Tag("h1", className: "text-lg text-secondary"))
-                        .Append("' ")
-                        .ToString()
-                        .Tag("div", className: "text-xl flex-row text-success max-w-128")
-                )
-                .AsHTMLString()
+//             Message = $"{users_who_liked_papers.Count} total Likes."
+//                 .Prepend($"{recommended_papers.Count} total recommendations."),
+//
+//             Render = users_who_liked_papers
+//                 .DistinctBy(x => x.last_name)
+//                 .ToList()
+//                 .Aggregate(new StringBuilder(), (sb, next_user) =>
+//                 {
+//                     // <button class='btn btn-accent'>View</button>
+//                     sb.AppendLine($"""
+//                                            <span class="card-title text-2xl"><b>Name: </b>{ next_user.FullName.Tag()}
+//                                                         </span>
+//                                            <span class=""><b>Age: </b>{ next_user.Age.ToString().Tag()} </span>
+//                                            <span class=""><b>Email: </b>{ next_user.Email.Tag()} </span>
+//                                    """ .Tag("div", className: "card-body")
+//                     );
+//                     return sb;
+//                 })
+//                 .ToString()
+//                 // .AppendEach<User>(new List<User>(), () => "")
+//                 // .FirstOrDefault()
+//                 // .ToMaybe()
+//                 // .IfSome(user => { return $"{user.last_name}, {user.first_name}".Tag("li"); })
+//                 .Tag("ul", className: "card w-96 bg-base-100 shadow-xl")
+//                 .Tag("div", className: "")
+//                 .Tag("div", className: "flex flex-row items-center")
+//                 .Prepend(
+//                     new StringBuilder("Users liked the Paper entitled: '")
+//                         .AppendEach(common_likes.AsList(),
+//                             (shared_paper) => shared_paper.Title.Tag("h1", className: "text-lg text-secondary"))
+//                         .Append("' ")
+//                         .ToString()
+//                         .Tag("div", className: "text-xl flex-row text-success max-w-128")
+//                 )
+//                 .AsHTMLString()
         });
     }
 

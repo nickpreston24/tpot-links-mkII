@@ -1,14 +1,15 @@
 using CodeMechanic.Embeds;
-using CodeMechanic.RazorPages;
+
 using CodeMechanic.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Neo4j.Driver;
 
 namespace TPOT_Links.Pages.Tutorial;
 //Note: to remove all comments, replace this pattern with nothing:  // .*$
 
 [BindProperties]
-public class HxPostExample : HighSpeedPageModel
+public class HxPostExample: PageModel
 {
     public string Name { get; init; } = string.Empty;
     public int Age { get; init; } = -1;
@@ -22,7 +23,7 @@ public class HxPostExample : HighSpeedPageModel
     public HxPostExample(
         IEmbeddedResourceQuery embeddedResourceQuery
         , IDriver driver)
-        : base(embeddedResourceQuery, driver)
+        
     {
     }
 
