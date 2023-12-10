@@ -1,13 +1,15 @@
 using System.Diagnostics;
-using System.Text;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
 using CodeMechanic.Neo4j;
+using CodeMechanic.RazorHAT.Services;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Neo4j.Driver;
 using NSpecifications;
+using TPOT_Links.Extensions;
+using TPOT_Links.Models;
 
 namespace TPOT_Links.Pages.Sandbox;
 
@@ -16,6 +18,7 @@ namespace TPOT_Links.Pages.Sandbox;
 public class IndexModel : PageModel
 {
     private readonly IEmbeddedResourceQuery embeddedResourceQuery;
+    private readonly EmbeddedResourceService embedService;
     private readonly IDriver driver;
     private readonly IAirtableRepo repo;
 
@@ -51,41 +54,31 @@ public class IndexModel : PageModel
     // };
 
 
-    public Stopwatch watch = new Stopwatch();
-
     public IndexModel(
         IEmbeddedResourceQuery embeddedResourceQuery
+        , IEmbeddedResourceQuery embedService
         , IDriver driver
         , IAirtableRepo repo)
 
     {
         this.embeddedResourceQuery = embeddedResourceQuery;
+        this.embedService = embedService.Dump("injected?") as EmbeddedResourceService;
+        this.embedService.GetFileContents<IndexModel>("SearchByRegex.cypher");
         this.driver = driver;
         this.repo = repo;
     }
 
-    // public async Task<IActionResult> OnGetBloopf(string email)
-    // {
-    //     email.Dump("index");
-    //     return Content("<p>boop!</p>");
-    // }
-
-
-    public async Task<JsonResult> OnGetHelloWorld()
+    public void OnGet()
     {
-        // return JsonConvert.SerializeObject(new Paper()
+        // string query2 = (embedService as EmbeddedResourceService).GetFileContents<IndexModel>("SearchByRegex.cypher");
+
+
+        // var customAlert = new CustomAlert()
         // {
-        //     Title = "Test Paper"
-        // });
-        return default;
+        //     Message = $"test message",
+        //     AlertType = "error"
+        // }.Dump("custom alert");
     }
-
-    public async Task<IActionResult> OnPostBloopf()
-    {
-        // email.Dump("index");
-        return Content("<p>boop!</p>");
-    }
-
 
     public async Task<IActionResult> OnGetLikePaper(
         // [FromBody] Paper selected_paper
@@ -98,24 +91,8 @@ public class IndexModel : PageModel
         return Content("<p x-on:init='show_modal=true' class='alert alert-success'>Liked!</p>");
     }
 
-    //
-    // public async Task<IActionResult> OnPostLikePaper(
-    //     // [FromBody] Paper selected_paper
-    // )
-    // {
-    //     var user = this.CurrentUser;
-    //     user.Dump("dis user");
-    //     string query = "";
-    //
-    //     return Content("<p class='alert alert-success'>Liked!</p>");
-    // }
-
     public async Task<IActionResult> OnPostValidateUser([FromForm] User user, string pass = "")
     {
-        // CurrentUser = TypeExtensions.With(u =>
-        // {
-        // });
-
         var pwd = Environment.GetEnvironmentVariable("TPOT_DEFAULT_PASSWORD");
         return Partial("_ValidatedUser", CurrentUser);
     }
@@ -132,60 +109,25 @@ public class IndexModel : PageModel
     {
         try
         {
-            // if (debug_mode)
-            //     partial_name.Dump("partial selected");
-
-
-            // string personal_access_token = Environment.GetEnvironmentVariable("TPOT_PAT");
-            // string tpot_base_key = Environment.GetEnvironmentVariable("TPOT_BASE_KEY");
-            //
-            // var airtable_query = @$"https://api.airtable.com/v0/{tpot_base_key}/Regex_Patterns?maxRecords=3&view=Grid%20view";  
-            //
-            // using HttpClient http_client = new HttpClient();
-            // http_client.DefaultRequestHeaders.Authorization =
-            //     new AuthenticationHeaderValue("Bearer", personal_access_token);
-
-
-            // var airtable_search = new AirtableSearch()
-            // {
-            //     table_name = "Regex_Patterns",
-            //     // filterByFormula = true.ToString(),
-            // };
-
-            // airtable_search.AsQuery().Dump("query");
-
-            // var regexes_from_airtable = await airtable_repo
-            // .SearchRecords<AirtableRegexPattern>(airtable_search, debug_mode: true);
-
-            // Stopwatch embedwatch = new Stopwatch();
-            // embedwatch.Start();
-
-            string query = await embeddedResourceQuery
-                .GetQueryAsync<IndexModel>(new StackTrace());
-
-            // embedwatch.Stop();
-            // embedwatch.Elapsed.ToString().Dump("Elapsed");
-
+            var fn = (() => this.embedService.GetFileContents<IndexModel>("SearchByRegex.cypher"));
+            string query = fn.QuickWatch("read speed");
             var category = search_by_categories ? CategoryNumber.ToString() : "";
             var search_parameters = new PaperSearch
-                    {
-                        regex = $"""(?is)(<\w+>)?.*({ term}      ).*(<\w+>)?""" ,
-                        // term = term,
-                        category = category,
-                        // id = 1.ToString(),
-                        limit = limit
-                    }
-                    .Dump("paper search")
-                ;
+            {
+                regex = $@"(?is)(<\w+>)?.*({term}).*(<\w+>)?",
+                category = category,
+                limit = limit
+            };
 
-            var pages = await driver.SearchNeo4J<Paper>(query, search_parameters);
+            var search_fn = async () => await driver.SearchNeo4J<Paper>(query, search_parameters);
+            var pages = await search_fn.QuickWatch("pages speed");
 
             return Partial(partial_name, pages);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return Content(e.Message.Tag("b"));
+            return Partial("_Alert", new CustomAlert() { AlertType = AlertType.Error, Message = "Search failed!" });
         }
     }
 
@@ -213,8 +155,6 @@ public class IndexModel : PageModel
             batch = batch_of_papers
         };
 
-        var alert = (string text, string alert)
-            => $"""<p class='alert alert-{ alert}      ' x-init='loading=false'>{ text}      !<p>""" ;
         try
         {
             var created = await driver.BulkCreateNodes<Paper>(query, parameters);
@@ -222,11 +162,20 @@ public class IndexModel : PageModel
         catch (Exception e)
         {
             Console.WriteLine(e);
-            // throw;
-            return Content(alert($"FAILED{e.Message}", "error"));
+            var customAlert = new CustomAlert()
+            {
+                Message = $"Failed to retrieve recommendations {e.Message}",
+                AlertType = "error"
+            };
+            return Partial("_Alert", customAlert);
         }
 
-        return Content(alert("hey", "success"));
+        return Partial("_Alert", new CustomAlert()
+        {
+            Message = "<p class='' x-init='loading=false'>Done!</p>"
+        });
+
+        // return Content(alert("hey", "success"));
     }
 
     // public async Task<IActionResult> OnGetRecommendations()
@@ -244,7 +193,7 @@ public class IndexModel : PageModel
         if (is_query_empty.IsSatisfiedBy(query))
             return Partial("_Alert", new CustomAlert()
             {
-                AlertCssClass = AlertType.Warning,
+                AlertType = AlertType.Warning,
                 Message = "No query found.  Contact your admin."
             });
 
@@ -342,22 +291,33 @@ AND t2.user_id <> 1
     }
 }
 
-public class AirtableRegexPattern
-{
-    public string Name { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
-    public string Resolution { get; set; } = string.Empty;
-    public string Pattern { get; set; } = string.Empty;
-    public string RegexLink { get; set; } = string.Empty;
-}
 
-public class CardOptions
-{
-    public bool show_slugs { get; set; }
-    public bool show_excerpts { get; set; }
-    public bool show_urls { get; set; }
-    public bool case_insensitive { get; set; }
-}
+#region SCRAPS
+
+// if (debug_mode)
+//     partial_name.Dump("partial selected");
+
+
+// string personal_access_token = Environment.GetEnvironmentVariable("TPOT_PAT");
+// string tpot_base_key = Environment.GetEnvironmentVariable("TPOT_BASE_KEY");
+//
+// var airtable_query = @$"https://api.airtable.com/v0/{tpot_base_key}/Regex_Patterns?maxRecords=3&view=Grid%20view";  
+//
+// using HttpClient http_client = new HttpClient();
+// http_client.DefaultRequestHeaders.Authorization =
+//     new AuthenticationHeaderValue("Bearer", personal_access_token);
+
+
+// var airtable_search = new AirtableSearch()
+// {
+//     table_name = "Regex_Patterns",
+//     // filterByFormula = true.ToString(),
+// };
+
+// airtable_search.AsQuery().Dump("query");
+
+// var regexes_from_airtable = await airtable_repo
+// .SearchRecords<AirtableRegexPattern>(airtable_search, debug_mode: true);
 
 
 // pages.ToList().Count.Dump("# of recommendations");
@@ -376,3 +336,5 @@ public class CardOptions
 //         """).ToString();
 //
 //         return Content(html);
+
+#endregion SCRAPS

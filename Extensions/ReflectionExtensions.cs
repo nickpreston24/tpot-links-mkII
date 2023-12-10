@@ -1,4 +1,5 @@
 using System.Reflection;
+using CodeMechanic.Diagnostics;
 
 namespace CodeMechanic.Extensions
 {

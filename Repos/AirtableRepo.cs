@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
-using CodeMechanic.Airtable;
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Extensions;
+using CodeMechanic.RazorHAT;
 using CodeMechanic.Types;
 
 public class AirtableRepo : IAirtableRepo
@@ -70,7 +71,7 @@ public class AirtableRepo : IAirtableRepo
         }
 
         // var list = new RecordList<T>(json);
-        var (_, records) = new RecordList<T>(json);
+        var (_, records) = new CodeMechanic.Airtable.RecordList<T>(json);
         return records;
     }
 

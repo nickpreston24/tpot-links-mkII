@@ -1,3 +1,4 @@
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
 using CodeMechanic.Extensions;
 using Microsoft.AspNetCore.Mvc;

@@ -1,3 +1,5 @@
+using TPOT_Links.Models;
+
 namespace TPOT_Links;
 
 public class User
@@ -13,7 +15,6 @@ public class User
 
     public bool IsOnline { get; set; } = false;
     public string FullName => $"{last_name}, {first_name}";
-    
-    public AvatarDetails Avatar = new AvatarDetails();
 
+    public AvatarDetails Avatar = new AvatarDetails();
 }

@@ -1,6 +1,14 @@
+@using Newtonsoft.Json
+@model TPOT_Links.Models.CardOptions
+
+@{
+    var card_options = Model;
+    string card_options_json = card_options.AsJS();
+    Console.WriteLine(card_options_json);
+}
 
 <div
-    x-data="{open: 'true'}"
+    x-data="{open: 'true', card_options: @card_options_json}"
     class="join join-vertical justify-start flex flex-col">
     <markdown>
         # Hello there!, you can choose search options below

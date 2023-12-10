@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Html;
+using TPOT_Links.Models;
 
 public class CustomModal
 {

@@ -1,3 +1,4 @@
+using System.Reflection;
 using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
 using CodeMechanic.RazorHAT.Services;
@@ -26,8 +27,6 @@ builder.Services.AddCors(options =>
 // Load and inject .env files & values
 DotEnv.Load();
 
-// Add services to the container.
-builder.Services.AddRazorPages();
 
 builder.Services.ConfigureAirtable();
 builder.Services.ConfigureNeo4j();
@@ -39,6 +38,22 @@ builder.Services.AddTransient<ICarService, CarService>();
 builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
 
 builder.Services.AddControllers();
+
+
+var main_assembly = Assembly.GetExecutingAssembly();
+builder.Services.AddSingleton<IEmbeddedResourceQuery>(
+    new EmbeddedResourceService(
+            new Assembly[]
+            {
+                main_assembly
+            },
+            debugMode: false
+        )
+        .CacheAllEmbeddedFileContents());
+
+
+// Add services to the container.
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 

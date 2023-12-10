@@ -1,7 +1,7 @@
 using Insight.Database.MissingExtensions;
 using NSpecifications;
 
-namespace TPOT_Links;
+namespace TPOT_Links.Models;
 
 public class AvatarDetails
 {

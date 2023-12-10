@@ -1,6 +1,4 @@
 using CodeMechanic.Embeds;
-
-using CodeMechanic.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Neo4j.Driver;
