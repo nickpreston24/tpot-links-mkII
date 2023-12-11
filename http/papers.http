@@ -1,7 +1,7 @@
 POST fluttering-detail.railway.app:7474/db/neo4j/tx/commit
 Accept: application/json;charset=UTF-8
 Content-Type: application/json
-Authorization: Basic bmVvNGo6dmVyeXNlY3JldA==
+Authorization: Basic *****
 
 {
     "statements": [
