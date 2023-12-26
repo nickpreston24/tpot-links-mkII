@@ -6,7 +6,7 @@
 <div x-data="setup()" class="flex flex-col items-center justify-center">
 
     <div class="flex flex-center hero min-h-screen bg-base-200">
-        <div class="hero-content flex-col lg:flex-row-reverse">
+        <div class="hero-content flex-col lg:flex-row">
             <h1 x-text="message" class="text-5xl font-bold"></h1>
 
             <ul>
@@ -17,15 +17,22 @@
                     </a>
                 </li>
 
-                <li>
+                @* <li> *@
+                @* *@
+                @*     <a href="Admin/Checkup"> *@
+                @*         <button class="btn btn-primary">Checkup Time!</button> *@
+                @*     </a> *@
+                @* </li> *@
 
-                    <a href="Admin/Checkup">
-                        <button class="btn btn-primary">Checkup Time!</button>
+                <li>
+                    <a href="Admin/Logs">
+                        <button class="btn btn-primary">Logs!</button>
                     </a>
                 </li>
             </ul>
         </div>
     </div>
+
 
 </div>
 <script>

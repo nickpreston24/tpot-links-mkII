@@ -2,12 +2,21 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model TPOT_Links.Pages.Logs.IndexModel
 @{
+    var splunky_logs = Model.SplunkyLogs;
 }
 
 <div class='flex flex-col' x-data='setup()'>
 
-   <partial name="_LogsTable" />
-
+    <h1>Logs</h1>
+    @* hx-swap="outerHTML" *@
+    @* hx-trigger="load" *@
+    <button
+        hx-get
+        hx-page-handler="SearchLogs"
+        hx-page="Logs/Index">
+        @* <partial name="_LogsTable" model="@splunky_logs"/> *@
+        Show logs
+    </button>
 </div>
 
 

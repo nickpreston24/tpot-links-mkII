@@ -137,6 +137,3 @@ call SearchLogs(null, 0, 0, 1);
 
 -- it will never be all 3
 call SearchLogs(null, 1, 1, 1);
-
-
-

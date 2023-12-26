@@ -51,7 +51,6 @@ builder.Services.AddSingleton<IEmbeddedResourceQuery>(
         )
         .CacheAllEmbeddedFileContents());
 
-
 // Add services to the container.
 builder.Services.AddRazorPages();
 
