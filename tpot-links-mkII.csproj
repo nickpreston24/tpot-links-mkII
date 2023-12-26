@@ -73,12 +73,5 @@
     <AdditionalFiles Include="Pages\Admin\Logs\_LogsTable.cshtml" />
   </ItemGroup>
 
-<!-- 
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="tpot-links-seeder\nuget.config" />
-    <_ContentIncludedByDefault Remove="tpot-links-seeder\appsettings.Development.json" />
-    <_ContentIncludedByDefault Remove="tpot-links-seeder\appsettings.json" />
-    <_ContentIncludedByDefault Remove="tpot-links-seeder\Properties\launchSettings.json" />
-  </ItemGroup> -->
 
 </Project> 

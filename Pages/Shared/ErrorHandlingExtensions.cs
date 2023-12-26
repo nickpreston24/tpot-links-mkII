@@ -17,7 +17,7 @@ namespace TPOT_Links.GlobalErrorHandling.Extensions
                 // TODO: Log this record to Airtable or some other SQL DB like Postgres...       
                 var my_custom_logrow = new LogRecord()
                         {
-                            CreatedBy = "Recommendations",
+                            created_by = "Recommendations",
                             exception_text = trace.ToString()                            
                         };
 

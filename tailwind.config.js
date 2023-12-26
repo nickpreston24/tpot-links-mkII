@@ -47,8 +47,10 @@ module.exports = {
             xl: "1440px"
         },
         fontSize: {
-            tiny: ".875rem",
-            base: "1rem",
+            tiny: ".5rem",
+            base: ".75rem",
+            sm: ".875rem",
+            md: "1rem",
             lg: "1.125rem",
             xl: "1.25rem",
             "2xl": "1.5rem",
@@ -317,7 +319,7 @@ module.exports = {
     //         },
     //     ],
     // },
-    
+
     plugins: [require("daisyui"), require("@tailwindcss/typography")],
 
     content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"]
