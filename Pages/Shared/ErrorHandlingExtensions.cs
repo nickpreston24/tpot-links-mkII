@@ -18,7 +18,7 @@ namespace TPOT_Links.GlobalErrorHandling.Extensions
                 var my_custom_logrow = new LogRecord()
                         {
                             CreatedBy = "Recommendations",
-                            ExceptionMessage = trace.ToString()                            
+                            exception_text = trace.ToString()                            
                         };
 
 

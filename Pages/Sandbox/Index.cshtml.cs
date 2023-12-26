@@ -24,8 +24,7 @@ public class IndexModel : PageModel
 
     // private static string _query { get; set; } = string.Empty;
     // public string Query => _query;
-    //
-    //
+    
     public string category { get; set; } = string.Empty;
     public bool search_by_categories { get; set; }
 

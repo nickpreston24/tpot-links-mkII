@@ -62,6 +62,17 @@
     <None Remove="Pages\Admin\Shared\**" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Pages\Admin\sql" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <AdditionalFiles Include="Pages\Admin\Logs\Index.cshtml" />
+    <AdditionalFiles Include="Pages\Admin\Logs\_LogsTable.cshtml" />
+  </ItemGroup>
+
 <!-- 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="tpot-links-seeder\nuget.config" />
