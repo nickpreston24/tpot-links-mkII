@@ -3,27 +3,82 @@
 @model TPOT_Links.Pages.Logs.IndexModel
 @{
     var splunky_logs = Model.SplunkyLogs;
+    var splunkySearch = Model.SplunkySearch;
 }
 
-<div class='flex flex-col' x-data='setup()'>
+<div
+    class='flex flex-col' x-data='setup()'>
 
-    <h1>Logs</h1>
-    @* hx-swap="outerHTML" *@
-    @* hx-trigger="load" *@
+    <form
+        method="post"
+        hx-page="Index"
+        hx-page-handler="FullSearchLogs"
+        hx-post
+        hx-target="#splunky_logs"
+        hx-swap="innerHTML"
+        class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+        <div class="card-body">
+            @* <div class="mb-3"> *@
+            @*     <label class="form-label">@nameof(@splunkySearch.created_by)</label> *@
+            @*     <input type="text" class="input-accent input" *@
+            @*            name="@nameof(@Model.SplunkySearch.created_by)"> *@
+            @* </div> *@
+            @* *@
+            @* <div class="mb-3"> *@
+            @*     <label class="form-label">@nameof(@splunkySearch.modified_by)</label> *@
+            @*     <input type="text" class="input-accent input" *@
+            @*            name="@nameof(@Model.SplunkySearch.modified_by)"> *@
+            @* </div> *@
+
+            <div class="mb-3">
+                <label class="form-label">Search</label>
+                <input type="text" class="input-accent input"
+                       name="@nameof(@Model.search_term)">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">@nameof(@splunkySearch.is_archived)</label>
+                <input type="checkbox" class="input-accent input"
+                       name="@nameof(@Model.SplunkySearch.is_archived)">
+            </div>
+            <div id="submitButton" class="form-control mt-6">
+                <button type="submit"
+                        class="btn btn-primary">
+                    Submit
+                </button>
+            </div>
+
+
+        </div>
+
+        @Html.AntiForgeryToken()
+
+    </form>
+    <partial name="_LogsTable" model="@splunky_logs"/>
+
+    <span id="loading_rows" class="htmx-indicator loading loading-infinity loading-lg"></span>
+
     <button
+        class="btn btn-primary"
         hx-get
+        type="button"
         hx-page-handler="SearchLogs"
-        hx-page="Logs/Index">
-        @* <partial name="_LogsTable" model="@splunky_logs"/> *@
-        Show logs
+        hx-target="#splunky_logs"
+        hx-swap="outerHTML"
+        hx-trigger="load"
+        hx-indicator="#loading_rows"
+        hx-page="Index">
+        Refresh
     </button>
+
+
 </div>
 
-
 <script>
+   
     function setup() {
         return {
-            value: "foo"
+            header: "Logs!!"
         }
     }
 </script>

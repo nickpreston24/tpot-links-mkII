@@ -1,53 +1,74 @@
 using System.Data;
-using System.Data.Common;
+using System.Diagnostics;
 using CodeMechanic.Diagnostics;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySqlConnector;
-using TPOT_Links;
+using TPOT_Links.Extensions;
 
 namespace TPOT_Links.Pages.Logs
 {
+    [BindProperties]
     public class IndexModel : PageModel
     {
-        public List<LogRecord> SplunkyLogs { get; set; } = new List<LogRecord>();
+        public string search_term { get; set; } = string.Empty;
+        public LogRecord SplunkySearch { get; set; } = new();
+        public static List<LogRecord> splunkyLogs { get; set; } = new List<LogRecord>();
+        public List<LogRecord> SplunkyLogs => splunkyLogs;
 
-        // public void OnGet()
-        // {
-        //     Console.WriteLine("hello there!");
-        // }
+
+        public void OnGet()
+        {
+            Console.WriteLine("On get()");
+        }
+
+        public void OnGetSeedLogs()
+        {
+            
+        }
+
+        public async Task<IActionResult> OnPostFullSearchLogs(LogRecord splunkySearch)
+        {
+            var results = RunSearch(splunkySearch.Dump("inputs"));
+            splunkyLogs = results;
+            return Partial("_LogsTable", SplunkyLogs);
+        }
 
         public async Task<IActionResult> OnGetSearchLogs()
         {
-            Console.WriteLine("Searching logs...");
-            // var connectionString = Environment.GetEnvironmentVariable("MYSQL_CONNECTIONSTRING");
-            // var connectionString = Environment.GetEnvironmentVariable("MYSQL_PRIVATE_URL");
+            var search = new LogRecord()
+            {
+                created_by = "Nick Preston", is_deleted = false, is_archived = false, is_enabled = false
+            };
+
+            var results = RunSearch(search);
+            splunkyLogs = results;
+            return Partial("_LogsTable", SplunkyLogs);
+        }
+
+        private List<LogRecord> RunSearch(LogRecord search)
+        {
+            Console.WriteLine(nameof(OnGetSearchLogs));
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             var connectionString = new MySqlConnectionStringBuilder()
             {
                 Database = Environment.GetEnvironmentVariable("MYSQLDATABASE"),
                 Server = Environment.GetEnvironmentVariable("MYSQLHOST"),
                 Password = Environment.GetEnvironmentVariable("MYSQLPASSWORD"),
                 UserID = Environment.GetEnvironmentVariable("MYSQLUSER"),
-                Port = 16806 //Environment.GetEnvironmentVariable("MYSQLPORT").ToUInt(),
-                // ConnectionTimeout = 60
+                Port = 16806
             }.ToString();
 
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
-            connectionString.Dump("mysql connectionstrng");
             using var connection = new MySqlConnection(connectionString);
 
             /* Dapper way */
             var storedProcedureName = "SearchLogs";
-            var values = new
-            {
-                created_by = "Nick Preston", is_deleted = false, is_archived = false, is_enabled = false
-            };
             var results = connection
-                .Query<TPOT_Links.LogRecord>(storedProcedureName, values, commandType: CommandType.StoredProcedure)
+                .Query<TPOT_Links.LogRecord>(storedProcedureName, search, commandType: CommandType.StoredProcedure)
                 .ToList();
-
-            results.Dump("splunky logs");
 
             /* Insight way: */
             // DbConnection db = new MySqlConnection(connectionString);
@@ -55,20 +76,20 @@ namespace TPOT_Links.Pages.Logs
             // Insight.Database.Providers.MsSqlClient.SqlInsightDbProvider.RegisterProvider();
             // this.SplunkyLogs = repo.SearchLogs("Nick Preston");
 
+            watch.Stop();
+            watch.PrintRuntime();
 
-            SplunkyLogs = results;
-
-            return Partial("_LogsTable", SplunkyLogs);
+            return results;
         }
     }
 }
 
-public interface ILogRepository
-{
-    List<LogRecord> SearchLogs(
-        string created_by
-        , bool? is_archived = false
-        , bool? is_deleted = false
-        , bool? is_enabled = false
-    );
-}
+// public interface ILogRepository
+// {
+//     List<LogRecord> SearchLogs(
+//         string created_by
+//         , bool? is_archived = false
+//         , bool? is_deleted = false
+//         , bool? is_enabled = false
+//     );
+// }

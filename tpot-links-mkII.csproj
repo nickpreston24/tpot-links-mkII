@@ -50,7 +50,7 @@
     <ItemGroup>
         <Watch Include="**\*.cshtml"/>
         <Watch Include="**\*.config.json"/>
-        <Watch Include="/Pages/**/*.json"/>
+        <Watch Include="\Pages\**\*.json"/>
         <Watch Include="**\*.sql"/>
         <Watch Include="**\*.cypher"/>
         <Watch Include="**\*.css"/>

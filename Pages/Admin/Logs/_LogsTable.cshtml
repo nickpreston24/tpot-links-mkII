@@ -1,39 +1,29 @@
 @model List<LogRecord>
+@{
+    var rows = Model;
+}
 
-<div>
+<div id="splunky_logs">
     <div class="overflow-x-auto">
         <table class="table w-full">
-            <!-- head -->
             <thead>
             <tr>
                 <th></th>
                 <th>Created By</th>
-                <th>Exception Text</th>
-                <th>Deleted</th>
+                <th>Modified By</th>
+                <th>Exception</th>
             </tr>
             </thead>
             <tbody>
-            @* <!-- row 1 --> *@
-            @* <tr> *@
-            @*     <th>1</th> *@
-            @*     <td>Cy Ganderton</td> *@
-            @*     <td>Quality Control Specialist</td> *@
-            @*     <td>Blue</td> *@
-            @* </tr> *@
-            @* <!-- row 2 --> *@
-            @* <tr class="active"> *@
-            @*     <th>2</th> *@
-            @*     <td>Hart Hagerty</td> *@
-            @*     <td>Desktop Support Technician</td> *@
-            @*     <td>Purple</td> *@
-            @* </tr> *@
-            @* <!-- row 3 --> *@
-            @* <tr> *@
-            @*     <th>3</th> *@
-            @*     <td>Brice Swyre</td> *@
-            @*     <td>Tax Accountant</td> *@
-            @*     <td>Red</td> *@
-            @* </tr> *@
+            @foreach (var row in rows)
+            {
+                <tr>
+                    <th></th>
+                    <td>@row.created_by</td>
+                    <td>@row.modified_by</td>
+                    <td>@row.exception_text</td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>
