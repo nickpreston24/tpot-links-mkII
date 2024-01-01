@@ -10,7 +10,6 @@
     class='flex flex-col' x-data='setup()'>
 
     <form
-        method="post"
         hx-page="Index"
         hx-page-handler="FullSearchLogs"
         hx-post
@@ -36,11 +35,14 @@
                        name="@nameof(@Model.search_term)">
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">@nameof(@splunkySearch.is_archived)</label>
-                <input type="checkbox" class="input-accent input"
-                       name="@nameof(@Model.SplunkySearch.is_archived)">
-            </div>
+            @* <template x-if="false"> *@
+            @*     <div class="mb-3"> *@
+            @*         <label class="form-label">@nameof(@splunkySearch.is_archived)</label> *@
+            @*         <input type="checkbox" class="input-accent input" *@
+            @*                name="@nameof(@Model.SplunkySearch.is_archived)"> *@
+            @*     </div> *@
+            @* </template> *@
+            
             <div id="submitButton" class="form-control mt-6">
                 <button type="submit"
                         class="btn btn-primary">
@@ -48,30 +50,32 @@
                 </button>
             </div>
 
-
         </div>
 
         @Html.AntiForgeryToken()
 
     </form>
+
     <partial name="_LogsTable" model="@splunky_logs"/>
 
     <span id="loading_rows" class="htmx-indicator loading loading-infinity loading-lg"></span>
+    <template x-if="true">
 
-    <button
-        class="btn btn-primary"
-        hx-get
-        type="button"
-        hx-page-handler="SearchLogs"
-        hx-target="#splunky_logs"
-        hx-swap="outerHTML"
-        hx-trigger="load"
-        hx-indicator="#loading_rows"
-        hx-page="Index">
-        Refresh
-    </button>
+        <button
+            id="seed_btn"
+            class="btn btn-primary"
+            hx-get
+            type="button"
+            hx-page-handler="SeedLogs"
+            hx-target="#seed_btn"
+            hx-swap="outerHTML"
+            hx-trigger="load"
+            hx-indicator="#loading_rows"
+            hx-page="Index">
+            Seed
+        </button>
 
-
+    </template>
 </div>
 
 <script>

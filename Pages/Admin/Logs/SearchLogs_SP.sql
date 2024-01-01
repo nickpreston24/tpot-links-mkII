@@ -99,7 +99,7 @@ CREATE PROCEDURE SearchLogs(
 )
 BEGIN
     #     compute temp vars first
-    set @search_term = coalesce(concat(search_term, ''), search_term, '');
+    set @search_term = coalesce(search_term, '');
     #     set @regex_symbols = '[[\{\}\.\s\d\w]\+?\*?]+';
     #     set @regex_symbols = '(\\[sdw]|[.])[+*?]*(\{\d*,?\d*\})?';
     set @regex_symbols = '^(\\[sdw]|[.])[+*?]*$';

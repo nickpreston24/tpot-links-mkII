@@ -24,60 +24,61 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Airtable" Version="1.4.0"/>
-        <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.2"/>
-        <PackageReference Include="CodeMechanic.Embeds" Version="1.0.0"/>
-        <PackageReference Include="CodeMechanic.FileSystem" Version="1.0.4"/>
-        <PackageReference Include="CodeMechanic.Neo4j" Version="1.0.3"/>
-        <PackageReference Include="CodeMechanic.RazorHAT" Version="1.0.6"/>
-        <PackageReference Include="CodeMechanic.Reflection" Version="1.0.4"/>
-        <PackageReference Include="CodeMechanic.Regex" Version="1.0.2"/>
-        <PackageReference Include="CodeMechanic.Types" Version="1.0.7"/>
-        <PackageReference Include="Dapper" Version="2.1.24"/>
-        <PackageReference Include="ElectronNET.API" Version="23.6.2-alpha-13"/>
-        <PackageReference Include="Htmx" Version="1.6.1"/>
-        <PackageReference Include="Htmx.TagHelpers" Version="1.6.1"/>
-        <PackageReference Include="Insight.Database" Version="6.3.11"/>
-        <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1004"/>
-        <PackageReference Include="MySqlConnector" Version="2.3.1"/>
-        <PackageReference Include="Neo4j.Driver" Version="5.15.0"/>
-        <PackageReference Include="NSpecifications" Version="1.1.0"/>
-        <PackageReference Include="PuppeteerSharp" Version="13.0.1"/>
-        <PackageReference Include="RestSharp" Version="110.2.1-alpha.0.2"/>
+        <PackageReference Include="Airtable" Version="1.4.0" />
+        <PackageReference Include="Bogus" Version="35.2.0" />
+        <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.2" />
+        <PackageReference Include="CodeMechanic.Embeds" Version="1.0.0" />
+        <PackageReference Include="CodeMechanic.FileSystem" Version="1.0.4" />
+        <PackageReference Include="CodeMechanic.Neo4j" Version="1.0.3" />
+        <PackageReference Include="CodeMechanic.RazorHAT" Version="1.0.6" />
+        <PackageReference Include="CodeMechanic.Reflection" Version="1.0.4" />
+        <PackageReference Include="CodeMechanic.Regex" Version="1.0.2" />
+        <PackageReference Include="CodeMechanic.Types" Version="1.0.7" />
+        <PackageReference Include="Dapper" Version="2.1.24" />
+        <PackageReference Include="ElectronNET.API" Version="23.6.2-alpha-13" />
+        <PackageReference Include="Htmx" Version="1.6.1" />
+        <PackageReference Include="Htmx.TagHelpers" Version="1.6.1" />
+        <PackageReference Include="Insight.Database" Version="6.3.11" />
+        <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1004" />
+        <PackageReference Include="MySqlConnector" Version="2.3.1" />
+        <PackageReference Include="Neo4j.Driver" Version="5.15.0" />
+        <PackageReference Include="NSpecifications" Version="1.1.0" />
+        <PackageReference Include="PuppeteerSharp" Version="13.0.1" />
+        <PackageReference Include="RestSharp" Version="110.2.1-alpha.0.2" />
     </ItemGroup>
 
 
     <ItemGroup>
-        <Watch Include="**\*.cshtml"/>
-        <Watch Include="**\*.config.json"/>
-        <Watch Include="\Pages\**\*.json"/>
-        <Watch Include="**\*.sql"/>
-        <Watch Include="**\*.cypher"/>
-        <Watch Include="**\*.css"/>
-        <Watch Include="**\*.env"/>
+        <Watch Include="**\*.cshtml" />
+        <Watch Include="**\*.config.json" />
+        <Watch Include="\Pages\**\*.json" />
+        <Watch Include="**\*.sql" />
+        <Watch Include="**\*.cypher" />
+        <Watch Include="**\*.css" />
+        <Watch Include="**\*.env" />
     </ItemGroup>
 
 
     <ItemGroup>
-        <Compile Remove="tpot-links-seeder\Controllers\Paper.cs"/>
-        <Compile Remove="tpot-links-seeder\**"/>
+        <Compile Remove="tpot-links-seeder\Controllers\Paper.cs" />
+        <Compile Remove="tpot-links-seeder\**" />
     </ItemGroup>
 
 
     <ItemGroup>
-        <Content Remove="tpot-links-seeder\**"/>
-        <Content Remove="Pages\Admin\Shared\**"/>
+        <Content Remove="tpot-links-seeder\**" />
+        <Content Remove="Pages\Admin\Shared\**" />
     </ItemGroup>
 
 
     <ItemGroup>
-        <None Remove="tpot-links-seeder\**"/>
-        <None Remove="Pages\Admin\Shared\**"/>
+        <None Remove="tpot-links-seeder\**" />
+        <None Remove="Pages\Admin\Shared\**" />
     </ItemGroup>
 
 
     <ItemGroup>
-        <Folder Include="Pages\Admin\sql"/>
+        <Folder Include="Pages\Admin\sql" />
     </ItemGroup>
 
 </Project> 
