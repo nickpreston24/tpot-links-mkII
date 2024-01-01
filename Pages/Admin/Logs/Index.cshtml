@@ -15,39 +15,32 @@
         hx-post
         hx-target="#splunky_logs"
         hx-swap="innerHTML"
+        hx-trigger="load, submit"
         class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
         <div class="card-body">
-            @* <div class="mb-3"> *@
-            @*     <label class="form-label">@nameof(@splunkySearch.created_by)</label> *@
-            @*     <input type="text" class="input-accent input" *@
-            @*            name="@nameof(@Model.SplunkySearch.created_by)"> *@
-            @* </div> *@
-            @* *@
-            @* <div class="mb-3"> *@
-            @*     <label class="form-label">@nameof(@splunkySearch.modified_by)</label> *@
-            @*     <input type="text" class="input-accent input" *@
-            @*            name="@nameof(@Model.SplunkySearch.modified_by)"> *@
-            @* </div> *@
+            <div class="flex flex-row gap-2">
+                <div class="">
+                    <label class="form-label">Search</label>
+                    <input
 
-            <div class="mb-3">
-                <label class="form-label">Search</label>
-                <input type="text" class="input-accent input"
-                       name="@nameof(@Model.search_term)">
-            </div>
+                        hx-page="Index"
+                        hx-page-handler="FullSearchLogs"
+                        hx-post
+                        hx-target="#splunky_logs"
+                        hx-swap="innerHTML"
 
-            @* <template x-if="false"> *@
-            @*     <div class="mb-3"> *@
-            @*         <label class="form-label">@nameof(@splunkySearch.is_archived)</label> *@
-            @*         <input type="checkbox" class="input-accent input" *@
-            @*                name="@nameof(@Model.SplunkySearch.is_archived)"> *@
-            @*     </div> *@
-            @* </template> *@
-            
-            <div id="submitButton" class="form-control mt-6">
-                <button type="submit"
-                        class="btn btn-primary">
-                    Submit
-                </button>
+                        hx-trigger="keyup changed delay:250ms"
+                        hx-indicator="#loading_rows"
+                        type="text" class="input-accent input"
+                        name="@nameof(@Model.search_term)"/>
+
+                </div>
+                <div id="submitButton" class="form-control">
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Submit
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -59,6 +52,7 @@
     <partial name="_LogsTable" model="@splunky_logs"/>
 
     <span id="loading_rows" class="htmx-indicator loading loading-infinity loading-lg"></span>
+    
     <template x-if="true">
 
         <button

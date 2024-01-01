@@ -1803,6 +1803,12 @@ html {
   /*font-size: .5rem;*/
 }
 
+.vertical-padding {
+  background-color: rgb(40, 45, 88, 0.5);
+  /*debugging*/
+  padding: 1em;
+}
+
 .fab-wrapper {
   position: fixed;
   bottom: 3rem;

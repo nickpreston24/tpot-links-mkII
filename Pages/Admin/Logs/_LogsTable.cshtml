@@ -3,8 +3,10 @@
     var rows = Model;
 }
 
-<div id="splunky_logs">
-    <div class="overflow-x-auto">
+<section id="splunky_logs" class="vertical-padding">
+    <div class="overflow-x-auto wrapper">
+        <b>Rows: @rows.Count</b>
+
         <table class="table w-full">
             <thead>
             <tr>
@@ -15,7 +17,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var row in rows)
+            @foreach (var row in rows.Take(20))
             {
                 <tr>
                     <th></th>
@@ -27,4 +29,57 @@
             </tbody>
         </table>
     </div>
-</div>
+</section>
+<style>
+    .wrapper {
+        width: min(900px, 100% - 3rem);
+        /*margin-inline: auto;*/
+    }
+    table {
+        border-collapse: collapse;
+    }
+    
+    th,td {
+        padding: 1rem;
+        /*background: #002f4a;*/
+    }
+    
+    caption,th {
+        text-align: left;
+    }
+    
+    caption {
+        /*background: hsl(0, 0%, 0%);*/
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    
+     @@media(max-width: 650px) {
+        th {
+            display: none;
+        }
+        td {
+            display: block;
+            padding: 0.75rem 1rem;
+        }
+        
+        td:first-child {
+            padding-top: 2rem;
+        }
+        td:last-child {
+            padding-bottom: 2rem;
+        }
+        
+        td::before {
+            content: attr(data-cell) ": ";
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+        
+        /*td:nth-of-type(1)::before {*/
+        /*    content: "retailer"*/
+        /*}*/
+     }
+        
+</style>

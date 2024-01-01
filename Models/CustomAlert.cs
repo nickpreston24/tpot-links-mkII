@@ -13,9 +13,11 @@ public class CustomAlert
     {
     }
 
+
     public CustomAlert(PageModel parentPageModel
         , Exception? exception = null
         , string message = ""
+        , string partial_name = "_Alert" // defaults to the global _Alert
     )
     {
         this.parentPageModel = parentPageModel;
@@ -24,7 +26,7 @@ public class CustomAlert
         if (null != exception)
         {
             this.AlertType = AlertType.Error;
-            this.render = parentPageModel.Partial("_Alert", this);
+            this.render = parentPageModel.Partial(partial_name, this);
         }
     }
 
@@ -41,3 +43,11 @@ public static class CustomAlertExtensions
         return new CustomAlert(pm, ex).Render();
     }
 }
+//
+// public class CustomAlertRender : PartialViewResult
+// {
+//     public static explicit operator CustomAlertRender(CustomAlert customAlert)
+//     {
+//         return customAlert.Render();
+//     }
+// }
