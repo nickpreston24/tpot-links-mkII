@@ -19,6 +19,7 @@ namespace TPOT_Links.Pages.Logs
     [BindProperties]
     public class IndexModel : PageModel
     {
+        private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         public string search_term { get; set; } = string.Empty;
         public LogRecord SplunkySearch { get; set; } = new();
         public static List<LogRecord> splunkyLogs { get; set; } = new List<LogRecord>();
@@ -29,15 +30,25 @@ namespace TPOT_Links.Pages.Logs
             Console.WriteLine("On get()");
         }
 
+        public async Task<IActionResult> OnGetCancel()
+        {
+            Console.WriteLine("Cancelling current task ... ");
+            cancellationTokenSource.Cancel();
+            return Partial("_CancelButton", new CancelButtonOptions() { Message = "Cancelled " });
+        }
+
         public async Task<IActionResult> OnGetSeedLogs()
         {
             try
             {
                 Console.WriteLine(nameof(OnGetSeedLogs));
                 var faker = new LogFaker();
-                var sample_records = faker.Generate(1000 * 1000);
+                var sample_records = faker.Generate(1000);
                 Console.WriteLine("sample records :>> " + sample_records.Count);
-                var insertions = await BulkUpsertLogs(sample_records);
+                cancellationTokenSource = new CancellationTokenSource();
+                var insertions = await BulkUpsertLogs(sample_records)
+                        .WithCancellation(cancellationTokenSource.Token)
+                    ;
                 string message = $"Seeded {insertions.Count} logs.";
 
                 return Partial("_Alert", new CustomAlert()
@@ -54,10 +65,12 @@ namespace TPOT_Links.Pages.Logs
 
         public async Task<IActionResult> OnPostFullSearchLogs(LogRecord splunky_search)
         {
+            cancellationTokenSource = new CancellationTokenSource();
             Console.WriteLine(nameof(OnPostFullSearchLogs));
             Console.WriteLine("Searching full text for " + search_term);
-            var results = RunSearch(search_term, splunky_search, debug_mode: true);
-            splunkyLogs = results;
+            var results = RunSearchAsync(search_term, splunky_search, debug_mode: true)
+                .WithCancellation(cancellationTokenSource.Token);
+            splunkyLogs = await results;
             return Partial("_LogsTable", SplunkyLogs);
         }
 
@@ -65,13 +78,16 @@ namespace TPOT_Links.Pages.Logs
         {
             try
             {
+                cancellationTokenSource = new CancellationTokenSource();
                 var search = new LogRecord()
                 {
                     created_by = "Nick Preston", is_deleted = false, is_archived = false, is_enabled = false
                 };
 
-                var results = RunSearch(search_term, search);
-                splunkyLogs = results;
+                var searchTask = RunSearchAsync(search_term, search)
+                        .WithCancellation(cancellationTokenSource.Token)
+                    ;
+                splunkyLogs = await searchTask;
                 return Partial("_LogsTable", SplunkyLogs);
             }
             catch (Exception e)
@@ -81,7 +97,7 @@ namespace TPOT_Links.Pages.Logs
             }
         }
 
-        private List<LogRecord> RunSearch(
+        private async Task<List<LogRecord>> RunSearchAsync(
             string search_term
             , LogRecord search_options
             , bool debug_mode = false
@@ -92,7 +108,7 @@ namespace TPOT_Links.Pages.Logs
             Stopwatch watch = new Stopwatch();
             watch.Start();
             var connectionString = GetConnectionString();
-            using var connection = new MySqlConnection(connectionString);
+            await using var connection = new MySqlConnection(connectionString);
 
             /* Dapper way */
             var storedProcedureName = "SearchLogs";
@@ -102,11 +118,12 @@ namespace TPOT_Links.Pages.Logs
                 is_deleted = search_options.is_deleted, is_enabled = search_options.is_enabled
             };
 
-            var results = connection
-                .Query<TPOT_Links.LogRecord>(storedProcedureName
-                    , parameters
-                    , commandType: CommandType.StoredProcedure
-                )
+            var results = (await connection
+                    .QueryAsync<TPOT_Links.LogRecord>(storedProcedureName
+                        , parameters
+                        , commandType: CommandType.StoredProcedure
+                    )
+                    .WithCancellation(cancellationTokenSource.Token))
                 .ToList();
 
 
@@ -133,7 +150,8 @@ namespace TPOT_Links.Pages.Logs
 
         private async Task<List<LogRecord>> BulkUpsertLogs(List<LogRecord> logRecords)
         {
-            var batch_size = 1000;//(int)Math.Round(Math.Log2(logRecords.Count * 1.0) * Math.Log10(logRecords.Count) * 100, 1);
+            var batch_size =
+                1000; //(int)Math.Round(Math.Log2(logRecords.Count * 1.0) * Math.Log10(logRecords.Count) * 100, 1);
             Console.WriteLine("batch size :>> " + batch_size);
             var Q = new SerialQueue();
             Console.WriteLine("Running Q of bulk upserts ... ");
@@ -159,18 +177,18 @@ namespace TPOT_Links.Pages.Logs
                 .Aggregate(new StringBuilder(), (builder, next) =>
                 {
                     builder
-                        .AppendLine($"( '{ next.application_name}'")
-                        .AppendLine($", '{ next.database_name}'   ")
-                        .AppendLine($", '{ next.exception_text}'  ")
-                        .AppendLine($", '{ next.breadcrumb}'      ")
-                        .AppendLine($", '{ next.issue_url}'       ")
-                        .AppendLine($", '{ next.created_by}'      ")
-                        .AppendLine($", '{ next.modified_by}'     ")
+                        .AppendLine($"( '{next.application_name}'")
+                        .AppendLine($", '{next.database_name}'   ")
+                        .AppendLine($", '{next.exception_text}'  ")
+                        .AppendLine($", '{next.breadcrumb}'      ")
+                        .AppendLine($", '{next.issue_url}'       ")
+                        .AppendLine($", '{next.created_by}'      ")
+                        .AppendLine($", '{next.modified_by}'     ")
                         .AppendLine($", null")
                         .AppendLine($", null")
-                        .AppendLine($", '{ next.is_archived}'     ")
-                        .AppendLine($", '{ next.is_deleted}'      ")
-                        .AppendLine($", '{ next.is_enabled}'      ")
+                        .AppendLine($", '{next.is_archived}'     ")
+                        .AppendLine($", '{next.is_deleted}'      ")
+                        .AppendLine($", '{next.is_enabled}'      ")
                         .AppendLine($")")
                         .ToString()
                         .Trim();

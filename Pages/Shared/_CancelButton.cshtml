@@ -1,0 +1,25 @@
+@using Microsoft.AspNetCore.Html
+@using CodeMechanic.Types
+@using TPOT_Links.Models
+@model CancelButtonOptions
+
+@{
+    var cancel_options = Model ?? new CancelButtonOptions();
+}
+
+<div>
+
+    <button
+        id="cancel_btn"
+        hx-get
+        type="button"
+        hx-page="Index"
+        hx-swap="outerHTML"
+        class="btn btn-primary"
+        hx-target="#cancel_btn"
+        hx-indicator="#canceling"
+        hx-page-handler="Cancel">
+        Cancel
+    </button>
+    @* <span id="canceling">Canceling ...</span> *@
+</div>

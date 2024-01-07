@@ -1,5 +1,7 @@
 @page
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using TPOT_Links.Models
+@using Htmx.TagHelpers
 @model TPOT_Links.Pages.Logs.IndexModel
 @{
     var splunky_logs = Model.SplunkyLogs;
@@ -41,6 +43,9 @@
                         Submit
                     </button>
                 </div>
+
+                <partial name="_CancelButton" model="new CancelButtonOptions()"/>
+
             </div>
 
         </div>
@@ -52,7 +57,7 @@
     <partial name="_LogsTable" model="@splunky_logs"/>
 
     <span id="loading_rows" class="htmx-indicator loading loading-infinity loading-lg"></span>
-    
+
     <template x-if="true">
 
         <button
@@ -68,9 +73,11 @@
             hx-page="Index">
             Seed
         </button>
-
     </template>
+
+
 </div>
+
 
 <script>
    
