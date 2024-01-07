@@ -13,7 +13,7 @@
                 <th></th>
                 <th>Created By</th>
                 <th>Modified By</th>
-                <th>Exception</th>
+                <th>Details</th>
             </tr>
             </thead>
             <tbody>
@@ -23,7 +23,26 @@
                     <th></th>
                     <td>@row.created_by</td>
                     <td>@row.modified_by</td>
-                    <td>@row.exception_text</td>
+                    @* <td>@row.exception_text</td> *@
+                    <td class="card">
+                        <span class="card-body">
+                            <p>
+                                @row.database_name
+                            </p>
+                            <p>
+                                enabled?: @row.is_enabled
+                            </p>
+                            <p>
+                                @row.exception_text
+                            </p>
+                            <p>
+                                @row.breadcrumb
+                            </p>
+                            <a href="@row.commit_url">
+                                @row.commit_url
+                            </a>
+                        </span>
+                    </td>
                 </tr>
             }
             </tbody>

@@ -35,8 +35,9 @@ namespace TPOT_Links.Pages.Logs
             {
                 Console.WriteLine(nameof(OnGetSeedLogs));
                 var faker = new LogFaker();
-                var sample_records = faker.Generate(1000);
-                var insertions = await UpsertLogs(sample_records, debug_mode: false);
+                var sample_records = faker.Generate(1000 * 1000);
+                Console.WriteLine("sample records :>> " + sample_records.Count);
+                var insertions = await BulkUpsertLogs(sample_records);
                 string message = $"Seeded {insertions.Count} logs.";
 
                 return Partial("_Alert", new CustomAlert()
@@ -130,18 +131,23 @@ namespace TPOT_Links.Pages.Logs
             return connectionString;
         }
 
-        private async Task<List<LogRecord>> BulkUpsertLogs(List<LogRecord> logRecords, int batch_size = 100)
+        private async Task<List<LogRecord>> BulkUpsertLogs(List<LogRecord> logRecords)
         {
+            var batch_size = 1000;//(int)Math.Round(Math.Log2(logRecords.Count * 1.0) * Math.Log10(logRecords.Count) * 100, 1);
+            Console.WriteLine("batch size :>> " + batch_size);
             var Q = new SerialQueue();
+            Console.WriteLine("Running Q of bulk upserts ... ");
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             var tasks = logRecords
                 .Batch(batch_size)
                 .Select(log_batch => Q
-                    .Enqueue(async () => await UpsertLogs(log_batch)));
+                    .Enqueue(async () => await UpsertLogs(log_batch, debug_mode: false)));
 
             await Task.WhenAll(tasks);
-            Console.WriteLine($"Done upserting {logRecords.Count} logs!");
-
-            return default;
+            watch.Stop();
+            watch.PrintRuntime($"Done upserting {logRecords.Count} logs! ");
+            return logRecords;
         }
 
         private async Task<List<LogRecord>> UpsertLogs(
@@ -152,21 +158,22 @@ namespace TPOT_Links.Pages.Logs
             var insert_values = logRecords
                 .Aggregate(new StringBuilder(), (builder, next) =>
                 {
-                    builder.AppendLine($"""
-                        ( '{ next.application_name}'
-                        , '{ next.database_name}'
-                        , '{ next.exception_text}'
-                        , '{ next.breadcrumb}'
-                        , '{ next.issue_url}' 
-                        , '{ next.created_by}'
-                        , '{ next.modified_by}'
-                        , null
-                        , null 
-                        , '{ next.is_archived}'
-                        , '{ next.is_deleted}'
-                        , '{ next.is_enabled}'
-                        )
-                     """ .Trim());
+                    builder
+                        .AppendLine($"( '{ next.application_name}'")
+                        .AppendLine($", '{ next.database_name}'   ")
+                        .AppendLine($", '{ next.exception_text}'  ")
+                        .AppendLine($", '{ next.breadcrumb}'      ")
+                        .AppendLine($", '{ next.issue_url}'       ")
+                        .AppendLine($", '{ next.created_by}'      ")
+                        .AppendLine($", '{ next.modified_by}'     ")
+                        .AppendLine($", null")
+                        .AppendLine($", null")
+                        .AppendLine($", '{ next.is_archived}'     ")
+                        .AppendLine($", '{ next.is_deleted}'      ")
+                        .AppendLine($", '{ next.is_enabled}'      ")
+                        .AppendLine($")")
+                        .ToString()
+                        .Trim();
                     builder.Append(",");
                     return builder;
                 }).ToString();

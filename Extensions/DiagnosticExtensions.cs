@@ -14,13 +14,13 @@ namespace TPOT_Links.Extensions
             return result;
         }
 
-        public static Stopwatch PrintRuntime(this Stopwatch watch)
+        public static Stopwatch PrintRuntime(this Stopwatch watch, string message = "RunTime: ")
         {
             var timespan = watch.Elapsed;
             string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
                 timespan.Hours, timespan.Minutes, timespan.Seconds,
                 timespan.Milliseconds);
-            Console.WriteLine("RunTime " + elapsedTime);
+            Console.WriteLine(message + elapsedTime);
             return watch;
         }
     }
