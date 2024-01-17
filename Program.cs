@@ -2,9 +2,8 @@ using System.Reflection;
 using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
 using CodeMechanic.RazorHAT.Services;
-// using CodeMechanic.Neo4j.Repos;
-using TPOT_Links.Controllers;
 using TPOT_Links.Pages.Admin.Emails;
+using TPOT_Links.Services;
 
 var policyName = "_myAllowSpecificOrigins";
 
@@ -27,18 +26,15 @@ builder.Services.AddCors(options =>
 // Load and inject .env files & values
 DotEnv.Load();
 
-
 builder.Services.ConfigureAirtable();
 builder.Services.ConfigureNeo4j();
 
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-// builder.Services.AddTransient<INeo4JRepo, Neo4JRepo>();
-builder.Services.AddTransient<ICarService, CarService>();
+builder.Services.AddTransient<IParseScriptures, ScriptureParser>();
 builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
 
 builder.Services.AddControllers();
-
 
 var main_assembly = Assembly.GetExecutingAssembly();
 builder.Services.AddSingleton<IEmbeddedResourceQuery>(

@@ -85,7 +85,7 @@ public class IndexModel : PageModel
     {
         var user = CurrentUser;
         user.Dump("dis user");
-        string query = "";
+        // string query = "";
 
         return Content("<p x-on:init='show_modal=true' class='alert alert-success'>Liked!</p>");
     }

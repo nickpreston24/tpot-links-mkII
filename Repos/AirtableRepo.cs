@@ -1,6 +1,5 @@
 using System.Net.Http.Headers;
 using CodeMechanic.Diagnostics;
-using CodeMechanic.Extensions;
 using CodeMechanic.RazorHAT;
 using CodeMechanic.Types;
 

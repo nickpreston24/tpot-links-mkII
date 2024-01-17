@@ -2,7 +2,6 @@ using CodeMechanic.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using CodeMechanic.Embeds;
-using CodeMechanic.Extensions;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace TPOT_Links.Pages.Tutorial;

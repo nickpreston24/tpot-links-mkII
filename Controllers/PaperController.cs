@@ -60,7 +60,8 @@ public class TPOTPaperController : ControllerBase
     }
 
     // GET: api/Paper
-    [HttpGet]
+    // [HttpGet]
+    [HttpGet(Name = "GetPaper")]
     public IEnumerable<Paper> Get()
     {
         return new Paper()
@@ -98,7 +99,7 @@ public class TPOTPaperController : ControllerBase
             };
 
             string found_file = fs.GetFileNames()
-                .Dump("all found")
+                .Dump("all files found")
                 .FirstOrDefault(filename => filename.Contains(expected_name, StringComparison.OrdinalIgnoreCase));
             found_file.Dump("file found ");
             query = System.IO.File.ReadAllText(found_file);

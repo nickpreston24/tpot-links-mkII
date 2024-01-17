@@ -1,0 +1,118 @@
+@using TPOT_Links.Models
+@using Htmx.TagHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model object
+
+
+<section class="flex flex-col">
+    <div class="flex flex-col h-screen gap-2">
+        <!-- <h1 class="text-2xl">Multi-Endpoint Testing</h1> -->
+
+        <div id="main_grid" class="grid grid-cols-2 border-4 w-full md:grid-cols-3 border-error p-2">
+            <div id="left" class="flex  h-screen flex-col gap-2">
+                <div id="debug_panel" class="flex flex-col">
+                    <!-- NOTE: you can use this panel as a way to degug things -->
+
+                    <iframe class="airtable-embed"
+                            src="https://airtable.com/embed/shrcEu7hD1TmBFPwN?backgroundColor=purple&layout=card&viewControls=on"
+                            frameborder="0" onmousewheel="" width="100%" height="533"
+                            style="background: transparent; border: 1px solid #ccc;">
+                    </iframe>
+                    @* *@
+                    @* <label for=""> *@
+                    @*     <b>Current Server: </b> *@
+                    @* *@
+                    @*     <span x-text="current_server.name"></span> *@
+                    @* </label> *@
+                    @* *@
+                    @* <label> *@
+                    @*     <span x-text="raw_endpoints.length"></span> *@
+                    @* *@
+                    @*     <b>Endpoints</b> *@
+                    @* </label> *@
+
+                    @* <div x-show="debug.show_endpoints"> *@
+                    @*     <template x-for="endpoint in full_endpoints"> *@
+                    @*         <pre class="text-sm" x-text="endpoint"></pre> *@
+                    @*     </template> *@
+                    @* </div> *@
+                </div>
+            </div>
+
+            <div class="border-2 border-primary" id="middle">
+                <div class="overflow-y-auto">
+                    <table x-show="debug.show_endpoints_table" class="table w-full overflow-y-scroll h-1/2">
+                        <thead>
+                        <tr>
+                            <th></th>
+
+                            <th>Name</th>
+
+                            <th>Job</th>
+
+                            <th>URL</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <template x-for="endpoint in full_endpoints">
+                            <tr>
+                                <th>1</th>
+
+                                <td>???</td>
+
+                                <td>
+                                    <!-- hx-get="https://api.github.com/users/marcus-at-localhost/gists" -->
+
+                                    <button class="btn btn-primary" type="button" hx-trigger="click"
+                                            hx-get="/api/FormConfiguration/all" nunjucks-template="gistlist"
+                                            hx-target="#json_results" hx-swap="innerHTML">
+                                        Reload
+                                    </button>
+                                </td>
+
+                                <td>
+                                    <a class="link link-accent" target="_blank" :href="endpoint">
+                                        <span x-text="endpoint"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </template>
+                        </tbody>
+                    </table>
+                </div>
+
+                <template x-if="debug.show_ideas">
+                    <div class="flex flex-col gap-2">
+                        <iframe class="airtable-embed min-h-screen"
+                                src="https://airtable.com/embed/shrSbqKOtob4S9O61?backgroundColor=purple&layout=card&viewControls=on"
+                                frameborder="0" onmousewheel="" style="background: transparent; border: 1px solid #ccc">
+                        </iframe>
+                    </div>
+                </template>
+
+                <div id="json_results">
+                    <!-- JSON RESULTS WILL BE RENDERED HERE -->
+                </div>
+            </div>
+
+            <div class="border-2 border-primary h-screen" id="right">
+                <div id="controls">
+                    <div class="grid grid-cols-2 gap-1 md:grid-cols-1">
+                        <template x-for="[key, value] of Object.entries(debug)">
+                            <label class="cursor-pointer label">
+                                <span x-text="key" class="label-text"></span>
+
+                                <input x-bind:checked="debug[key]" x-on:change="debug[key]=!debug[key]"
+                                       type="checkbox" class="toggle toggle-primary"/>
+                            </label>
+                        </template>
+                    </div>
+                </div>
+
+                <partial name="TotalRowsSelect" model="new RowOptions()"></partial>
+            </div>
+        </div>
+    </div>
+
+</section>

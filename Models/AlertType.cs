@@ -1,5 +1,4 @@
 using CodeMechanic.Extensions;
-using CodeMechanic.Types;
 using Enumeration = CodeMechanic.Advanced.Extensions.Enumeration;
 
 namespace TPOT_Links.Models;
@@ -15,7 +14,7 @@ public class AlertType : Enumeration
     {
     }
 
-    public static implicit operator AlertType(string name = "")
+    public static implicit operator AlertType(string name)
     {
         if (MissingExtensions.IsEmpty(name))
             name = Error.ToString();
