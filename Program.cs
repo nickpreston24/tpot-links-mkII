@@ -31,7 +31,7 @@ builder.Services.ConfigureNeo4j();
 
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-builder.Services.AddTransient<IParseScriptures, ScriptureParser>();
+builder.Services.AddSingleton<IParseScriptures, ScriptureParser>();
 builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
 
 builder.Services.AddControllers();

@@ -10,4 +10,5 @@ public class Scripture
     public string start { get; set; } = string.Empty;
     public string end { get; set; } = string.Empty;
     public string spaces { get; set; } = string.Empty;
+    public string raw_text { get; set; } = string.Empty;
 }

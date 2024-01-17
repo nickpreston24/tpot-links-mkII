@@ -39,52 +39,31 @@
                         Icon.
                     </b>
 
-                    <a x-show="options.show_right_panel">
-                        <button class="btn btn-primary">Go</button>
-                    </a>
+                    @* <a x-show="options.show_right_panel"> *@
+                    @*     <button class="btn btn-primary">Go</button> *@
+                    @* </a> *@
 
-                    <a x-show="false">
-                        <button x-on:click="options.show_comments_form=true" class="btn btn-primary" disabled>
-                            Request Facebook Scrape
-                        </button>
-                    </a>
+                    @* <a x-show="false"> *@
+                    @*     <button x-on:click="options.show_comments_form=true" class="btn btn-primary" disabled> *@
+                    @*         Request Facebook Scrape *@
+                    @*     </button> *@
+                    @* </a> *@
 
-                    <template x-if="options.show_comments_form">
-                        <div></div>
-                    </template>
 
-                    <template x-if="options.show_comments">
-                        <div>
-                            <iframe class="airtable-embed w-screen h-screen"
-                                    src="https://airtable.com/embed/shrcEu7hD1TmBFPwN?backgroundColor=purple&layout=card&viewControls=on"
-                                    frameborder="0" onmousewheel="">
-                            </iframe>
 
-                        </div>
-                    </template>
+                    @* <template x-if="options.show_comments"> *@
+                    @*     <div> *@
+                    @*         <iframe class="airtable-embed w-screen h-screen" *@
+                    @*                 src="https://airtable.com/embed/shrcEu7hD1TmBFPwN?backgroundColor=purple&layout=card&viewControls=on" *@
+                    @*                 frameborder="0" onmousewheel=""> *@
+                    @*         </iframe> *@
+                    @* *@
+                    @*     </div> *@
+                    @* </template> *@
                 </div>
             </div>
 
-            <div x-ignore>
-                <div id="options_panel" class="flex flex-col">
-                    <!-- NOTE: you can use this panel as a way to degug things -->
-
-                    <div id="controls" class="glass p-12 rounded-3xl">
-                        <div class="grid grid-cols-3 gap-1 md:grid-cols-1">
-                            <template x-for="[key, value] of Object.entries(options)">
-                                <label class="cursor-pointer label">
-                                    <span x-text="key" class="label-text"></span>
-
-                                    <input x-bind:checked="options[key]" x-on:change="options[key]=!options[key]"
-                                           type="checkbox" class="toggle toggle-primary"/>
-                                </label>
-                            </template>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
+            @* <partial name="ScrapesOptionsPanel" model="new ScrapeOptions()" /> *@
 
         </div>
     </section>
@@ -92,7 +71,7 @@
     <partial name="ScrapeOptions" model="new ScrapeOptions()"/>
 
     <partial name="ScrapesFromAirtable"/>
-rm
+    rm
 </div>
 
 <script>
@@ -288,13 +267,6 @@ rm
         return {
             theme: "forest",
             view_index: 1,
-            options: {
-                keep_history: true,
-                show_comments: false,
-                show_comments_form: false,
-                show_right_panel: false,
-                view_panels: all_view_panels,
-            },
             sales: [{
                     manufacturer: "ACME Labs",
                     monthly_sales: 1200.2,

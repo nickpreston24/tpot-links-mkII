@@ -1,13 +1,51 @@
 @page
+@using TPOT_Links.Services
+@using CodeMechanic.Embeds
+@using CodeMechanic.FileSystem
+@using CodeMechanic.Diagnostics
+@using CodeMechanic.Types
 @using TPOT_Links.Models
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CodeMechanic.Advanced.Regex
 @model TPOT_Links.Pages.Comments.IndexModel
+@inject IParseScriptures scripture_parser;
+@inject IEmbeddedResourceQuery embeddedResourceQuery;
 @{
+    string root = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Samples");
+    Console.WriteLine("root path :>> " + root);
+    var html_files = new Grepper()
+    {
+        RootPath = root,
+        FileSearchMask = "*.html"
+    }
+        .GetFileNames()
+        .Dump("html file names")
+        // .Select(file_path => System.IO.File.ReadAllText(file_path))
+        ;
+    string html = System.IO.File.ReadAllText(html_files.Last());
+    Console.WriteLine("html :>> " + html);
+
+    // EmbeddedResourceService embeddedResourceService = (EmbeddedResourceService)embeddedResourceQuery;
+    // string html = await embeddedResourceService.Read<IndexModel>("How One Is Saved.html").ReadAllLinesFromStreamAsync();
+    // var scriptures = Model.Scriptures;
+
+    // string sample_text = 
+    // var scriptures = scripture_parser.ParseLines(ScriptureRegexPattern.FullRegexPattern, html.Split("\n"));
+    var scriptures = html.Extract<Scripture>(ScriptureRegexPattern.GetPattern(ScriptureRegexPattern.FullRegexPattern));
+    scriptures
+        // .Where(s => s.raw_text.IsNotEmpty())
+        .Dump("scriptures parsed");
+    int parsed_count = scriptures.Count;
 }
 
 <div class='flex flex-col' x-data='setup()'>
 
-    <h1>Scriptures</h1>
-    <partial name="ScrapeRequestForm" model="new ScrapeRequest()"/>
-    <partial name="Scrapes" model="Model"/>
+    <h1>Found @parsed_count Scriptures</h1>
+    @* <partial name="ScrapeRequestForm" model="new ScrapeRequest()"/> *@
+    @* <partial name="Scrapes" model="Model"/> *@
 </div>
+<script>
+
+    function setup() {
+    
+    }
+</script>

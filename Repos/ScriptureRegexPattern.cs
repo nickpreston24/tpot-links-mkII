@@ -41,7 +41,7 @@ public class ScriptureRegexPattern : Enumeration
         , nameof(PostFixRegexPattern),
         """^(?<Text>.*?)(?<Name>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?)""");
 
-    //https://regex101.com/r/DQu8B1/1
+    //https://regex101.com/r/gnRL5k/1
     public static ScriptureRegexPattern FullRegexPattern = new ScriptureRegexPattern(3, nameof(FullRegexPattern),
         """(?(?=^\s*\((?<chapter>^\d*\s*[a-zA-Z]+\s*\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{3,})\)\.)$)(“(?<quoted_text>\b[\s\.,a-zA-Z!:\d]+\b)”\s*?(?<end>\([\w\s:-]+\)\.))|((?<start>^\d*?\s*?[A-Z][\w\s:-]+$)\n(?<quote>^((\s*“?\(\d+\)[\w\s,\.!?’',”;:]+))*)(?<spaces>(”?$\n)|(”\n*?$)))""");
 }

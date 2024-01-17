@@ -1,6 +1,8 @@
+@using TPOT_Links.Models
 @model TPOT_Links.Models.ScrapeOptions
 @{
     var scrape_options = Model.AsJS();
+    Console.WriteLine("js :>> " + scrape_options);
 }
 
 <section x-data="setup_scrape_options()" class="flex flex-col">
@@ -13,6 +15,28 @@
                     <input type="checkbox" class="form-control toggle toggle-accent" :for="key">
                 </div>
             </template>
+        </div>
+    </div>
+
+
+    <div>
+        <div id="@nameof(ScrapeOptions)" class="flex flex-col">
+            <!-- NOTE: you can use this panel as a way to degug things -->
+
+            <div id="controls" class="glass p-12 rounded-3xl">
+                <div class="grid grid-cols-3 gap-1 md:grid-cols-1">
+                    <template x-for="[key, value] of Object.entries(options)">
+                        <label class="cursor-pointer label">
+                            <span x-text="key" class="label-text"></span>
+
+                            <input x-bind:checked="options[key]" x-on:change="options[key]=!options[key]"
+                                   type="checkbox" class="toggle toggle-primary"/>
+                        </label>
+                    </template>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </section>
