@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
-using CodeMechanic.Neo4j;
 using CodeMechanic.RazorHAT.Services;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,8 @@ using Neo4j.Driver;
 using NSpecifications;
 using TPOT_Links.Extensions;
 using TPOT_Links.Models;
+using CodeMechanic.Neo4j;
+using CodeMechanic.Neo4j.Repos;
 
 namespace TPOT_Links.Pages.Sandbox;
 
@@ -24,7 +25,7 @@ public class IndexModel : PageModel
 
     // private static string _query { get; set; } = string.Empty;
     // public string Query => _query;
-    
+
     public string category { get; set; } = string.Empty;
     public bool search_by_categories { get; set; }
 
