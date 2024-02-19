@@ -1,4 +1,4 @@
-namespace TPOT_Links;
+namespace TPOT_Links.Models;
 
 
 public class Category 

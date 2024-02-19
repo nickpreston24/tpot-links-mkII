@@ -1,7 +1,19 @@
 @page
+@using Htmx.TagHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CodeMechanic.Embeds
 @model IndexModel
-
+@* @inject IRazorRoutesService routes_service *@
+@inject IEmbeddedResourceQuery embeds_service
 @{
+    // var all_pages = routes_service.GetAllRoutes();
+
+    // string file_name = "BuildByName.cypher";
+    // string query = (embeds_service as EmbeddedResourceService).GetFileContents<IndexModel>(file_name);
+    // string query2 = (embeds_service as EmbeddedResourceService).GetFileContents<IndexModel>("BuildsLiked.cypher");
+
+    // Console.WriteLine("builds liked: " + query2);
+    // Console.WriteLine("builds by name: " + query);
 }
 
 <style>
@@ -14,10 +26,6 @@
     <section x-data="setup()" class="flex flex-row z-0">
 
         <div class="h-screen w-4/6">
-
-            @* <pre x-text="routes"></pre> *@
-
-
 
             @* swap example  *@
             <template x-cloak x-if="card_options.dev_mode">
@@ -74,16 +82,10 @@
 
                     <th scope="row" class="col-span-4 border-2">
 
-                        @* <pre x-text="current_partial"></pre> *@
                         <div class="join flex-row flex">
-                            @* x-data="{ *@
-                            @*  message2 : '_PaperList' *@
-                            @* }" *@
                             <div>
-                                <div hx-ext="include-vals">
+                                <div hx-ext="include-vals" x-show="false">
 
-                                    @* hx-vars='js:{partial_name: $card_options.message}' *@
-                                    @* hx-include="partial_name: '_PaperList'" *@
                                     <input class="input input-bordered join-item"
                                            type="text" name="term" id="query" autocomplete="off"
                                            hx-get
@@ -94,7 +96,6 @@
                                            hx-swap="innerHTML"
                                            hx-trigger="keyup changed delay:250ms"
                                            hx-indicator="#loading"
-                                           class="input input-bordered input-ghost"
                                            aria-label="SEARCH"
                                            :placeholder="search_placeholder"
                                            aria-describedby="search-addon"/>
@@ -136,7 +137,7 @@
                            class="input input-bordered input-ghost"
                            aria-label="SEARCH"
                            :placeholder="search_placeholder"
-                           aria-describedby="search-addon"/>
+                           aria-describedbyx-init="search-addon"/>
                     <div class="htmx-indicator" id='loading'>loading...</div>
                     *@
                         <div class="htmx-indicator" id='loading'>loading...</div>
@@ -163,8 +164,8 @@
 
         <div class="w-2/6 m-2 hero bg-base-200 border-2 border-accent">
             <div class="hero-content flex flex-col lg:flex-col">
-                <partial name="_UserAvatar" model="new User()"/>
-                <partial name="_CardOptionsPanel"/>
+                <partial name="_UserAvatar" model="@Model.CurrentUser"/>
+                <partial name="_CardOptionsPanel" model="@Model.CardOptions"/>
                 <div
                     x-show="card_options.dev_mode" x-transition>
                     <select
@@ -184,7 +185,7 @@
 
                 @* <partial x-show="card_options.dev_mode" x-transition name="_AccordionPanel"/> *@
                 @await Html.PartialAsync("_RecommendationsPanel"
-                           , Enumerable.Empty<Paper>().ToList())
+                    , Enumerable.Empty<Paper>().ToList())
             </div>
 
         </div>
@@ -221,12 +222,12 @@
         show_modal: true,
         search_placeholder: "E.g.: 'What is Faith?'",
         search_button_text: "Search for Papers",
-        card_options: {
-            case_insensitive: true,
-            ignore_whitespace: false,
-            ignore_special_characters: false,
-            // dev_mode: false            
-        },
+        // card_options: {
+        //     case_insensitive: true,
+        //     ignore_whitespace: false,
+        //     ignore_special_characters: false,
+        //     // dev_mode: false            
+        // },
         categories: [
             'Faith',
             'Obedience',

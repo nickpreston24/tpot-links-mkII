@@ -1,0 +1,17 @@
+POST fluttering-detail.railway.app:7474/db/neo4j/tx/commit
+Accept: application/json;charset=UTF-8
+Content-Type: application/json
+Authorization: Basic *****
+
+{
+    "statements": [
+        {
+            "statement": "MERGE (n:Person {name: $name, age: $age}) RETURN n",
+            "parameters": {
+                "name": "Alice",
+                "age": 42
+            }
+        }
+    ]
+
+}

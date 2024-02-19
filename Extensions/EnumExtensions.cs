@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
 using System.Text;
+using CodeMechanic.Diagnostics;
 
 namespace CodeMechanic.Advanced.Extensions
 {
@@ -132,9 +133,12 @@ namespace CodeMechanic.Advanced.Extensions
         public override string ToString() => Name;
 
         public static IEnumerable<T> GetAll<T>() where T : Enumeration =>
-            typeof(T).GetFields(BindingFlags.Public |
+            typeof(T)
+                .Dump("typename & stuff")
+                    .GetFields(BindingFlags.Public |
                                 BindingFlags.Static |
                                 BindingFlags.DeclaredOnly)
+                .Dump("fieldinfo")
                      .Select(f => f.GetValue(null))
                      .Cast<T>();
 

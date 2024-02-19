@@ -1,22 +1,25 @@
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
-using CodeMechanic.RazorPages;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Neo4j.Driver;
 
 namespace TPOT_Links.Pages.Admin;
 //Note: to remove all comments, replace this pattern with nothing:  // .*$
 
 [BindProperties]
-public class FeatureRequestModel : HighSpeedPageModel
+public class FeatureRequestModel : PageModel
 {
+    private readonly IEmbeddedResourceQuery embeddedResourceQuery;
+    private readonly IDriver driver;
     public Feature feature = new Feature();
 
     public FeatureRequestModel(
         IEmbeddedResourceQuery embeddedResourceQuery
         , IDriver driver)
-        : base(embeddedResourceQuery, driver)
     {
+        this.embeddedResourceQuery = embeddedResourceQuery;
+        this.driver = driver;
     }
 
     public async Task<IActionResult> OnPostValidate(Feature feature)
@@ -32,11 +35,12 @@ public class FeatureRequestModel : HighSpeedPageModel
                 x-init='loading=false'
                 class="card lg:card-side bg-base-100 shadow-xl">
                 <div class="card-body">
-                    <h2 class="card-title">Submit, {Name}!</h2>
+                    <h2 class="card-title">Submit, { Name}  !</h2>
                     <label>With Description:</label>
-                    <textarea placeholder="Notes" disabled class="textarea textarea-bordered textarea-lg w-full max-w-xs" >{Notes}</textarea>
+                    <textarea placeholder="Notes" disabled class="textarea textarea-bordered textarea-lg w-full max-w-xs" >
+                    { Notes}  </textarea>
 
-                    <a href={Url}>
+                    <a href={ Url}  >
                         <button>Go to Issue</button>
                     </a>
                     <div class="card-actions justify-end">
@@ -44,6 +48,6 @@ public class FeatureRequestModel : HighSpeedPageModel
                     </div>
                 </div>
             </div>
-        """);
+        """ );
     }
 }

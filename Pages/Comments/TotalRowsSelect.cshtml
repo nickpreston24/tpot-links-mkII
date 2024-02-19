@@ -1,0 +1,22 @@
+@model TPOT_Links.Models.RowOptions
+@{
+    var row_options = Model;
+    string handler = Model.handler;
+}
+
+<div class="form-control">
+    <div class="input-group">
+        <select class="select select-bordered">
+
+            <option disabled selected>@row_options.rows_counts.First()</option>
+
+            @foreach (var rows_desired in @row_options.rows_counts.Skip(1))
+            {
+                // TODO: implement an hx-get to the handler on selected option (trigger)
+                <option :select="limit={@rows_desired}">@rows_desired</option>
+            }
+        </select>
+
+        <button class="btn">Select</button>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+@model List<LogRecord>
+@{
+    var rows = Model;
+}
+
+<section id="splunky_logs" class="vertical-padding">
+    <div class="overflow-x-auto wrapper">
+        <b>Rows: @rows.Count</b>
+
+        <table class="table w-full">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Created By</th>
+                <th>Modified By</th>
+                <th>Details</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var row in rows.Take(20))
+            {
+                <tr>
+                    <th></th>
+                    <td>@row.created_by</td>
+                    <td>@row.modified_by</td>
+                    @* <td>@row.exception_text</td> *@
+                    <td class="card">
+                        <span class="card-body">
+                            <p>
+                                @row.database_name
+                            </p>
+                            <p>
+                                enabled?: @row.is_enabled
+                            </p>
+                            <p>
+                                @row.exception_text
+                            </p>
+                            <p>
+                                @row.breadcrumb
+                            </p>
+                            <a href="@row.commit_url">
+                                @row.commit_url
+                            </a>
+                        </span>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</section>
+<style>
+    .wrapper {
+        width: min(900px, 100% - 3rem);
+        /*margin-inline: auto;*/
+    }
+    table {
+        border-collapse: collapse;
+    }
+    
+    th,td {
+        padding: 1rem;
+        /*background: #002f4a;*/
+    }
+    
+    caption,th {
+        text-align: left;
+    }
+    
+    caption {
+        /*background: hsl(0, 0%, 0%);*/
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    
+     @@media(max-width: 650px) {
+        th {
+            display: none;
+        }
+        td {
+            display: block;
+            padding: 0.75rem 1rem;
+        }
+        
+        td:first-child {
+            padding-top: 2rem;
+        }
+        td:last-child {
+            padding-bottom: 2rem;
+        }
+        
+        td::before {
+            content: attr(data-cell) ": ";
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+        
+        /*td:nth-of-type(1)::before {*/
+        /*    content: "retailer"*/
+        /*}*/
+     }
+        
+</style>

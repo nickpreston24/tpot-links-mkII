@@ -1,9 +1,12 @@
 @page
+@using Htmx.TagHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using TPOT_Links.Models
 @model TPOT_Links.Pages.Comments.IndexModel
 @{
 }
 
-<div class="flex flex-col items-center justify-center" x-data="setup()">
+<div class="flex flex-col items-center justify-center" x-data="setup_scrapes()">
     <section class="flex flex-col">
         <div x-bind:data-theme="theme" class="flex hero bg-base-200">
             <div class="hero-content flex-col lg:flex-row-reverse">
@@ -24,11 +27,11 @@
                         To view one, simply click on a record, below. Then, download the
                         attachment by clicking on the
                         <svg width="16" height="16" viewBox="0 0 16 16" class="icon"
-                            style="shape-rendering: geometricprecision">
+                             style="shape-rendering: geometricprecision">
                             <path fill-rule="nonzero" fill="currentColor"
-                                d="M8 2C7.86739 2 7.74021 2.05268 7.64645 2.14645C7.55268 2.24021 7.5 2.36739 7.5 2.5V8.29297L5.72852 6.52148C5.63475 6.42774 5.50759 6.37508 5.375 6.37508C5.24241 6.37508 5.11525 6.42774 5.02148 6.52148C4.92774 6.61525 4.87508 6.74241 4.87508 6.875C4.87508 7.00759 4.92774 7.13475 5.02148 7.22852L7.64648 9.85352C7.74024 9.94729 7.8674 9.99998 8 10C8.1326 9.99998 8.25976 9.94729 8.35352 9.85352L10.9785 7.22852C11.0723 7.13475 11.1249 7.00759 11.1249 6.875C11.1249 6.74241 11.0723 6.61525 10.9785 6.52148C10.8848 6.42774 10.7576 6.37508 10.625 6.37508C10.4924 6.37508 10.3652 6.42774 10.2715 6.52148L8.5 8.29297V2.5C8.5 2.36739 8.44732 2.24021 8.35355 2.14645C8.25979 2.05268 8.13261 2 8 2Z M2.5 9C2.36739 9 2.24021 9.05268 2.14645 9.14645C2.05268 9.24021 2 9.36739 2 9.5V13C2.00007 13.5463 2.45357 13.9999 2.99988 14C2.99984 14 2.99992 14 2.99988 14H13C13.5464 14 14 13.5464 14 13V9.5C14 9.36739 13.9473 9.24021 13.8536 9.14645C13.7598 9.05268 13.6326 9 13.5 9C13.3674 9 13.2402 9.05268 13.1464 9.14645C13.0527 9.24021 13 9.36739 13 9.5V13H3.00012L3 9.5C3 9.36739 2.94732 9.24021 2.85355 9.14645C2.75979 9.05268 2.63261 9 2.5 9Z">
+                                  d="M8 2C7.86739 2 7.74021 2.05268 7.64645 2.14645C7.55268 2.24021 7.5 2.36739 7.5 2.5V8.29297L5.72852 6.52148C5.63475 6.42774 5.50759 6.37508 5.375 6.37508C5.24241 6.37508 5.11525 6.42774 5.02148 6.52148C4.92774 6.61525 4.87508 6.74241 4.87508 6.875C4.87508 7.00759 4.92774 7.13475 5.02148 7.22852L7.64648 9.85352C7.74024 9.94729 7.8674 9.99998 8 10C8.1326 9.99998 8.25976 9.94729 8.35352 9.85352L10.9785 7.22852C11.0723 7.13475 11.1249 7.00759 11.1249 6.875C11.1249 6.74241 11.0723 6.61525 10.9785 6.52148C10.8848 6.42774 10.7576 6.37508 10.625 6.37508C10.4924 6.37508 10.3652 6.42774 10.2715 6.52148L8.5 8.29297V2.5C8.5 2.36739 8.44732 2.24021 8.35355 2.14645C8.25979 2.05268 8.13261 2 8 2Z M2.5 9C2.36739 9 2.24021 9.05268 2.14645 9.14645C2.05268 9.24021 2 9.36739 2 9.5V13C2.00007 13.5463 2.45357 13.9999 2.99988 14C2.99984 14 2.99992 14 2.99988 14H13C13.5464 14 14 13.5464 14 13V9.5C14 9.36739 13.9473 9.24021 13.8536 9.14645C13.7598 9.05268 13.6326 9 13.5 9C13.3674 9 13.2402 9.05268 13.1464 9.14645C13.0527 9.24021 13 9.36739 13 9.5V13H3.00012L3 9.5C3 9.36739 2.94732 9.24021 2.85355 9.14645C2.75979 9.05268 2.63261 9 2.5 9Z">
                                 <path fill-rule="nonzero" fill="currentColor"
-                                    d="M8 2C7.86739 2 7.74021 2.05268 7.64645 2.14645C7.55268 2.24021 7.5 2.36739 7.5 2.5V8.29297L5.72852 6.52148C5.63475 6.42774 5.50759 6.37508 5.375 6.37508C5.24241 6.37508 5.11525 6.42774 5.02148 6.52148C4.92774 6.61525 4.87508 6.74241 4.87508 6.875C4.87508 7.00759 4.92774 7.13475 5.02148 7.22852L7.64648 9.85352C7.74024 9.94729 7.8674 9.99998 8 10C8.1326 9.99998 8.25976 9.94729 8.35352 9.85352L10.9785 7.22852C11.0723 7.13475 11.1249 7.00759 11.1249 6.875C11.1249 6.74241 11.0723 6.61525 10.9785 6.52148C10.8848 6.42774 10.7576 6.37508 10.625 6.37508C10.4924 6.37508 10.3652 6.42774 10.2715 6.52148L8.5 8.29297V2.5C8.5 2.36739 8.44732 2.24021 8.35355 2.14645C8.25979 2.05268 8.13261 2 8 2Z M2.5 9C2.36739 9 2.24021 9.05268 2.14645 9.14645C2.05268 9.24021 2 9.36739 2 9.5V13C2.00007 13.5463 2.45357 13.9999 2.99988 14C2.99984 14 2.99992 14 2.99988 14H13C13.5464 14 14 13.5464 14 13V9.5C14 9.36739 13.9473 9.24021 13.8536 9.14645C13.7598 9.05268 13.6326 9 13.5 9C13.3674 9 13.2402 9.05268 13.1464 9.14645C13.0527 9.24021 13 9.36739 13 9.5V13H3.00012L3 9.5C3 9.36739 2.94732 9.24021 2.85355 9.14645C2.75979 9.05268 2.63261 9 2.5 9Z">
+                                      d="M8 2C7.86739 2 7.74021 2.05268 7.64645 2.14645C7.55268 2.24021 7.5 2.36739 7.5 2.5V8.29297L5.72852 6.52148C5.63475 6.42774 5.50759 6.37508 5.375 6.37508C5.24241 6.37508 5.11525 6.42774 5.02148 6.52148C4.92774 6.61525 4.87508 6.74241 4.87508 6.875C4.87508 7.00759 4.92774 7.13475 5.02148 7.22852L7.64648 9.85352C7.74024 9.94729 7.8674 9.99998 8 10C8.1326 9.99998 8.25976 9.94729 8.35352 9.85352L10.9785 7.22852C11.0723 7.13475 11.1249 7.00759 11.1249 6.875C11.1249 6.74241 11.0723 6.61525 10.9785 6.52148C10.8848 6.42774 10.7576 6.37508 10.625 6.37508C10.4924 6.37508 10.3652 6.42774 10.2715 6.52148L8.5 8.29297V2.5C8.5 2.36739 8.44732 2.24021 8.35355 2.14645C8.25979 2.05268 8.13261 2 8 2Z M2.5 9C2.36739 9 2.24021 9.05268 2.14645 9.14645C2.05268 9.24021 2 9.36739 2 9.5V13C2.00007 13.5463 2.45357 13.9999 2.99988 14C2.99984 14 2.99992 14 2.99988 14H13C13.5464 14 14 13.5464 14 13V9.5C14 9.36739 13.9473 9.24021 13.8536 9.14645C13.7598 9.05268 13.6326 9 13.5 9C13.3674 9 13.2402 9.05268 13.1464 9.14645C13.0527 9.24021 13 9.36739 13 9.5V13H3.00012L3 9.5C3 9.36739 2.94732 9.24021 2.85355 9.14645C2.75979 9.05268 2.63261 9 2.5 9Z">
                                 </path>
                             </path>
                         </svg>
@@ -36,326 +39,39 @@
                         Icon.
                     </b>
 
-                    <a x-show="options.show_right_panel">
-                        <button class="btn btn-primary">Go</button>
-                    </a>
+                    @* <a x-show="options.show_right_panel"> *@
+                    @*     <button class="btn btn-primary">Go</button> *@
+                    @* </a> *@
 
-                    <a x-show="false">
-                        <button x-on:click="options.show_comments_form=true" class="btn btn-primary" disabled>
-                            Request Facebook Scrape
-                        </button>
-                    </a>
+                    @* <a x-show="false"> *@
+                    @*     <button x-on:click="options.show_comments_form=true" class="btn btn-primary" disabled> *@
+                    @*         Request Facebook Scrape *@
+                    @*     </button> *@
+                    @* </a> *@
 
-                    <template x-if="options.show_comments_form">
-                        <div></div>
-                    </template>
 
-                    <template x-if="options.show_comments">
-                        <div>
-                            <iframe class="airtable-embed w-screen h-screen"
-                                src="https://airtable.com/embed/shrcEu7hD1TmBFPwN?backgroundColor=purple&layout=card&viewControls=on"
-                                frameborder="0" onmousewheel="">
-                            </iframe>
 
-                        </div>
-                    </template>
+                    @* <template x-if="options.show_comments"> *@
+                    @*     <div> *@
+                    @*         <iframe class="airtable-embed w-screen h-screen" *@
+                    @*                 src="https://airtable.com/embed/shrcEu7hD1TmBFPwN?backgroundColor=purple&layout=card&viewControls=on" *@
+                    @*                 frameborder="0" onmousewheel=""> *@
+                    @*         </iframe> *@
+                    @* *@
+                    @*     </div> *@
+                    @* </template> *@
                 </div>
             </div>
 
-            <div x-ignore>
-                <div id="options_panel" class="flex flex-col">
-                    <!-- NOTE: you can use this panel as a way to degug things -->
-
-                    <div id="controls" class="glass p-12 rounded-3xl">
-                        <div class="grid grid-cols-3 gap-1 md:grid-cols-1">
-                            <template x-for="[key, value] of Object.entries(options)">
-                                <label class="cursor-pointer label">
-                                    <span x-text="key" class="label-text"></span>
-
-                                    <input x-bind:checked="options[key]" x-on:change="options[key]=!options[key]"
-                                        type="checkbox" class="toggle toggle-primary" />
-                                </label>
-                            </template>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
+            @* <partial name="ScrapesOptionsPanel" model="new ScrapeOptions()" /> *@
 
         </div>
     </section>
 
-    <section class="flex flex-col">
-        <div x-cloak>
-            <div :class="grid_class">
-                <template x-for="[key, value] of Object.entries(options)">
-                    <div class="mb-3">
-                        <label class="form-label" :for="key"></label>
-                        <span x-text="key">This is for debugging only and can be omitted</span>
-                        <input type="checkbox" class="form-control toggle toggle-accent" :for="key">
-                    </div>
-                </template>
-            </div>
-        </div>
-    </section>
+    <partial name="ScrapeOptions" model="new ScrapeOptions()"/>
 
-    <section class="flex flex-col">
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa laboriosam laborum maiores, minima mollitia
-            soluta? Culpa dicta excepturi facere fugiat fugit libero porro unde voluptatem. Iusto nostrum quia
-            recusandae ullam!
-        </p>
-    </section>
-
-    <section class="flex flex-col">
-        <div x-data="setup()" class="flex flex-col h-screen gap-2">
-            <!-- <h1 class="text-2xl">Multi-Endpoint Testing</h1> -->
-
-            <div id="main_grid" class="grid grid-cols-2 border-4 w-full md:grid-cols-3 border-error p-2">
-                <div id="left" class="flex  h-screen flex-col gap-2">
-                    <div id="debug_panel" class="flex flex-col">
-                        <!-- NOTE: you can use this panel as a way to degug things -->
-
-                        <iframe class="airtable-embed"
-                            src="https://airtable.com/embed/shrcEu7hD1TmBFPwN?backgroundColor=purple&layout=card&viewControls=on"
-                            frameborder="0" onmousewheel="" width="100%" height="533"
-                            style="background: transparent; border: 1px solid #ccc;"></iframe>
-
-                        <label for="">
-                            <b>Current Server: </b>
-
-                            <span x-text="current_server.name"></span>
-                        </label>
-
-                        <label>
-                            <span x-text="raw_endpoints.length"></span>
-
-                            <b>Endpoints</b>
-                        </label>
-
-                        <div x-show="debug.show_endpoints">
-                            <template x-for="endpoint in full_endpoints">
-                                <pre class="text-sm" x-text="endpoint"></pre>
-                            </template>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border-2 border-primary" id="middle">
-                    <div class="overflow-y-auto">
-                        <table x-show="debug.show_endpoints_table" class="table w-full overflow-y-scroll h-1/2">
-                            <thead>
-                                <tr>
-                                    <th></th>
-
-                                    <th>Name</th>
-
-                                    <th>Job</th>
-
-                                    <th>URL</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <template x-for="endpoint in full_endpoints">
-                                    <tr>
-                                        <th>1</th>
-
-                                        <td>???</td>
-
-                                        <td>
-                                            <!-- hx-get="https://api.github.com/users/marcus-at-localhost/gists" -->
-
-                                            <button class="btn btn-primary" type="button" hx-trigger="click"
-                                                hx-get="/api/FormConfiguration/all" nunjucks-template="gistlist"
-                                                hx-target="#json_results" hx-swap="innerHTML">
-                                                Reload
-                                            </button>
-                                        </td>
-
-                                        <td>
-                                            <a class="link link-accent" target="_blank" :href="endpoint">
-                                                <span x-text="endpoint"></span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </template>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <template x-if="debug.show_ideas">
-                        <div class="flex flex-col gap-2">
-                            <iframe class="airtable-embed min-h-screen"
-                                src="https://airtable.com/embed/shrSbqKOtob4S9O61?backgroundColor=purple&layout=card&viewControls=on"
-                                frameborder="0" onmousewheel="" style="background: transparent; border: 1px solid #ccc">
-                            </iframe>
-                        </div>
-                    </template>
-
-                    <div id="json_results">
-                        <!-- JSON RESULTS WILL BE RENDERED HERE -->
-                    </div>
-                </div>
-
-                <div class="border-2 border-primary h-screen" id="right">
-                    <div id="controls">
-                        <div class="grid grid-cols-3 gap-1 md:grid-cols-1">
-                            <template x-for="[key, value] of Object.entries(debug)">
-                                <label class="cursor-pointer label">
-                                    <span x-text="key" class="label-text"></span>
-
-                                    <input x-bind:checked="debug[key]" x-on:change="debug[key]=!debug[key]"
-                                        type="checkbox" class="toggle toggle-primary" />
-                                </label>
-                            </template>
-                        </div>
-                    </div>
-
-                    <div class="form-control">
-                        <div class="input-group">
-                            <select class="select select-bordered">
-                                <option disabled selected>Max rows</option>
-
-                                <option x-on:select="limit=5">5</option>
-
-                                <option x-on:select="limit=10">10</option>
-                            </select>
-
-                            <button class="btn">Go</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-    <section class="flex flex-col">
-
-        <nav>
-            <div class="navbar bg-base-300 rounded-box">
-                <div class="flex-1 px-2 lg:flex-none">
-                    <a class="text-lg font-bold">Builds</a>
-                </div>
-                <div class="flex justify-end flex-1 px-2">
-                    <div class="flex items-stretch">
-                        <div class="dropdown dropdown-end">
-                            <label tabindex="0" class="btn btn-ghost rounded-btn">
-                                Options
-                            </label>
-                            <ul tabindex="0" class="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                                <template x-for="[key, value] of Object.entries(options)">
-                                    <label class="cursor-pointer label">
-                                        <span x-text="without_underscores(key)" class="label-text">
-                                        </span>
-
-                                        <input x-bind:checked="options[key]" x-on:change="options[key]=!options[key]"
-                                            type="checkbox" class="toggle toggle-primary" />
-                                    </label>
-                                </template>
-
-                                <div class="dropdown dropdown-left dropdown-end">
-                                    <label x-show="false" tabindex="0" class="btn m-1">Click</label>
-                                    <ul tabindex="0"
-                                        class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                        <template x-for="sub in options.view_panels">
-                                            <li class="m-1">
-                                                <a>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                        viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2" :d="sub.d" />
-                                                    </svg>
-                                                    <span onclick="view_index=0" x-text="sub.label"></span>
-                                                </a>
-                                            </li>
-                                        </template>
-                                    </ul>
-                                </div>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        <body class="h-screen flex flex-col justify-center text-content-200" x-data="setup()">
-            <div :class="grid_class">
-                <div class="order-first flex flex-col items-center justify-center gap-2">
-                    <div class="stats text-ghost">
-                        <div class="stat flex flex-col">
-                            <h1 class="stat-value text-5xl" x-text="total_sales"></h1>
-                            <div class="stat-title">Industry Sales</div>
-                            <pre x-text="view_index"></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- width="600" height="400" -->
-                <div class="order-2 flex-1">
-                    <canvas id="barChart"></canvas>
-                </div>
-
-                <div id="sales_table" class="order-3">
-                    <div class="overflow-x-auto">
-                        <table class="table w-full">
-                            <thead>
-                                <tr>
-                                    <template x-for="header in Object.keys(sales[0]).map(without_underscores)">
-                                        <th x-text="header"></th>
-                                    </template>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <template x-for="sale in sales">
-                                    <tr>
-                                        <td x-text="sale.manufacturer"></td>
-                                        <td x-text="sale.monthly_sales"></td>
-                                        <td x-text="sale.last_product_launch"></td>
-                                    </tr>
-                                </template>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- width="600" height="400" -->
-                <div class="order-4 hover:bg-base-400">
-                    <canvas id="lineChart"></canvas>
-                </div>
-
-                <div width="600" height="400" class="order-3 flex flex-col items-center justify-center gap-2">
-                    <div class="stats bg-primary text-primary-content">
-                        <div class="stat">
-                            <div class="stat-title">Account balance</div>
-                            <div class="stat-value">$89,400</div>
-                            <div class="stat-actions">
-                                <button class="btn btn-sm btn-success">Add funds</button>
-                            </div>
-                        </div>
-
-                        <div class="stat">
-                            <div class="stat-title">Current balance</div>
-                            <div class="stat-value">$89,400</div>
-                            <div class="stat-actions">
-                                <button class="btn btn-sm">Withdrawal</button>
-                                <button class="btn btn-sm">deposit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div width="600" height="400" class="order-6 flex flex-col items-center justify-center gap-2">
-                    <div class="radial-progress bg-primary text-primary-content border-4 border-primary"
-                        style="--value: 70; --size: 12rem; --thickness: 1rem">
-                        70%
-                    </div>
-                </div>
-            </div>
-        </body>
-
-    </section>
+    <partial name="ScrapesFromAirtable"/>
+    rm
 </div>
 
 <script>
@@ -466,59 +182,59 @@
         var lineChart = new Chart(ctx, config);
     });
 </script>
-
-<script>
-    const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-    ];
-    const bar_labels = Array.from({
-            length: 7
-        },
-        (_, index) => months[index] || index
-    );
-    const bar_data = {
-        labels: bar_labels,
-        datasets: [{
-            label: "Votes",
-            data: [65, 59, 80, 81, 56, 55, 40],
-            backgroundColor: Array.from({
-                    length: 7
-                },
-                () => "rgba(153, 102, 255, 0.2)"
-            ),
-            borderColor: Array.from({
-                length: 7
-            }, (_) => "rgb(54, 162, 235)"),
-            borderWidth: 1,
-        }, ],
-    };
-    const bar_config = {
-        type: "bar",
-        data: bar_data,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                },
-            },
-        },
-    };
-    document.addEventListener("DOMContentLoaded", (event) => {
-        var ctx = document.getElementById("barChart");
-        var barChart = new Chart(ctx, bar_config);
-    });
-</script>
+@* *@
+@* <script> *@
+@*     const months = [ *@
+@*         "January", *@
+@*         "February", *@
+@*         "March", *@
+@*         "April", *@
+@*         "May", *@
+@*         "June", *@
+@*         "July", *@
+@*         "August", *@
+@*         "September", *@
+@*         "October", *@
+@*         "November", *@
+@*         "December", *@
+@*     ]; *@
+@*     const bar_labels = Array.from({ *@
+@*             length: 7 *@
+@*         }, *@
+@*         (_, index) => months[index] || index *@
+@*     ); *@
+@*     const bar_data = { *@
+@*         labels: bar_labels, *@
+@*         datasets: [{ *@
+@*             label: "Votes", *@
+@*             data: [65, 59, 80, 81, 56, 55, 40], *@
+@*             backgroundColor: Array.from({ *@
+@*                     length: 7 *@
+@*                 }, *@
+@*                 () => "rgba(153, 102, 255, 0.2)" *@
+@*             ), *@
+@*             borderColor: Array.from({ *@
+@*                 length: 7 *@
+@*             }, (_) => "rgb(54, 162, 235)"), *@
+@*             borderWidth: 1, *@
+@*         }, ], *@
+@*     }; *@
+@*     const bar_config = { *@
+@*         type: "bar", *@
+@*         data: bar_data, *@
+@*         options: { *@
+@*             scales: { *@
+@*                 y: { *@
+@*                     beginAtZero: true, *@
+@*                 }, *@
+@*             }, *@
+@*         }, *@
+@*     }; *@
+@*     document.addEventListener("DOMContentLoaded", (event) => { *@
+@*         var ctx = document.getElementById("barChart"); *@
+@*         var barChart = new Chart(ctx, bar_config); *@
+@*     }); *@
+@* </script> *@
 
 <script>
     let is_number = (n) => (isNaN(n) ? 0 : n);
@@ -547,17 +263,10 @@
         },
     ];
 
-    function setup() {
+    function setup_scrapes() {
         return {
             theme: "forest",
             view_index: 1,
-            options: {
-                keep_history: true,
-                show_comments: false,
-                show_comments_form: false,
-                show_right_panel: false,
-                view_panels: all_view_panels,
-            },
             sales: [{
                     manufacturer: "ACME Labs",
                     monthly_sales: 1200.2,

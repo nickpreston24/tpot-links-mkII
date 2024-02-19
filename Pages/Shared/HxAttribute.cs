@@ -1,4 +1,4 @@
-using CodeMechanic.Advanced.Extensions;
+using Enumeration = CodeMechanic.Advanced.Extensions.Enumeration;
 
 public class HxAttribute : Enumeration
 {

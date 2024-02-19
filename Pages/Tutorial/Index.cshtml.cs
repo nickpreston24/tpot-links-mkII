@@ -1,14 +1,13 @@
+using CodeMechanic.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using CodeMechanic.Embeds;
-using CodeMechanic.Extensions;
-using CodeMechanic.RazorPages;
-using CodeMechanic.Types;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace TPOT_Links.Pages.Tutorial;
 
 [BindProperties]
-public class IndexModel : HighSpeedPageModel
+public class IndexModel: PageModel
 {
     // private static int count = 0;
     // public int Count => count;
@@ -20,7 +19,7 @@ public class IndexModel : HighSpeedPageModel
         , IDriver driver
         , IAirtableRepo repo
     )
-        : base(embeddedResourceQuery, driver, repo)
+        
     {
         repo.Dump("my repo");
     }

@@ -1,0 +1,45 @@
+POST https://localhost:5002/tpotpaper/searchbyregex
+content-type: application/json
+
+{
+    "term": "Faith",
+    "limit": 10
+}
+
+###
+POST https://tpot-links-mkii-production.up.railway.app/tpotpaper/searchbyregex
+content-type: application/json
+
+{
+"term": "Faith",
+"limit": 10
+}
+
+###
+
+GET https://localhost:5002/api/car
+
+
+###  PRODUCTION
+
+###
+# POST https://fluttering-detail.railway.app:7474/db/neo4j/tx/commit
+POST https://fluttering-detail-production.up.railway.app:7474/db/neo4j/tx/commit HTTP/1.1
+Accept: application/json;charset=UTF-8
+Content-Type: application/json
+Authorization: Basic *****
+
+{
+  "statements": [
+    {
+      "statement": "MERGE (n:Person {name: $name, age: $age}) RETURN n",
+      "parameters": {
+        "name": "Alice",
+        "age": 42
+      }
+    }
+  ]
+
+}
+
+###

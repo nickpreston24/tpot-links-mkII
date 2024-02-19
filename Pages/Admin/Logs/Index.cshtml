@@ -1,0 +1,89 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using TPOT_Links.Models
+@using Htmx.TagHelpers
+@model TPOT_Links.Pages.Logs.IndexModel
+@{
+    var splunky_logs = Model.SplunkyLogs;
+    var splunkySearch = Model.SplunkySearch;
+}
+
+<div
+    class='flex flex-col' x-data='setup()'>
+
+    <form
+        hx-page="Index"
+        hx-page-handler="FullSearchLogs"
+        hx-post
+        hx-target="#splunky_logs"
+        hx-swap="innerHTML"
+        hx-trigger="load, submit"
+        class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+        <div class="card-body">
+            <div class="flex flex-row gap-2">
+                <div class="">
+                    <label class="form-label">Search</label>
+                    <input
+
+                        hx-page="Index"
+                        hx-page-handler="FullSearchLogs"
+                        hx-post
+                        hx-target="#splunky_logs"
+                        hx-swap="innerHTML"
+
+                        hx-trigger="keyup changed delay:250ms"
+                        hx-indicator="#loading_rows"
+                        type="text" class="input-accent input"
+                        name="@nameof(@Model.search_term)"/>
+
+                </div>
+                <div id="submitButton" class="form-control">
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Submit
+                    </button>
+                </div>
+
+                <partial name="_CancelButton" model="new CancelButtonOptions()"/>
+
+            </div>
+
+        </div>
+
+        @Html.AntiForgeryToken()
+
+    </form>
+
+    <partial name="_LogsTable" model="@splunky_logs"/>
+
+    <span id="loading_rows" class="htmx-indicator loading loading-infinity loading-lg"></span>
+
+    <template x-if="true">
+
+        <button
+            id="seed_btn"
+            class="btn btn-primary"
+            hx-get
+            type="button"
+            hx-page-handler="SeedLogs"
+            hx-target="#seed_btn"
+            hx-swap="outerHTML"
+            hx-trigger="load"
+            hx-indicator="#loading_rows"
+            hx-page="Index">
+            Seed
+        </button>
+    </template>
+
+
+</div>
+
+
+<script>
+   
+    function setup() {
+        return {
+            header: "Logs!!"
+        }
+    }
+</script>

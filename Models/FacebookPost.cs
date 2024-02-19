@@ -1,5 +1,5 @@
 using CodeMechanic.Advanced.Regex;
-using CodeMechanic.Extensions;
+using CodeMechanic.Diagnostics;
 
 namespace tpot_links_seeder;
 

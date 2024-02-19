@@ -1,12 +1,15 @@
 using System.Text;
 using CodeMechanic.Extensions;
 using Microsoft.AspNetCore.Html;
+using Newtonsoft.Json;
 
 namespace TPOT_Links;
 
 public static class HtmlExtensions
 {
     private const string fallback = "p";
+    public static string AsJS<T>(this T obj) => JsonConvert.SerializeObject(obj);
+
 
     /// <summary>
     /// Surrounds Text with html tag.
