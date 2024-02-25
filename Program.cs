@@ -28,8 +28,12 @@ builder.Services.AddCors(options =>
 // Load and inject .env files & values
 DotEnv.Load();
 
+// Dump("environment?");
+var dotnetcoreenv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+bool use_localhost = !dotnetcoreenv.ToLower().Equals("production");
+
 builder.Services.ConfigureAirtable();
-builder.Services.ConfigureNeo4j(Neo4jConfig.GetLocalhostConfig(true).Dump("neo config"));
+builder.Services.ConfigureNeo4j(Neo4jConfig.GetConfig(use_localhost:use_localhost).Dump("neo config"));
 
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();

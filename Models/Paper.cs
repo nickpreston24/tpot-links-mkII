@@ -25,4 +25,6 @@ public class Paper
 
     // Where is the file now?  Neo4j? wordpress? etc...
     public string WebStatus { get; set; } = "Unknown";
+    
+    public Guid guid { get; set; } = new Guid();
 }

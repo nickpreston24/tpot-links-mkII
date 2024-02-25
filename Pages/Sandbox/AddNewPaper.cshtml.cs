@@ -4,6 +4,7 @@ using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Neo4j.Driver;
+using TPOT_Links.Models;
 
 namespace TPOT_Links.Pages.Sandbox;
 
@@ -43,38 +44,65 @@ public class AddNewPaper : PageModel
         string query = $"match (node:{label}) return node";
         // query.Dump();
         //
-        var results = await neo4JRepo.SearchNeo4J<Paper>(query, null, debug_mode: true);
+        var results = await neo4JRepo.SearchNeo4J<Paper>(query, null, debug_mode: false);
         // results.Dump();
         // return Content("Results: ", results.FirstOrDefault().Name);
         return Content($"Node Count : {results.Count}");
         // return Partial("_FriendsFound", results);
     }
 
-    public async Task<IActionResult> OnPostAddNewPaper()
+    public async Task<IActionResult> OnDeleteRemovePaper()
     {
-        string query = @"merge (p:Paper {Title:$title, description: $description}) return p ";
-        var parameters = new 
-        {
-            title = TpotPaper.Title,
-            description = TpotPaper.Description
-        };
+        string query = @"###### set (p:Paper {is_deleted: true}) return p "; // todo: add name to query 
 
         await using var session = driver.AsyncSession();
 
         var results = await session.ExecuteWriteAsync(async tx =>
         {
-            var result = await tx.RunAsync(query, parameters);
+            var result = await tx.RunAsync(query);
             result.Dump("raw write result");
 
             return await result.ToListAsync(record => record.MapToV2<Paper>());
         });
-       
-        return Content("Success! new papers created!");
+
+        return Content("Success! paper soft deleted!");
+    }
+
+    public async Task<IActionResult> OnPostAddNewPaper()
+    {
+        try
+        {
+            string query =
+                @"merge (p:Paper {title:$title, description: $description, excerpt: $excerpt, guid: $guid}) return p ";
+            
+            var parameters = new
+            {
+                title = TpotPaper.Title,
+                description = TpotPaper.Description,
+                excerpt = TpotPaper.Excerpt ?? "",
+                guid = TpotPaper.guid.ToString()
+            };
+
+            await using var session = driver.AsyncSession();
+
+            var results = await session.ExecuteWriteAsync(async tx =>
+            {
+                var result = await tx.RunAsync(query, parameters);
+                return await result.ToListAsync(record => record.MapToV2<Paper>());
+            });
+
+            return Content($"Success! {results.Count} new papers created!");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return Partial("_Alert", new CustomAlert() { Message = e.Message, AlertType = AlertType.Error });
+        }
     }
 
     private async Task<List<Paper>> BulkUploadNewPapers(List<Paper> neo_papers)
     {
-        neo_papers.Dump("all neo papers");
+        neo_papers.Dump("bulk neo papers to upload");
         var parameters = new
         {
             batch = neo_papers.ToArray()

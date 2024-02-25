@@ -28,9 +28,9 @@ public static class Neo4jConfigurations
 
 public class Neo4jConfig
 {
-    public static Neo4jConfig GetLocalhostConfig(bool use_local = false)
+    public static Neo4jConfig GetConfig(bool use_localhost = false)
     {
-        return !use_local
+        return !use_localhost
             ? new Neo4jConfig()
             {
                 uri = Environment.GetEnvironmentVariable("NEO4J_URI") ?? string.Empty,

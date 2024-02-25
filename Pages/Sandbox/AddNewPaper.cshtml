@@ -59,6 +59,22 @@
                             <span asp-validation-for="@Model.TpotPaper.Description"></span>
                         </div>
                     </label>
+
+                </div>
+
+                <div class="form-control">
+                    <label
+                        asp-for="@Model.TpotPaper.Excerpt"
+                        class="input-group input-group-vertical">
+                        <span class="text-accent">@nameof(Model.TpotPaper.Excerpt)</span>
+                        <input
+                            asp-for="@Model.TpotPaper.Excerpt"
+                            type="text" placeholder="Excerpt goes here" class="input input-bordered"/>
+
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="@Model.TpotPaper.Excerpt"></span>
+                        </div>
+                    </label>
                 </div>
 
             </div>
@@ -88,11 +104,11 @@
 
 <section>
     <span hx-trigger="init,load"
-          hx-get 
+          hx-get
           hx-page="AddNewPaper"
           hx-page-handler="CountNodes"
-          hx-target="#node_counter"
-    ></span>
+          hx-target="#node_counter">
+    </span>
     <div id="node_counter">
     </div>
 
