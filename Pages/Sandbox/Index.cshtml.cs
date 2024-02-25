@@ -109,8 +109,9 @@ public class IndexModel : PageModel
     {
         try
         {
-            var fn = (() => this.embedService.GetFileContents<IndexModel>("SearchByRegex.cypher"));
-            string query = fn.QuickWatch("read speed");
+            Console.WriteLine("partial name :>> " + partial_name);
+            var readerfn = (() => this.embedService.GetFileContents<IndexModel>("SearchByRegex.cypher"));
+            string query = readerfn.QuickWatch("read speed ");
             var category = search_by_categories ? CategoryNumber.ToString() : "";
             var search_parameters = new PaperSearch
             {
@@ -119,10 +120,14 @@ public class IndexModel : PageModel
                 limit = limit
             };
 
-            var search_fn = async () => await driver.SearchNeo4J<Paper>(query, search_parameters);
-            var pages = await search_fn.QuickWatch("pages speed");
+            // Console.WriteLine(search_parameters.ToString());
 
-            return Partial(partial_name, pages);
+            var search_fn = async () => await driver.SearchNeo4J<Paper>(query, search_parameters);
+            var papers = await search_fn.QuickWatch("pages speed ");
+
+            papers.Dump("found");
+
+            return Partial(partial_name, papers);
         }
         catch (Exception e)
         {
@@ -174,11 +179,8 @@ public class IndexModel : PageModel
         {
             Message = "<p class='' x-init='loading=false'>Done!</p>"
         });
-
-        // return Content(alert("hey", "success"));
     }
 
-    // public async Task<IActionResult> OnGetRecommendations()
     public async Task<IActionResult> OnPostRecommendations()
     {
         Console.WriteLine("Recommendations...".Dump());

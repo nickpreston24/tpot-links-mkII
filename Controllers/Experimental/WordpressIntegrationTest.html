@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-theme="halloween" lang="en">
+<html data-theme="autumn" lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -11,11 +11,10 @@
 
     <script src="https://unpkg.com/htmx.org@1.8.5"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
-    <title>What's Taters, Precious?</title>
 </head>
 
 <body>
-    <div x-data="setup()" class="flex flex-col items-center justify-center">
+    <div x-data="setup_wp_integration()" class="flex flex-col items-center justify-center">
 
         <div class="flex flex-center hero min-h-screen bg-base-200">
             <div class="hero-content flex-col lg:flex-row-reverse">
@@ -57,9 +56,9 @@
     </div>
 </body>
 <script>
-    function setup() {
+    function setup_wp_integration() {
         return {
-            message: "Have a Potato Day! 🥔 ",
+            // message: "Have a Potato Day! 🥔 ",
         };
     }
 </script>

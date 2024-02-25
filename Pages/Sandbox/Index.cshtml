@@ -22,7 +22,7 @@
             z-index: 0 !important;
     }
 </style>
-<div theme-data="light" class="border-0 border-green-400">
+<div theme-data="autumn" class="border-2 border-primary-400">
     <section x-data="setup()" class="flex flex-row z-0">
 
         <div class="h-screen w-4/6">
@@ -47,33 +47,7 @@
 
             </template>
 
-            <template x-cloak x-if="card_options.dev_mode">
-
-                <div
-                    x-transition
-                    class="stack">
-                    <div class="card x-show='card_options.dev_mode shadow-md bg-primary text-primary-content'">
-                        <div class="card-body">
-                            <h2 class="card-title">Notification 1</h2>
-                            <p>You have 3 unread messages. Tap here to see.</p>
-                        </div>
-                    </div>
-                    <div class="card shadow bg-primary text-primary-content">
-                        <div class="card-body">
-                            <h2 class="card-title">Notification 2</h2>
-                            <p>You have 3 unread messages. Tap here to see.</p>
-                        </div>
-                    </div>
-                    <div class="card shadow-sm bg-primary text-primary-content">
-                        <div class="card-body">
-                            <h2 class="card-title">Notification 3</h2>
-                            <p>You have 3 unread messages. Tap here to see.</p>
-                        </div>
-                    </div>
-                </div>
-
-            </template>
-
+            <partial name="NotificationsPanel" model="null"/>
 
             <table
                 class="m-2 table table-zebra border-0 border-red-700 ">
@@ -84,7 +58,7 @@
 
                         <div class="join flex-row flex">
                             <div>
-                                <div hx-ext="include-vals" x-show="false">
+                                <div hx-ext="include-vals">
 
                                     <input class="input input-bordered join-item"
                                            type="text" name="term" id="query" autocomplete="off"
@@ -164,26 +138,11 @@
 
         <div class="w-2/6 m-2 hero bg-base-200 border-2 border-accent">
             <div class="hero-content flex flex-col lg:flex-col">
+                
                 <partial name="_UserAvatar" model="@Model.CurrentUser"/>
+                <partial name="_AccordionPanel" />
                 <partial name="_CardOptionsPanel" model="@Model.CardOptions"/>
-                <div
-                    x-show="card_options.dev_mode" x-transition>
-                    <select
-
-                        name="view_modes_select" id="view_modes_select">
-                        <option
-                            selected disabled value="Pick One">
-                            Pick One
-                        </option>
-                        <template x-cloak x-for="mode in Object.entries(VIEWS)" :key="mode[0]">
-                            <option x-on:select="view_mode=VIEWS[mode[0]]; alert('ping')"
-                                    x-text="mode[0]">
-                            </option>
-                        </template>
-                    </select>
-                </div>
-
-                @* <partial x-show="card_options.dev_mode" x-transition name="_AccordionPanel"/> *@
+               
                 @await Html.PartialAsync("_RecommendationsPanel"
                     , Enumerable.Empty<Paper>().ToList())
             </div>
@@ -192,19 +151,6 @@
 
     </section>
 
-    @* <label for="my_modal_6" class="btn">open modal</label> *@
-
-    <input type="checkbox" id="my_modal_6" class="modal-toggle"/>
-
-    <div class="modal">
-        <div class="modal-box">
-            <h3 class="font-bold text-lg">Hello!</h3>
-            <p class="py-4">This modal works with a hidden checkbox!</p>
-            <div class="modal-action">
-                <label for="my_modal_6" class="btn">Close!</label>
-            </div>
-        </div>
-    </div>
 
 
 </div>

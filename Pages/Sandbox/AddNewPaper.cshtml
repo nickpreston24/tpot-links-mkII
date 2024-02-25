@@ -1,0 +1,99 @@
+@page
+@* @page "{id}" *@
+@using Htmx.TagHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CodeMechanic.Types
+@using CodeMechanic.Diagnostics
+@model TPOT_Links.Pages.Sandbox.AddNewPaper
+
+@{
+    // Layout = null;
+
+    var tpot_paper = Model.TpotPaper; //.ToMaybe().IfNone(new Paper());
+    // tpot_paper.Title.Dump("current title");
+}
+
+<section>
+
+    <h1 class="text-info text-3xl"> Add a new TPOT Paper to the Database</h1>
+    @if (@tpot_paper.WebStatus.Equals("Neo4j"))
+    {
+        <p class="alert alert-success">Already submitted!</p>
+    }
+    else
+    {
+        <form hx-post
+              hx-page="AddNewPaper"
+              hx-page-handler="AddNewPaper"
+              hx-swap="outerHTML"
+              class="form-horizontal needs-validation"
+              _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+
+            <div class="mb-3 flex flex-col">
+
+                <div class="form-control">
+                    <label
+                        asp-for="@Model.TpotPaper.Title"
+                        class="input-group input-group-vertical input-info">
+                        <span class="text-accent">@nameof(tpot_paper.Title)</span>
+                        <input
+                            asp-for="@Model.TpotPaper.Title"
+                            type="text" placeholder="Name of paper" class="input input-bordered"/>
+
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="@tpot_paper.Title"></span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="form-control">
+                    <label
+                        asp-for="@Model.TpotPaper.Description"
+                        class="input-group input-group-vertical">
+                        <span class="text-accent">@nameof(Model.TpotPaper.Description)</span>
+                        <input
+                            asp-for="@Model.TpotPaper.Description"
+                            type="text" placeholder="Notes go here" class="input input-bordered"/>
+
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="@Model.TpotPaper.Description"></span>
+                        </div>
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="">
+
+                @* :class='loading_button_class' *@
+                @* class='btn-active btn-md btn btn-outline-primary float-end' *@
+                <button
+                    class="btn btn-primary"
+                    x-on:click='btn_width = 4; loading=true'
+                    type="submit">
+                    <span x-show="loading" class="htmx-indicator">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="visually-hidden">Loading...</span>
+                    </span>
+                    Submit
+                </button>
+
+                @Html.AntiForgeryToken()
+            </div>
+
+        </form>
+    }
+
+</section>
+
+<section>
+    <span hx-trigger="init,load"
+          hx-get 
+          hx-page="AddNewPaper"
+          hx-page-handler="CountNodes"
+          hx-target="#node_counter"
+    ></span>
+    <div id="node_counter">
+    </div>
+
+</section>

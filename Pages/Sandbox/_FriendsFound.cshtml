@@ -1,0 +1,22 @@
+@model List<Friend>
+
+@{
+    var friends = @Model;
+}
+<h1>Your friends: </h1>
+@if (friends.Count == 0)
+{
+    <p>My bad ... you don't have any!</p>
+}
+else
+{
+    <h2>@friends.Count</h2>
+    <ul>
+        @foreach (var friend in friends)
+        {
+            <li>
+               name:  @friend.name
+            </li>
+        }
+    </ul>
+}

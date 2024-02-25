@@ -1,6 +1,8 @@
 using System.Reflection;
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
+using CodeMechanic.Neo4j.Repos;
 using CodeMechanic.RazorHAT.Services;
 using TPOT_Links.Pages.Admin.Emails;
 using TPOT_Links.Services;
@@ -27,10 +29,11 @@ builder.Services.AddCors(options =>
 DotEnv.Load();
 
 builder.Services.ConfigureAirtable();
-builder.Services.ConfigureNeo4j();
+builder.Services.ConfigureNeo4j(Neo4jConfig.GetLocalhostConfig(true).Dump("neo config"));
 
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+// builder.Services.AddSingleton<INeo4JRepo, Neo4JRepo>();
 builder.Services.AddSingleton<IParseScriptures, ScriptureParser>();
 builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
 

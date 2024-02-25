@@ -1,9 +1,26 @@
 ﻿using System.Diagnostics;
+using CodeMechanic.Diagnostics;
 
 namespace TPOT_Links.Extensions
 {
     public static class DiagnosticExtensions
     {
+        public static bool OverridesToString(this object v)
+        {
+            return v.ToString() != v.GetType().ToString();
+        }
+
+        public static void Print(params object[] items)
+        {
+            foreach (var item in items)
+            {
+                if (item.OverridesToString())
+                    Console.WriteLine(item);
+                else
+                    item.Dump();
+            }
+        }
+
         public static T QuickWatch<T>(this Func<T> fn, string message = "quick watch :>> ")
         {
             Stopwatch watch = new Stopwatch();

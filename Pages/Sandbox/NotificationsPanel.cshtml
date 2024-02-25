@@ -1,0 +1,33 @@
+@using CodeMechanic.Types
+@using CodeMechanic.Diagnostics
+@model NotificationsPanelOptions
+@{
+    var show = Model.ToMaybe().IfNone(() => new NotificationsPanelOptions()).show_panel.AsJS();
+}
+
+<template x-cloak x-if="@show">
+
+    <div
+        x-transition
+        class="stack">
+        <div class="card x-show='card_options.dev_mode shadow-md bg-primary text-primary-content'">
+            <div class="card-body">
+                <h2 class="card-title">Notification 1</h2>
+                <p>You have 3 unread messages. Tap here to see.</p>
+            </div>
+        </div>
+        <div class="card shadow bg-primary text-primary-content">
+            <div class="card-body">
+                <h2 class="card-title">Notification 2</h2>
+                <p>You have 3 unread messages. Tap here to see.</p>
+            </div>
+        </div>
+        <div class="card shadow-sm bg-primary text-primary-content">
+            <div class="card-body">
+                <h2 class="card-title">Notification 3</h2>
+                <p>You have 3 unread messages. Tap here to see.</p>
+            </div>
+        </div>
+    </div>
+
+</template>

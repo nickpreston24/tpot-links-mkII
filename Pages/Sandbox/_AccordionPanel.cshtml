@@ -32,7 +32,7 @@
         debug: false
     }">
 
-    <div x-show="debug">
+    <div x-show="true">
         <label for=""> Active</label>
         <pre x-text="active_section"></pre>
     </div>
@@ -43,9 +43,8 @@
         hx-post hx-page="Index" hx-page-handler="Bloopf" hx-swap="outerHTML"
         class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
         <template
-
             x-cloak x-for="(item, index) of sections" :key="index">
-            <div class="collapse collapse-arrow bg-base-200 glass"
+            <div class="collapse collapse-arrow bg-base-200"
                  @@click="active_section = index">
                 <input
                     type="radio"

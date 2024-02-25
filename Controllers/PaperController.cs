@@ -227,7 +227,7 @@ public class TPOTPaperController : ControllerBase
 
         Console.WriteLine($"Uploading {wordpressPapers.Count} raw papers to Neo4j....");
 
-        var neo_papers = wordpressPapers
+        IEnumerable<Paper> neo_papers = wordpressPapers
             .Select(wp_paper => wp_paper
                 .Map(wordpress => new Paper
                 {

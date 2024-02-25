@@ -1,14 +1,15 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model IList<Paper>
+@using Pages.Sandbox;
+@model List<Paper>
 
 @{
-    var papers = Model;
-    int rowz = (int)(@papers.Count > 0
-        ? Math.Ceiling(papers.Count / Math.Log10(@papers.Count) * 1.0)
-        : papers.Count);
+    var tpot_papers = Model;
+    int rowz = (int)(tpot_papers.Count > 0
+        ? Math.Ceiling(tpot_papers.Count / Math.Log10(tpot_papers.Count) * 1.0)
+        : tpot_papers.Count);
 
-    int cols = (int)(@papers.Count > 0
-        ? Math.Ceiling(Math.Log10(@papers.Count) * 1.0)
+    int cols = (int)(tpot_papers.Count > 0
+        ? Math.Ceiling(Math.Log10(tpot_papers.Count) * 1.0)
         : 1);
 
     string GetCssClass()
@@ -17,21 +18,34 @@
     }
 
 }
-@if (papers.Any())
+@if (tpot_papers.Count > 0)
 {
     <div x-show="card_options.dev_mode">
 
         <div class="text-tiny text-red-600">
-            <h2 >cols: @cols, rows: @rowz, total papers: @papers.Count</h2>
+            <h2 >cols: @cols, rows: @rowz, total papers: @tpot_papers.Count</h2>
         </div>
     </div>
 
     @* <div class="grid grid-flow-col grid-rows-6 grid-cols-@cols"> *@
     <div class="@GetCssClass()">
 
-        @foreach (var paper in papers)
+        @foreach (var paper in tpot_papers)
         {
             <partial name="PaperCard" model="@paper"/>
         }
     </div>
+}
+else
+{
+    <tr>
+        <td colspan="4">
+            No Results found ...
+            <a href="/Sandbox/AddNewPaper">
+                <button class="btn btn-primary">Click to Change that</button>
+            </a>
+        </td>
+
+    </tr>
+
 }

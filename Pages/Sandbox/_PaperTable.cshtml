@@ -1,11 +1,14 @@
 @using Htmx.TagHelpers
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CodeMechanic.Diagnostics
 @model IList<TPOT_Links.Paper>
 @{
     // C# vars go here!
+    var tpot_papers = Model as List<Paper>;
+    tpot_papers.Dump("papers");
 }
 
-@if (Model is {} tpot_papers)
+@if (tpot_papers.Count > 0)
 {
     <tbody class="w-12 border-2 border-amber-500">
     @foreach (var paper in tpot_papers)
@@ -15,7 +18,9 @@
             <td class='text-secondary overflow-hidden truncate'>
                 <a target='_' href='@paper.Url'>
                     <button
-                        class='btn btn-accent'>Read it</button>
+                        class='btn btn-accent'>
+                        Read it
+                    </button>
                 </a>
             </td>
             <td class='text-secondary'>@paper.Excerpt</td>
@@ -29,9 +34,11 @@
     }
     </tbody>
 }
-else
+else if (tpot_papers.Count == 0)
 {
     <tr>
-        <td colspan="4">No Results for "@Model"</td>
+        <td colspan="4">No Results</td>
     </tr>
+    
+   
 }

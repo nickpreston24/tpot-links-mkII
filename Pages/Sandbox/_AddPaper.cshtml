@@ -1,0 +1,81 @@
+@* <p>Test Add Paper</p> *@
+
+
+
+@* @using CodeMechanic.Types *@
+@* @using Pages.Sandbox; *@
+@* @model object *@
+@* *@
+@* @{ *@
+@*     // var tpot_paper = Model *@
+@*     //     .ToMaybe() *@
+@*     //     .IfNone(new Paper()); *@
+@* } *@
+@* *@
+@* *@
+@* @if (@tpot_paper.WebStatus.Equals("Neo4j")) *@
+@* { *@
+@*     <p class="alert alert-success">Already submitted!</p> *@
+@* } *@
+@* else *@
+@* { *@
+@*     <form hx-post *@
+@*           hx-page="Index" *@
+@*           hx-page-handler="AddNewPaper" *@
+@*           hx-swap="outerHTML"tpot_paper *@
+@*           class="form-horizontal needs-validation" *@
+@*           _="on htmx:beforeSend set #submitButton.disabled to 'disabled'"> *@
+@* *@
+@*         <div class="mb-3 flex flex-col"> *@
+@* *@
+@*             <div class="form-control"> *@
+@*                 <label *@
+@*                     asp-for="@tpot_paper.Title" *@
+@*                     class="input-group input-group-vertical"> *@
+@*                     <span>@tpot_paper</span> *@
+@*                     <input *@
+@*                         asp-for="@tpot_paper.Title" *@
+@*                         type="text" placeholder="Name of @tpot_paper" class="input input-bordered"/> *@
+@* *@
+@*                     <div class="invalid-feedback"> *@
+@*                         <span asp-validation-for="@tpot_paper.Title"></span> *@
+@*                     </div> *@
+@*                 </label> *@
+@*             </div> *@
+@* *@
+@*             <div class="form-control"> *@
+@*                 <label *@
+@*                     asp-for="@tpot_paper.Description" *@
+@*                     class="input-group input-group-vertical"> *@
+@*                     <span>Notes</span> *@
+@*                     <input *@
+@*                         asp-for="@tpot_paper.Description" *@
+@*                         type="text" placeholder="Notes go here" class="input input-bordered"/> *@
+@* *@
+@*                     <div class="invalid-feedback"> *@
+@*                         <span asp-validation-for="@tpot_paper.Description"></span> *@
+@*                     </div> *@
+@*                 </label> *@
+@*             </div> *@
+@* *@
+@*         </div> *@
+@* *@
+@*         <div class="control"> *@
+@* *@
+@*             <button *@
+@*                 class='btn-active btn btn-md btn btn-outline-primary float-end' *@
+@*                 x-on:click='btn_width = 4; loading=true' *@
+@*                 :class='loading_button_class' *@
+@*                 type="submit"> *@
+@*                 <span x-show="loading" class="htmx-indicator"> *@
+@*                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> *@
+@*                     <span class="visually-hidden">Loading...</span> *@
+@*                 </span> *@
+@*                 Submit *@
+@*             </button> *@
+@* *@
+@*             @Html.AntiForgeryToken() *@
+@*         </div> *@
+@* *@
+@*     </form> *@
+@* } *@

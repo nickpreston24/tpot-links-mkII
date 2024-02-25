@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
-<html data-theme="dark" lang="en">
+<html data-theme="autumn" lang="en">
 <head>
     <base href="~/"/>
     <meta charset="utf-8"/>
@@ -84,74 +84,19 @@
 </script>
 
 <script>
-
-    const included = ['Sandbox/Index'];
-    const excluded = ['Error', 'Privacy'
-    , 'Index'
-    , 'Scrapes', 'FinishedScrapes'
-    , 'FeatureRequest' 
-    , 'Comments', 'Admin', 'ScrapeRequestForm'
-    , 'Logs/Index'
-    , 'Comments/Index'
-    , 'Admin/Index'
-    , 'Uploads/Index'
-    , 'Markdown/Index'
     
-    // , 'HxPostExample'
-    ];
-
-    const stored_routes = 
-        JSON.parse(localStorage.getItem('routes'))
-        // .filter(x => x.text.includes("Index")
-        //  x.url.includes("Sandbox")
-        // )
-        // .filter(
-        //     x => 
-        //     !excluded.some(ex=> x.url.match(ex))
-        //     // included.some(incl=>incl.match(x.url) )
-        //     // ||
-        //     // included.some(incl=>incl.match(x.text) )
-        //     // ||          
-        //     // !excluded.some(ex=> x.url.includes(ex))
-        //    // ||
-        //    // || 
-        //    //  !excluded.some(ex=> x.text === 'Index')
-        //     // ||
-        //     // !excluded.some(ex=> ex.match(x.url))
-        //     // x
-        // // && included.includes(x.text)
-        // )
-        // .map(route=> {
-        //     // console.log('route', route)
-        //     // const parent_name = null //XRegExp.exec(route.url, `blah`).groups.
-        //     // const pattern = XRegExp(`(?<parent>\w+)\/Index`);
-        //     let text = route.url;
-        //     // let pattern = /(?<parent>\w+)(\/Index)?/gi;
-        //    
-        //     let pattern = /((?<parent>\w+\/)+?(\/)?)*(?<name>\w+)/gi
-        //    
-        //     let groups = text.match(pattern);
-        //     let parent_name =  groups?.length >= 1 ? groups[0] : null
-        //     console.log('parent: ', parent_name);
-        //     return {
-        //        ... route,
-        //        text: route.text.replace('Index', parent_name ?? '???')
-        //        }
-        //     }
-        // )
-        // .filter(x=> included.includes(x.text))
-        || [] ;
-    
-    document.addEventListener('alpine:init', () => {
-        console.log('initialized alpine') 
-        console.log('stored routes :>> ', stored_routes);   
-        Alpine.store('settings', {
-            routes: stored_routes
-            // routes: [{
-            //     text: "hi"
-            // }]
-        })
-    })
+    // const stored_routes = 
+    //     JSON.parse(localStorage.getItem('routes'))       
+    //     || [] ;
+    //
+    // document.addEventListener('alpine:init', () => {
+    //     console.log('initialized alpine') 
+    //     console.log('stored routes :>> ', stored_routes);   
+    //     Alpine.store('settings', {
+    //         routes: stored_routes
+    //      
+    //     })
+    // })
 </script>
 
 </html>

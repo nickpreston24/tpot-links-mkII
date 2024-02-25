@@ -22,4 +22,7 @@ public class Paper
     public string created_at_wp { get; set; } = string.Empty;
     public string Type { get; set; }
     public int AuthorId { get; set; } = -1;
+
+    // Where is the file now?  Neo4j? wordpress? etc...
+    public string WebStatus { get; set; } = "Unknown";
 }

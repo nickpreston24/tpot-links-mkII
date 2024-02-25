@@ -5,54 +5,52 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html data-theme="halloween" lang="en">
-  
-  <div>    
+<html data-theme="autumn" lang="en">
+
+<div>
     <div x-data="setup()" class="flex flex-col items-center justify-center">
 
-<section class="h-screen">
-    <template x-cloak x-for="[key, value] of Object.entries(options)">
+        <section class="h-screen">
+            <template x-cloak x-for="[key, value] of Object.entries(options)">
 
-        <div class="mb-3">
-            <label class="form-label" :asp-for='key'></label>
-            <span x-text='key' class="label-text"></span>
+                <div class="mb-3">
+                    <label class="form-label" :asp-for='key'></label>
+                    <span x-text='key' class="label-text"></span>
 
 
-            <input x-bind:name='key' x-bind:value='value' :asp-for="key" type="checkbox"
-                class="form-control toggle toggle-primary" x-bind:checked="value" @@change='options[key]=!value'>
-            <div class="invalid-feedback">
-                <span :asp-validation-for='key'></span>
+                    <input x-bind:name='key' x-bind:value='value' :asp-for="key" type="checkbox"
+                           class="form-control toggle toggle-primary" x-bind:checked="value" @@change='options[key]=!value'>
+                    <div class="invalid-feedback">
+                        <span :asp-validation-for='key'></span>
+                    </div>
+                </div>
+
+
+            </template>
+
+
+        </section>
+
+        <section class="flex flex-center hero min-h-screen bg-base-200">
+
+
+            <div class="hero-content flex-col lg:flex-row-reverse">
+                <!-- <iframe width="420" height="746" src="https://www.youtube.com/embed/jOH3r2X_k7U" title="potato day" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
+
+                <div>
+                    <h1 x-text="message" class="text-5xl font-bold"></h1>
+                    <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+
+                    <a href="https://www.youtube.com/shorts/jOH3r2X_k7U">
+                        <button class="btn btn-primary">🥔 Go</button>
+                    </a>
+                </div>
             </div>
-        </div>
-
-
-    </template>  
-    
-    
-    
-    
-</section>
-
-      <section class="flex flex-center hero min-h-screen bg-base-200">
-
-
-        <div class="hero-content flex-col lg:flex-row-reverse">
-          <!-- <iframe width="420" height="746" src="https://www.youtube.com/embed/jOH3r2X_k7U" title="potato day" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
-
-          <div>
-            <h1 x-text="message" class="text-5xl font-bold"></h1>
-            <p  class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-
-            <a href="https://www.youtube.com/shorts/jOH3r2X_k7U">
-                <button class="btn btn-primary">🥔 Go</button>
-            </a>
-          </div>
-        </div>
-      </section>   
+        </section>
 
     </div>
-  </div>
-  <script>
+</div>
+<script>
     function setup() {
       return {
         message: "Have a Potato Day! 🥔 ",
