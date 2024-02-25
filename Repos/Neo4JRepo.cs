@@ -16,7 +16,7 @@ public class Neo4JRepo : IDisposable, INeo4JRepo
         IDriver driver
         // , IConnectionSettings settings
         // , 
-       , Neo4jConfig config
+        , Neo4jConfig config
     )
     {
         // this.config = config;
@@ -43,14 +43,14 @@ public class Neo4JRepo : IDisposable, INeo4JRepo
         where T : class, new()
     {
         if (debug_mode)
-            nameof(SearchNeo4J).Dump(" hello from : ");
+            nameof(SearchNeo4J).Dump(" hello from ");
 
         if (mapper == null)
             mapper = delegate(IRecord record)
             {
                 if (debug_mode)
                 {
-                    // record.Values.Dump("record values");
+                    record.Values.Dump("record values");
                 }
 
                 return record.MapToV2<T>(label: typeof(T).Name);
@@ -71,11 +71,11 @@ public class Neo4JRepo : IDisposable, INeo4JRepo
             var results = await session.ExecuteReadAsync(async tx =>
             {
                 var result = await tx.RunAsync(query, parameters);
-                return await result.ToListAsync<T>(mapper);
+                return await result.ToListAsync(mapper);
             });
 
-            if (debug_mode)
-                results.Dump("search results");
+            // if (debug_mode)
+            //     results.Dump("search results");
 
             return results;
         }

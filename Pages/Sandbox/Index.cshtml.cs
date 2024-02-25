@@ -62,7 +62,7 @@ public class IndexModel : PageModel
 
     {
         this.embeddedResourceQuery = embeddedResourceQuery;
-        this.embedService = embedService.Dump("injected?") as EmbeddedResourceService;
+        this.embedService = embedService as EmbeddedResourceService;
         this.embedService.GetFileContents<IndexModel>("SearchByRegex.cypher");
         this.driver = driver;
         this.repo = repo;
@@ -97,7 +97,6 @@ public class IndexModel : PageModel
         return Partial("_ValidatedUser", CurrentUser);
     }
 
-
     public async Task<IActionResult> OnGetSearchByRegex(
         string term = ""
         , bool show_excerpts = true
@@ -116,6 +115,7 @@ public class IndexModel : PageModel
             var search_parameters = new PaperSearch
             {
                 regex = $@"(?is)(<\w+>)?.*({term}).*(<\w+>)?",
+                title = term,
                 category = category,
                 limit = limit
             };

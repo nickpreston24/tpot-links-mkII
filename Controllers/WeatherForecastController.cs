@@ -1,3 +1,4 @@
+using CodeMechanic.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TPOT_Links.Controllers;
@@ -29,4 +30,19 @@ public class WeatherForecastController : ControllerBase
             })
             .ToArray();
     }
+
+    public IActionResult Details(int id)
+    {
+        // return ControllerContext.MyDisplayRouteInfo(id);
+        id.Dump("you called?");
+        return Ok(id);
+    }
+    //
+    // [HttpGet(Name = "GetIslandFiles")]
+    // public int[] GetIslandFiles()
+    // {
+    //     return new int[] { 500 };
+    //     // var results_array = solution(user_ids.ToArray(), file_names.ToArray(), file_types.ToArray());
+    //     // return results_array;
+    // }
 }

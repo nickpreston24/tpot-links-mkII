@@ -1,3 +1,3 @@
-MATCH (page:Page)
-WHERE toLower(page.Title) contains toLower($Title)
-RETURN page LIMIT 25;
+MATCH (paper:Paper)
+WHERE toLower(paper.Title) contains toLower($Title)
+RETURN paper LIMIT 25;

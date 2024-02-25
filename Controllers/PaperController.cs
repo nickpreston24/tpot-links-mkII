@@ -25,19 +25,19 @@ namespace tpot_links_seeder.Controllers;
 
 [Produces("application/json")]
 [Route("[controller]")]
-public class TPOTPaperController : ControllerBase
+public class PapersController : ControllerBase
 {
     private static readonly IDictionary<Type, ICollection<PropertyInfo>> _propertyCache =
         new Dictionary<Type, ICollection<PropertyInfo>>();
 
-    private readonly ILogger<TPOTPaperController> logger;
+    private readonly ILogger<PapersController> logger;
     private readonly IWebHostEnvironment env;
     private readonly TPOTSettings settings;
     private readonly INeo4JRepo neo4JRepo;
     private readonly IEmbeddedResourceQuery embeddedResources;
 
-    public TPOTPaperController(
-        ILogger<TPOTPaperController> logs
+    public PapersController(
+        ILogger<PapersController> logs
         , INeo4JRepo neo4j_repo
         , IWebHostEnvironment environment_vars
         , IEmbeddedResourceQuery embeddedResources
@@ -59,17 +59,15 @@ public class TPOTPaperController : ControllerBase
             .Dump("current settings"); // doesn't work on startup.  Who knew?
     }
 
-    // GET: api/Paper
-    // [HttpGet]
-    [HttpGet(Name = "GetPaper")]
-    public IEnumerable<Paper> Get()
-    {
-        return new Paper()
-        {
-            Title = "Test",
-            Description = "Your api is working."
-        }.AsList();
-    }
+    // public IActionResult GetContent(int id)
+    // {
+    //     var res = new Paper()
+    //     {
+    //         Title = "Test",
+    //         Description = "Your api is working."
+    //     }.AsList();
+    //     return Ok(res);
+    // }
 
     [HttpPost(nameof(SearchByRegex))]
     public async Task<IActionResult> SearchByRegex([FromBody] PaperSearch search_parameters)
