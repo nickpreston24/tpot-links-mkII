@@ -103,7 +103,7 @@ public class IndexModel : PageModel
         , bool show_excerpts = true
         , string show_slugs = ""
         , string show_urls = ""
-        , string partial_name = "_PaperTable"
+        , string partial_name = "_PaperList"
         , int limit = 20
     )
     {
@@ -125,7 +125,7 @@ public class IndexModel : PageModel
             var search_fn = async () => await driver.SearchNeo4J<Paper>(query, search_parameters);
             var papers = await search_fn.QuickWatch("pages speed ");
 
-            papers.Dump("found");
+            // papers.Dump("found");
 
             return Partial(partial_name, papers);
         }

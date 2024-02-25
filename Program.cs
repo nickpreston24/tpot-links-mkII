@@ -28,7 +28,6 @@ builder.Services.AddCors(options =>
 // Load and inject .env files & values
 DotEnv.Load();
 
-// Dump("environment?");
 var dotnetcoreenv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 bool use_localhost = !dotnetcoreenv.ToLower().Equals("production");
 
