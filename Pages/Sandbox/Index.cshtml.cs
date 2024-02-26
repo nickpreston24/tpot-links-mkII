@@ -19,7 +19,7 @@ namespace TPOT_Links.Pages.Sandbox;
 public class IndexModel : PageModel
 {
     private readonly IEmbeddedResourceQuery embeddedResourceQuery;
-    private readonly EmbeddedResourceService embedService;
+    private readonly EmbeddedResourceService embeds;
     private readonly IDriver driver;
     private readonly IAirtableRepo repo;
 
@@ -53,6 +53,7 @@ public class IndexModel : PageModel
     //     }
     // };
 
+    public EmbeddedResourceService Embeds => embeds;
 
     public IndexModel(
         IEmbeddedResourceQuery embeddedResourceQuery
@@ -62,15 +63,15 @@ public class IndexModel : PageModel
 
     {
         this.embeddedResourceQuery = embeddedResourceQuery;
-        this.embedService = embedService as EmbeddedResourceService;
-        this.embedService.GetFileContents<IndexModel>("SearchByRegex.cypher");
+        this.embeds = embedService as EmbeddedResourceService;
+        this.embeds.GetFileContents<IndexModel>("SearchByRegex.cypher");
         this.driver = driver;
         this.repo = repo;
     }
 
     public void OnGet()
     {
-        // string query2 = (embedService as EmbeddedResourceService).GetFileContents<IndexModel>("SearchByRegex.cypher");
+        // string query2 = (embeds as EmbeddedResourceService).GetFileContents<IndexModel>("SearchByRegex.cypher");
 
 
         // var customAlert = new CustomAlert()
@@ -97,6 +98,15 @@ public class IndexModel : PageModel
         return Partial("_ValidatedUser", CurrentUser);
     }
 
+    public async Task<IActionResult> OnGetGroupedByCategory()
+    {
+        string search_by_title = embeds.GetFileContents<IndexModel>("SearchByTitle.cypher");
+        Console.WriteLine(search_by_title);
+
+        var papers = new Paper().AsList();
+        return Partial("_PaperList", papers);
+    }
+
     public async Task<IActionResult> OnGetSearchByRegex(
         string term = ""
         , bool show_excerpts = true
@@ -109,7 +119,7 @@ public class IndexModel : PageModel
         try
         {
             Console.WriteLine("partial name :>> " + partial_name);
-            var readerfn = (() => this.embedService.GetFileContents<IndexModel>("SearchByRegex.cypher"));
+            var readerfn = (() => this.embeds.GetFileContents<IndexModel>("SearchByRegex.cypher"));
             string query = readerfn.QuickWatch("read speed ");
             var category = search_by_categories ? CategoryNumber.ToString() : "";
             var search_parameters = new PaperSearch

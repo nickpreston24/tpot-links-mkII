@@ -4,6 +4,7 @@ using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
 using CodeMechanic.Neo4j.Repos;
 using CodeMechanic.RazorHAT.Services;
+using CodeMechanic.TrashStack;
 using TPOT_Links.Pages.Admin.Emails;
 using TPOT_Links.Services;
 
@@ -32,13 +33,18 @@ var dotnetcoreenv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
 bool use_localhost = !dotnetcoreenv.ToLower().Equals("production");
 
 builder.Services.ConfigureAirtable();
-builder.Services.ConfigureNeo4j(Neo4jConfig.GetConfig(use_localhost:use_localhost).Dump("neo config"));
+builder.Services.ConfigureNeo4j(Neo4jConfig.GetConfig(use_localhost: use_localhost).Dump("neo config"));
 
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 // builder.Services.AddSingleton<INeo4JRepo, Neo4JRepo>();
 builder.Services.AddSingleton<IParseScriptures, ScriptureParser>();
 builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
+
+
+// email and custom renderer:
+builder.Services.AddTransient<IEmailService, DemoEmailService>();
+builder.Services.AddTransient<IRenderingService, RenderingService>();
 
 builder.Services.AddControllers();
 

@@ -12,7 +12,7 @@ public class AvatarDetails
 
     public string avatar_status => avatar_exists ? " online " : " placeholder offline ";
 
-    public string avatar_full_css => $"{avatar_status} avatar";
+    public string avatar_full_css => $"{avatar_status} avatar w-12";
 
 
     public void Deconstruct(out bool exists, out string status, out string css_class, out string image)

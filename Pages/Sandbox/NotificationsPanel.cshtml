@@ -5,7 +5,7 @@
     var show = Model.ToMaybe().IfNone(() => new NotificationsPanelOptions()).show_panel.AsJS();
 }
 
-<template x-cloak x-if="@show">
+<template x-cloak x-if="@show" x-data="{card_options:{dev_mode: false}}">
 
     <div
         x-transition

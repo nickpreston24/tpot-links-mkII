@@ -9,6 +9,7 @@
 <div class="flex flex-col"
      x-data="{
         active_section : 0,
+        current_page_handler: '',
         getActiveStatus(id){
             return id === this.active_section
         },
@@ -21,26 +22,26 @@
             { 
                 title: 'Recommended Papers',     
                 panel_name: '_CardOptionsPanel',
-                message: 'blarf'    
+                message: '...'    
             },
             { 
                 title: 'Section 3',     
                 panel_name: '_CardOptionsPanel', 
-                message: 'blarf'    
+                message: '...'    
             }
         ],
         debug: false
     }">
 
-    <div x-show="true">
-        <label for=""> Active</label>
-        <pre x-text="active_section"></pre>
-    </div>
+    @* <div x-show="true"> *@
+    @*     <label for=""> Active</label> *@
+    @*     <pre x-text="sections[active_section].name"></pre> *@
+    @* </div> *@
 
     @* hx-post="@Url.Page("Index", "Bloopf")" *@
 
     <form
-        hx-post hx-page="Index" hx-page-handler="Bloopf" hx-swap="outerHTML"
+        hx-post hx-page="Index" :hx-page-handler="current_page_handler" hx-swap="outerHTML"
         class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
         <template
             x-cloak x-for="(item, index) of sections" :key="index">
@@ -50,13 +51,13 @@
                     type="radio"
                     name="'accordion_'+index"
                     hx-post
-                    hx-page-handler="Bloopf"
+                    :hx-page-handler="current_page_handler"
                     hx-trigger="change"
                     hx-target="closest div.bloopf"
                     hidden
                     :checked="index === this.active_section"/>
                 <div class="collapse-title text-xl font-medium">
-                    <span :class="{'border-2 border-amber-500' : getActiveStatus(index)}" x-text="item.title"></span>
+                    <span :class="{'border-2 p-2 border-info' : getActiveStatus(index)}" x-text="item.title"></span>
                 </div>
 
                 @* <button *@
@@ -69,8 +70,12 @@
 
                 <div :class="{'collapse-content': !getActiveStatus(index)}">
                     <p x-text="item.message"></p>
-                    <div class="bloopf">...replace mee...</div>
-                    @* <partial :name="item.panel_name"/> *@
+                    <div class="">
+                        @* <partial name="_CardOptionsPanel" model="@Model.CardOptions"></partial> *@
+                        @* content goes here *@
+
+                        @* <partial name="item.panel_name"/> *@
+                    </div>
                 </div>
 
 

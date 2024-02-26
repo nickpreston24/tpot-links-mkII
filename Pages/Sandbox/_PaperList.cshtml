@@ -20,12 +20,12 @@
 }
 @if (tpot_papers.Count > 0)
 {
-    <div x-show="card_options.dev_mode">
+    @* <div x-show="card_options.dev_mode"> *@
 
         <div class="text-tiny text-red-600">
             <h2 >cols: @cols, rows: @rowz, total papers: @tpot_papers.Count</h2>
         </div>
-    </div>
+    // </div>
 
     @* <div class="grid grid-flow-col grid-rows-6 grid-cols-@cols"> *@
     <div class="@GetCssClass()">

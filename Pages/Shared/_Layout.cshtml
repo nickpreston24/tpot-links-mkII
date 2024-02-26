@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CodeMechanic.Types
 <!DOCTYPE html>
 <html data-theme="autumn" lang="en">
 <head>
@@ -32,6 +33,10 @@
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 </head>
+@* @{ *@
+@*     var alpine_modal_options = new AlpineModalOptions() { show_modal = true, show_modal_on_init = true }; *@
+@* } *@
+
 <body class='text-tiny bg-base-500'>
 <header>
 
@@ -67,278 +72,29 @@
 
 </body>
 
+<footer>
+    @* modal for errors *@
+
+    @* <template x-if="@alpine_modal_options.show_modal_on_init" x-cloak> *@
+    @* *@
+    @*     <partial name="_AlpineModal" model="@alpine_modal_options"/> *@
+    @* </template> *@
+</footer>
+
 <script type='module'>
 
-    const routes = await (async () => {
-        let results = await import('./routes.json', {
-            assert: {
-                type: 'json'
-            }
-        })
-
-        return results.default;
-    })()
-
-    localStorage.setItem('routes', JSON.stringify(routes));
-
-</script>
-
-<script>
-    
-    // const stored_routes = 
-    //     JSON.parse(localStorage.getItem('routes'))       
-    //     || [] ;
-    //
-    // document.addEventListener('alpine:init', () => {
-    //     console.log('initialized alpine') 
-    //     console.log('stored routes :>> ', stored_routes);   
-    //     Alpine.store('settings', {
-    //         routes: stored_routes
-    //      
+    // const routes = await (async () => {
+    //     let results = await import('./routes.json', {
+    //         assert: {
+    //             type: 'json'
+    //         }
     //     })
-    // })
+    //
+    //     return results.default;
+    // })()
+    //
+    // localStorage.setItem('routes', JSON.stringify(routes));
+
 </script>
 
 </html>
-
-
-@* #region old_nav *@
-@* *@
-@* <script> *@
-@*     document.addEventListener('alpine:init', () => { *@
-@*          *@
-@*          console.log('stores init...') *@
-@*      Alpine.store('notifications', { *@
-@*                  items: ['hot lava'], *@
-@*                  notify(message) { *@
-@*                      this.items.push(message) *@
-@*                  } *@
-@*              }) *@
-@*         Alpine.store('darkMode', { *@
-@*             on: false, *@
-@*   *@
-@*             toggle() { *@
-@*                 this.on = ! this.on *@
-@*             } *@
-@*         }) *@
-@*     }) *@
-@* </script> *@
-@* *@
-@* <script> *@
-@* *@
-@* // .filter(r=> !r.includes('Index'))  // Exclude Indexes for now. *@
-@* const stored_routes = JSON.parse(localStorage.getItem('routes')) || [] ; *@
-@*     console.log('stored_routes :>> ', stored_routes); *@
-@*      *@
-@* Alpine.store('notifications', { *@
-@*   items: ['blarg'], *@
-@* *@
-@*   notify(message) {  *@
-@*     this.items.push(message) *@
-@*   } *@
-@* }) *@
-@* *@
-@* </script> *@
-@* *@
-@* <script> *@
-@*     const stored_routes = JSON.parse(localStorage.getItem('routes')) || [] *@
-@*             // .filter(r=> !r.includes('Index'))  // Exclude Indexes for now. *@
-@*     ; *@
-@*     console.log('stored_routes :>> ', stored_routes); *@
-@* *@
-@*     const non_index_routes = stored_routes?.filter(r=>!r.path.includes('Index')) *@
-@* *@
-@*     function setup_layout() { *@
-@*         return { *@
-@*             foo: 'bar', *@
-@*             routes: non_index_routes || [] *@
-@*         } *@
-@*     } *@
-@* </script> *@
-
-@* 
-<div
-    x-show="false"
-    class="navbar bg-base-100">
-    <div class="navbar-start">
-        <div class="dropdown">
-            <label tabindex="0" class="btn btn-ghost lg:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="h-5 w-5" fill="none"
-                     viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"/>
-                </svg>
-            </label>
-            <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                <li tabindex="0">
-                    <a class="justify-between">
-                        Comments
-                        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/>
-                        </svg>
-                    </a>
-                    <ul class="p-2">
-                        <li>
-                            <a href="/Comments/Index">Home</a>
-                        </li>
-                        <li>
-                            <a href="/Comments/ScriptureHighlighter">Scripture Highlighter</a>
-                        </li>
-                    </ul>
-                </li>
-                <li tabindex="1">
-                    <a class="justify-between">
-                        Sandbox
-                        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/>
-                        </svg>
-                    </a>
-                    <ul class="p-2">
-                        <li>
-                            <a href="/Sandbox/Index">Home</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li tabindex="2">
-                    <a class="justify-between">
-                        Tutorial
-                        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/>
-                        </svg>
-                    </a>
-                    <ul class="p-2">
-                        <li>
-                            <a href="/Tutorial/Index">Home</a>
-                        </li>
-                        <li>
-                            <a href="/Tutorial/HxPostExample">Hx post</a>
-                        </li>
-                        <li>
-                            <a href="/Tutorial/HxPatchExample">Hx Patch</a>
-                        </li>
-                    </ul>
-
-                </li>
-
-                <li tabindex="3">
-
-                    <a class="justify-between">
-                        Admin
-                        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/>
-                        </svg>
-                    </a>
-                    <ul class="p-2">
-                        <li>
-                            <a href="/Admin/Index">Admin</a>
-                        </li>
-                        <li>
-                            <a href="/Admin/FeatureRequest">Requests</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <a class="btn btn-ghost normal-case text-xl">TPOT Links</a>
-    </div>
-
-    <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1">
-            <li tabindex="0">
-                <a class="justify-between">
-                    Comments
-                    <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/>
-                    </svg>
-                </a>
-                <ul class="p-2">
-                    <li>
-                        <a href="/Comments/Index">Home</a>
-                    </li>
-                    <li>
-                        <a href="/Comments/Manual_Copies">Manual</a>
-                    </li>
-                    <li>
-                        <a href="/Comments/Scrapes">Scrapes</a>
-                    </li>
-                    <li>
-                        <a href="/Comments/ScrapeRequestForm">Request a Scrape</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li tabindex="0">
-                <a class="justify-between">
-                    Admin
-                    <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/>
-                    </svg>
-                </a>
-                <ul class="p-2">
-                    <li>
-                        <a href="/Admin/Index">Home</a>
-                    </li>
-                    <li>
-                        <a href="/Admin/FeatureRequest">Requests</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li>
-                <a href='/Sandbox/Index'>Sandbox</a>
-            </li>
-            <li>
-                <a href="/Comments/ScriptureHighlighter">Scripture Highlighter</a>
-            </li>
-            <li tabindex="2">
-                <a class="justify-between">
-                    Tutorial
-                    <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/>
-                    </svg>
-                </a>
-                <ul class="p-2">
-                    <li>
-                        <a href="/Tutorial/Index">Home</a>
-                    </li>
-                    <li>
-                        <a href="/Tutorial/HxPostExample">Hx post</a>
-                    </li>
-                    <li>
-                        <a href="/Tutorial/HxPatchExample">Hx Patch</a>
-                    </li>
-                </ul>
-            </li>
-
-        </ul>
-    </div>
-    <!-- <div class="navbar-end">
-        ...
-    </div> -->
-</div>
- *@
-@* #endregion *@
-
-
-@* OLD SIDEBAR *@
-
-
-@* <div *@
-@*     class="btm-nav"> *@
-@*     <button> *@
-@*         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> *@
-@*             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/> *@
-@*         </svg> *@
-@*     </button> *@
-@*     <button class="active"> *@
-@*         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> *@
-@*             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/> *@
-@*         </svg> *@
-@*     </button> *@
-@*     <button> *@
-@*         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> *@
-@*             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/> *@
-@*         </svg> *@
-@*     </button> *@
-@* </div> *@
