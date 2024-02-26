@@ -23,7 +23,7 @@ public class ContactModel : PageModel
         var body = await _renderer.RenderAsync("_ContactEmailPartial", ContactForm);
         await _emailer.SendAsync(ContactForm.Email, ContactForm.Name, ContactForm.Subject, body);
         PostResult = "Check your specified pickup directory";
-        return RedirectToPage();
+        return RedirectToPage("/");
     }
 }
 

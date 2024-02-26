@@ -1,4 +1,3 @@
-using System.Net.Mail;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -89,35 +88,5 @@ public class RenderingService : IRenderingService
             RequestServices = _serviceProvider
         };
         return new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
-    }
-}
-
-public interface IEmailService
-{
-    Task SendAsync(string email, string name, string subject, string body);
-}
-
-public class DemoEmailService : IEmailService
-{
-    public async Task SendAsync(string email, string name, string subject, string body)
-    {
-        using (var smtp = new SmtpClient())
-        {
-            smtp.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-            string pickupdir = @"/home/nick/Downloads/maildump/";
-            if (!Directory.Exists(pickupdir))
-                Directory.CreateDirectory(pickupdir);
-            
-            smtp.PickupDirectoryLocation = pickupdir;
-            var message = new MailMessage
-            {
-                Body = body,
-                Subject = subject,
-                From = new MailAddress(email, name),
-                IsBodyHtml = true
-            };
-            message.To.Add("contact@domain.com");
-            await smtp.SendMailAsync(message);
-        }
     }
 }
