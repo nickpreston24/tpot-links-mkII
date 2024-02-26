@@ -1,3 +1,6 @@
+using CodeMechanic.Advanced.Regex;
+using CodeMechanic.Types;
+
 namespace TPOT_Links;
 
 public class Paper
@@ -25,6 +28,23 @@ public class Paper
 
     // Where is the file now?  Neo4j? wordpress? etc...
     public string WebStatus { get; set; } = "Unknown";
-    
+
     public Guid guid { get; set; } = new Guid();
+}
+
+public static class PaperExtensions
+{
+   private static Dictionary<string, string> replacement_map = new Dictionary<string, string>()
+    {
+        { @"&#8220;", "“" },
+        { @"&eacute;", "é" },
+        { @"&ntilde;", "ñ" },
+        { @"&#8221;", "”" },
+    };
+
+    public static Paper FixStuff(this Paper p)
+    {
+        p.Title = p.Title.AsArray().ReplaceAll(replacementMap: replacement_map).FlattenText();
+        return p;
+    }
 }

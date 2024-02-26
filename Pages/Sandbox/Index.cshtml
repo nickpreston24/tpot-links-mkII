@@ -23,8 +23,8 @@
             z-index: 0 !important;
     }
 </style>
-<div theme-data="autumn" class="">
-    <section x-data="setup()" class="flex flex-row z-0">
+<div class="" x-data="setup()">
+    <section class="flex flex-row z-0">
 
         <span hx-trigger="load"
               hx-get
@@ -97,13 +97,6 @@
                         <div class="htmx-indicator" id='loading'>loading...</div>
                     </th>
 
-                    <tr>
-
-                        <th>
-                        </th>
-
-                    </tr>
-
                 </tr>
                 </thead>
                 <tbody id='search_results'>
@@ -121,6 +114,44 @@
                 @await Html.PartialAsync("_RecommendationsPanel"
                     , Enumerable.Empty<Paper>().ToList())
             </div>
+
+            <!-- <h1 class="text-info text-2xl">Papers with NBSPs</h1> -->
+
+            @* <span hx-trigger="load" *@
+            @*       hx-get *@
+            @*       hx-page="Index" *@
+            @*       hx-page-handler="NonBreakingSpaces" *@
+            @*       hx-target="#non_backspace" *@
+            @*       hx-swap="innerHTML"> *@
+            @* </span> *@
+            @* *@
+            @* <div id="non_backspace"></div> *@
+
+
+            <h1 class="text-info text-2xl">Chinese Papers</h1>
+
+            <span hx-trigger="load"
+                  hx-get
+                  hx-page="Index"
+                  hx-page-handler="SearchByCategory"
+                  hx-target="#chinese_papers"
+                  hx-swap="innerHTML">
+            </span>
+
+            <div id="chinese_papers"></div>
+
+
+            <!-- <h1 class="text-info text-2xl">Specific Papers</h1>
+
+            <span hx-trigger="load"
+                  hx-get
+                  hx-page="Index"
+                  hx-page-handler="SearchByIdRange"
+                  hx-target="#specific_id_papers"
+                  hx-swap="innerHTML">
+            </span>
+
+            <div id="specific_id_papers"></div> -->
 
         </div>
 

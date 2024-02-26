@@ -23,9 +23,6 @@ public class IndexModel : PageModel
     private readonly IDriver driver;
     private readonly IAirtableRepo repo;
 
-    // private static string _query { get; set; } = string.Empty;
-    // public string Query => _query;
-
     public string category { get; set; } = string.Empty;
     public bool search_by_categories { get; set; }
 
@@ -42,16 +39,6 @@ public class IndexModel : PageModel
     public List<Paper> RecommendedPapers => _current_recommendations;
 
     public User CurrentUser { get; set; } = new User();
-
-    // public List<Panel> Panels { get; set; } = new List<Panel>()
-    // {
-    //     new Panel
-    //     {
-    //         panel_name = "_PaperList",
-    //         message = "Yarrr",
-    //         title = "List of Papers"
-    //     }
-    // };
 
     public EmbeddedResourceService Embeds => embeds;
 
@@ -71,23 +58,12 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-        // string query2 = (embeds as EmbeddedResourceService).GetFileContents<IndexModel>("SearchByRegex.cypher");
-
-
-        // var customAlert = new CustomAlert()
-        // {
-        //     Message = $"test message",
-        //     AlertType = "error"
-        // }.Dump("custom alert");
     }
 
-    public async Task<IActionResult> OnGetLikePaper(
-        // [FromBody] Paper selected_paper
-    )
+    public async Task<IActionResult> OnGetLikePaper()
     {
         var user = CurrentUser;
         user.Dump("dis user");
-        // string query = "";
 
         return Content("<p x-on:init='show_modal=true' class='alert alert-success'>Liked!</p>");
     }
@@ -98,12 +74,49 @@ public class IndexModel : PageModel
         return Partial("_ValidatedUser", CurrentUser);
     }
 
-    public async Task<IActionResult> OnGetGroupedByCategory()
-    {
-        string search_by_title = embeds.GetFileContents<IndexModel>("SearchByTitle.cypher");
-        Console.WriteLine(search_by_title);
 
-        var papers = new Paper().AsList();
+    public async Task<IActionResult> OnGetSearchByIdRange(int limit = 26)
+    {
+        string query = embeds.GetFileContents<IndexModel>("SearchByIdRange.cypher");
+        Console.WriteLine(query);
+
+        var search_parameters = new PaperSearch
+        {
+          
+        };
+
+        var search_fn = async () => await driver.SearchNeo4J<Paper>(query, null);
+        var papers = await search_fn.QuickWatch("search speed ");
+        // papers.Dump("id'd papers found");
+        return Partial("_PaperList", new List<Paper>());
+    }
+
+
+    public async Task<IActionResult> OnGetSearchByCategory(int limit = 26)
+    {
+        string query = embeds.GetFileContents<IndexModel>("SearchByCategory.cypher");
+        Console.WriteLine(query);
+
+        int category_id = 491;
+        var search_parameters = new PaperSearch
+        {
+            category_id = category_id,
+            limit = limit
+        };
+
+        var search_fn = async () => await driver.SearchNeo4J<Paper>(query, search_parameters);
+        var papers = await search_fn.QuickWatch("search speed ");
+        // papers.Dump("chinese papers found");
+        return Partial("_PaperList", papers);
+    }
+
+    public async Task<IActionResult> OnGetNonBreakingSpaces(string x = "")
+    {
+        // nameof(OnGetNonBreakingSpaces).Dump();
+        string query = embeds.GetFileContents<IndexModel>("NonBreakingSpaces.cypher");
+        // Console.WriteLine(query);
+
+        var papers = new List<Paper>();
         return Partial("_PaperList", papers);
     }
 
@@ -129,8 +142,6 @@ public class IndexModel : PageModel
                 category = category,
                 limit = limit
             };
-
-            // Console.WriteLine(search_parameters.ToString());
 
             var search_fn = async () => await driver.SearchNeo4J<Paper>(query, search_parameters);
             var papers = await search_fn.QuickWatch("pages speed ");

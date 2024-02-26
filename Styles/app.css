@@ -7,6 +7,22 @@
 }
 
 
+/* 
+  TODO: These bg's are temporary, until I can get tailwind to compile colors we want for matching TPOT
+      */
+body {
+    background-color: #e7e2de;
+}
+
+.bg-tpot-menu {
+    background-color: #D7D2CE;
+}
+
+.bg-tpot {
+    background-color: #e7e2de;
+}
+
+
 /*FAB Menu from :
  https://codepen.io/jo_Geek/pen/gyrZWW
 
