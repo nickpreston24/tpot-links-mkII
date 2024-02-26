@@ -1,9 +1,9 @@
-{
-  "buildOptions": {
-    "embed": {
-      "include": [
-        "Pages/**/*.cypher"    
-      ]
-    } 
-  }
-}
+//{
+//  "buildOptions": {
+//    "embed": {
+//      "include": [
+//        "Pages/**/*.cypher"    
+//      ]
+//    } 
+//  }
+//}
