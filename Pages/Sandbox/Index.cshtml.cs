@@ -7,10 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Neo4j.Driver;
 using NSpecifications;
-using TPOT_Links.Extensions;
 using TPOT_Links.Models;
 using CodeMechanic.Neo4j;
-using CodeMechanic.Neo4j.Repos;
 
 namespace TPOT_Links.Pages.Sandbox;
 

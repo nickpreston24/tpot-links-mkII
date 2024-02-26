@@ -4,8 +4,6 @@ using CodeMechanic.Neo4j.Repos;
 using CodeMechanic.RazorHAT.Services;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using TPOT_Links.Extensions;
 
 namespace TPOT_Links.Controllers;
 
@@ -29,7 +27,7 @@ public class TeachingsController : Controller
         // query.Dump(nameof(query));
 
         var readerfn = (() => embedService.GetFileContents<Pages.Sandbox.IndexModel>("SearchByRegex.cypher"));
-        string query = readerfn.QuickWatch("read speed ");
+        string query = readerfn.QuickWatch(message: "read speed ");
         // query.Dump(nameof(query));
 
         var parameters = new PaperSearch()

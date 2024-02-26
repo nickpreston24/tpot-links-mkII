@@ -1,7 +1,5 @@
-using CodeMechanic.Diagnostics;
 using CodeMechanic.Neo4j.Repos;
 using CodeMechanic.Types;
-using Insight.Database.MissingExtensions;
 using Neo4j.Driver;
 
 public static class Neo4jConfigurations

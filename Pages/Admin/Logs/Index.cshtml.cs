@@ -2,12 +2,12 @@ using System.Data;
 using System.Diagnostics;
 using System.Text;
 using CodeMechanic.Async;
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Types;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySqlConnector;
-using TPOT_Links.Extensions;
 using TPOT_Links.Models;
 using StringBuilderExtensions = CodeMechanic.Extensions.StringBuilderExtensions;
 

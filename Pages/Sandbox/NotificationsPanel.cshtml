@@ -1,5 +1,4 @@
 @using CodeMechanic.Types
-@using CodeMechanic.Diagnostics
 @model NotificationsPanelOptions
 @{
     var show = Model.ToMaybe().IfNone(() => new NotificationsPanelOptions()).show_panel.AsJS();

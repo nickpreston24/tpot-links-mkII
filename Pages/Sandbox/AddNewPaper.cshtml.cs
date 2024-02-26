@@ -1,6 +1,5 @@
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Neo4j.Repos;
-using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Neo4j.Driver;
