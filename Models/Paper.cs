@@ -1,5 +1,10 @@
+using System.Reflection;
+using System.Text.RegularExpressions;
 using CodeMechanic.Advanced.Regex;
+using CodeMechanic.Diagnostics;
+using CodeMechanic.Extensions;
 using CodeMechanic.Types;
+using StringExtensions = CodeMechanic.Types.StringExtensions;
 
 namespace TPOT_Links;
 
@@ -34,6 +39,8 @@ public class Paper
 
 public static class PaperExtensions
 {
+    private static Regex amps_pattern = new Regex(@"&.*;", RegexOptions.Compiled);
+
     private static Dictionary<string, string> replacement_map = new Dictionary<string, string>()
     {
         { @"&#8220;", "“" },
@@ -44,13 +51,33 @@ public static class PaperExtensions
         { @"&oacute;", "ó" },
         { @"&ldquo;", "“" },
         { @"&rdquo;", "”" },
-        { @"&#8217;", "’"},
-        { @"&rsquo;", "’"}
+        { @"&#8217;", "’" },
+        { @"&rsquo;", "’" }
     };
 
     public static Paper FixStrings(this Paper p)
     {
-        p.Title = p.Title.AsArray().ReplaceAll(replacementMap: replacement_map).FlattenText();
+        p.Title = StringExtensions.FlattenText(p.Title.AsArray().ReplaceAll(replacementMap: replacement_map));
+        p.Excerpt = StringExtensions.FlattenText(p.Excerpt.AsArray().ReplaceAll(replacementMap: replacement_map));
         return p;
+    }
+
+    public static int FindAmpIssues<T>(this T entity)
+    {
+        var str_props = typeof(T)
+                .GetOnlyStringProps()
+                .Select(prop => prop.GetValue(entity, null)?.ToString())
+            // .Where(v=>v.ToString().NotEmpty())
+            ;
+
+        // Console.WriteLine("string props: "  + str_props.Count());
+        // var amps_found = str_props?.Select(val => amps_pattern.Matches(val ?? "")).ToList();
+        // return amps_found.Count;
+        return 0;
+    }
+
+    public static IEnumerable<PropertyInfo> GetOnlyStringProps(this Type type)
+    {
+        return type.GetProperties().Where(prop => prop.PropertyType == typeof(string));
     }
 }

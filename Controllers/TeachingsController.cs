@@ -21,14 +21,26 @@ public class TeachingsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Search(int limit = 5, string term = "Repentance", string category = "Chinese")
+    public async Task<IActionResult> Search(
+        int limit = 5
+        , string term = "Repentance"
+        , string category = "Chinese"
+        , bool findupdates = false
+    )
     {
-        // string query = $"match (n) return n limit {limit}";
-        // query.Dump(nameof(query));
+        if (findupdates.Dump(nameof(findupdates)))
+        {
+            /* samples
+                newer paper:     https://www.thepathoftruth.com/wp-admin/post.php?post=302308&action=edit
+                older paper:   https://www.thepathoftruth.com/wp-admin/post.php?post=14907&action=edit
+             */
+            string find_updates_query = embedService.GetFileContents<TeachingsController>("SearchForOldPapers.cypher");
+            Console.WriteLine("find updates query " + find_updates_query);
+            return Ok(new Paper() { Description = "yup, this route worked" });
+        }
 
-        var readerfn = (() => embedService.GetFileContents<Pages.Sandbox.IndexModel>("SearchByRegex.cypher"));
-        string query = readerfn.QuickWatch(message: "read speed ");
-        // query.Dump(nameof(query));
+        var readerfn = () => embedService.GetFileContents<Pages.Sandbox.IndexModel>("SearchByRegex.cypher");
+        string paper_search_query = readerfn.QuickWatch(message: "read speed ");
 
         var parameters = new PaperSearch()
         {
@@ -37,16 +49,30 @@ public class TeachingsController : Controller
             limit = limit
         };
 
-        var raw_paper_objects = await repo.SearchNeo4J<object>(query, parameters, debug_mode: false, mapper: record =>
-        {
-            var keys = record.Keys.Dump("keys");
-            var paper = record[keys.FirstOrDefault()];
-            return paper;
-        });
+        var raw_paper_objects = await repo.SearchNeo4J<object>(paper_search_query, parameters, debug_mode: false,
+            mapper: record =>
+            {
+                var keys = record.Keys.Dump("keys");
+                var paper = record[keys.FirstOrDefault()];
+                return paper;
+            });
 
         raw_paper_objects.Count.Dump("count of papers found: ");
         return Ok(raw_paper_objects);
     }
+
+
+    // public IActionResult OnPostFindUpdates(WordpressPaper wp_paper)
+    // {
+    //     //TODO:
+    //     // 1. Get 10 papers that haven't been updated in 30 days.
+    //     // 2. Find the range of ids from lowest to highest and batch them.
+    //     // 2. call neo4j for last update to a paper
+    //     // 2. the wordpress api for new updates
+    //     // 3. 
+    //
+    //     return Ok("Hello from " + nameof(OnPostFindUpdates));
+    // }
 
     // [HttpGet]
     public IActionResult Top(int limit = 1)

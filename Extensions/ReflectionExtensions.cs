@@ -69,7 +69,8 @@ namespace CodeMechanic.Extensions
             PropertyInfo property = type.GetProperty(propertyName,
                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 
-            return property.GetValue(self, null);
+            var value = property.GetValue(self, null);
+            return value;
         }
     }
 

@@ -1,0 +1,10 @@
+<!-- ~/Pages/Components/Counter.cshtml -->
+
+@model HydroCounter
+
+<div>
+    Count: <strong>@Model.Count</strong>
+    <button hydro-on:click="@(() => Model.Add())">
+        Add
+    </button>
+</div>
