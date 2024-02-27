@@ -25,7 +25,7 @@
                 message: '...'    
             },
             { 
-                title: 'Section 3',     
+                title: 'Developer',     
                 panel_name: '_CardOptionsPanel', 
                 message: '...'    
             }
@@ -38,7 +38,7 @@
     @*     <pre x-text="sections[active_section].name"></pre> *@
     @* </div> *@
 
-    @* hx-post="@Url.Page("Index", "Bloopf")" *@
+    @* hx-post="@Url.Page("Index", "")" *@
 
     <form
         hx-post hx-page="Index" :hx-page-handler="current_page_handler" hx-swap="outerHTML"

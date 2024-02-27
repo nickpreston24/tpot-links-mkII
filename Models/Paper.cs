@@ -34,15 +34,21 @@ public class Paper
 
 public static class PaperExtensions
 {
-   private static Dictionary<string, string> replacement_map = new Dictionary<string, string>()
+    private static Dictionary<string, string> replacement_map = new Dictionary<string, string>()
     {
         { @"&#8220;", "“" },
         { @"&eacute;", "é" },
         { @"&ntilde;", "ñ" },
         { @"&#8221;", "”" },
+        { @"&iquest;", "¿" },
+        { @"&oacute;", "ó" },
+        { @"&ldquo;", "“" },
+        { @"&rdquo;", "”" },
+        { @"&#8217;", "’"},
+        { @"&rsquo;", "’"}
     };
 
-    public static Paper FixStuff(this Paper p)
+    public static Paper FixStrings(this Paper p)
     {
         p.Title = p.Title.AsArray().ReplaceAll(replacementMap: replacement_map).FlattenText();
         return p;

@@ -29,7 +29,7 @@
         <PackageReference Include="Bogus" Version="35.2.0" />
         <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.3" />
         <PackageReference Include="CodeMechanic.Embeds" Version="1.0.0" />
-        <PackageReference Include="CodeMechanic.FileSystem" Version="1.0.4" />
+        <PackageReference Include="CodeMechanic.FileSystem" Version="1.0.7" />
         <PackageReference Include="CodeMechanic.Neo4j" Version="1.0.3" />
         <PackageReference Include="CodeMechanic.Puppeteer" Version="1.0.0" />
         <PackageReference Include="CodeMechanic.RazorHAT" Version="1.0.6" />

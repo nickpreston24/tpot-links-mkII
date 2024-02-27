@@ -80,7 +80,6 @@ public class IndexModel : PageModel
 
         var search_parameters = new PaperSearch
         {
-          
         };
 
         var search_fn = async () => await driver.SearchNeo4J<Paper>(query, null);
@@ -142,7 +141,9 @@ public class IndexModel : PageModel
             };
 
             var search_fn = async () => await driver.SearchNeo4J<Paper>(query, search_parameters);
-            var papers = await search_fn.QuickWatch("pages speed ");
+            var papers = (await search_fn.QuickWatch("pages speed "))
+                .Select(p => p.FixStrings())
+                .ToList();
 
             // papers.Dump("found");
 

@@ -43,11 +43,22 @@
 
     <div class="control join join-vertical lg:join-horizontal">
 
-        <button class="btn btn-sm btn-secondary join-item">
-            <a target="_blank" href="@paper.Url">
-                Read
-            </a>
-        </button>
+
+        <div tabindex="0" class="collapse collapse-plus">
+            <div class="collapse-title text-xl font-medium">
+                Excerpt
+            </div>
+            <div class="collapse-content">
+                <p>@paper.Excerpt</p>
+            </div>
+        </div>
+
+        <a tabindex="1" target="_blank" href="@paper.Url">
+            @* <button tabindex="1" class="btn btn-sm btn-secondary join-item"> *@
+            Read
+            @* </button> *@
+        </a>
+
         @* x-on:click="confirm('Sorry, this feature is not ready!')" *@
         <template x-if="@is_development_env">
 
@@ -58,9 +69,7 @@
                 hx-page-handler="LikePaper"
                 hx-swap="outerHTML"
                 class="btn btn-md btn-accent join-item">
-
                 Like
-
                 <svg
                     x-show="true"
                     width="8mm"
