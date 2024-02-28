@@ -1,44 +1,85 @@
-@page
-@model IndexModel
-@{
-}
+@page "/admin"
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Hydro.TagHelpers
 
-<div x-data="setup()" class="flex flex-col items-center justify-center">
+<!DOCTYPE html>
 
-    <div class="flex flex-center hero min-h-screen bg-base-200">
-        <div class="hero-content flex-col lg:flex-row">
-            <h1 x-text="message" class="text-5xl font-bold"></h1>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="hydro-config"/>
 
-            <ul>
-                <li>
+  <script src="~/hydro.js" asp-append-version="true"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/morph@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-                    <a href="Admin/FeatureRequest">
-                        <button class="btn btn-primary">Request a Feature</button>
-                    </a>
-                </li>
+  <title>Hydro Todo</title>
+</head>
 
-                @* <li> *@
-                @* *@
-                @*     <a href="Admin/Checkup"> *@
-                @*         <button class="btn btn-primary">Checkup Time!</button> *@
-                @*     </a> *@
-                @* </li> *@
+<body class="bg-gray-200">
 
-                <li>
-                    <a href="Admin/Logs">
-                        <button class="btn btn-primary">Logs!</button>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<h1>Hello, Admin</h1>
+<hydro name="Todos"/>
+
+</body>
+</html>
 
 
-</div>
-<script>
-  function setup() {
-    return {
-      message: "Admin Options",
-    };
-  }
-</script>
+
+
+
+
+
+
+
+
+@* @page *@
+@* @model IndexModel *@
+@* @{ *@
+@* } *@
+@* *@
+@* <div x-data="setup()" class="flex flex-col items-center justify-center"> *@
+@* *@
+@*     <div class="flex flex-center hero min-h-screen bg-base-200"> *@
+@*         <div class="hero-content flex-col lg:flex-row"> *@
+@*             <h1 x-text="message" class="text-5xl font-bold"></h1> *@
+@* *@
+@* *@
+@*             <h2>Hydros here</h2> *@
+@*             <hydro class="border-red border-4" name="Todos"></hydro> *@
+@*             <hydro name="Counter2"/> *@
+@* *@
+@*             <ul> *@
+@*                 <li> *@
+@* *@
+@*                     <a href="Admin/FeatureRequest"> *@
+@*                         <button class="btn btn-primary">Request a Feature</button> *@
+@*                     </a> *@
+@*                 </li> *@
+@* *@
+@*                 $1$ <li> #1# *@
+@*                 $1$ #1# *@
+@*                 $1$     <a href="Admin/Checkup"> #1# *@
+@*                 $1$         <button class="btn btn-primary">Checkup Time!</button> #1# *@
+@*                 $1$     </a> #1# *@
+@*                 $1$ </li> #1# *@
+@* *@
+@*                 <li> *@
+@*                     <a href="Admin/Logs"> *@
+@*                         <button class="btn btn-primary">Logs!</button> *@
+@*                     </a> *@
+@*                 </li> *@
+@*             </ul> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@* </div> *@
+@* <script> *@
+@*   function setup() { *@
+@*     return { *@
+@*       message: "Admin Options", *@
+@*     }; *@
+@*   } *@
+@* </script> *@
