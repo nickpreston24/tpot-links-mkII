@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using CodeMechanic.Advanced.Regex;
+using CodeMechanic.RegularExpressions;
 using CodeMechanic.Async;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;

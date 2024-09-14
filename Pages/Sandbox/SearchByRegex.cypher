@@ -1,7 +1,7 @@
 MATCH (paper:Paper)
 // OPTIONAL MATCH (a)-[r:LINKS_TO]-(x)
-WHERE 
-    paper.Title =~ $regex
+  WHERE
+  paper.title =~ $regex OR paper.Title =~ $regex
 //  OR 
 //    paper.Excerpt =~ $regex
 //  OR 
@@ -11,9 +11,9 @@ WHERE
 //  OR paper.Id = $id
 //   OR paper.Categories =~ $regex
 RETURN paper
-order by paper.Title
+  ORDER BY paper.created DESC, paper.Title
 
-LIMIT $limit
+  LIMIT $limit
 
 
 // MATCH (paper:Paper)-[r]->(m)

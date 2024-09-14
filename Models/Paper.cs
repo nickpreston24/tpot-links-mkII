@@ -1,6 +1,6 @@
 using System.Reflection;
 using System.Text.RegularExpressions;
-using CodeMechanic.Advanced.Regex;
+using CodeMechanic.RegularExpressions;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Extensions;
 using CodeMechanic.Types;
@@ -57,8 +57,13 @@ public static class PaperExtensions
 
     public static Paper FixStrings(this Paper p)
     {
-        p.Title = StringExtensions.FlattenText(p.Title.AsArray().ReplaceAll(replacementMap: replacement_map));
-        p.Excerpt = StringExtensions.FlattenText(p.Excerpt.AsArray().ReplaceAll(replacementMap: replacement_map));
+        p.Title = StringExtensions.FlattenText(p.Title
+            .ToMaybe().IfNone(string.Empty)
+            .AsArray().ReplaceAll(replacementMap: replacement_map));
+        p.Excerpt = StringExtensions
+            .FlattenText(p.Excerpt
+                .ToMaybe().IfNone(string.Empty)
+                .AsArray().ReplaceAll(replacementMap: replacement_map));
         return p;
     }
 

@@ -1,3 +1,4 @@
+use railway;
 drop table if exists logs;
 create table logs
 (

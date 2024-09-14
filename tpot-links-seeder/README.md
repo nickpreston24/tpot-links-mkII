@@ -106,7 +106,7 @@ dotnet add package CodeMechanic.Diagnostics
 dotnet add package CodeMechanic.FileSystem
 dotnet add package CodeMechanic.Embeds
 dotnet add package CodeMechanic.Reflection
-dotnet add package CodeMechanic.Regex
+dotnet add package CodeMechanic.RegularExpressions
 
 }
 
@@ -121,7 +121,7 @@ dotnet add package CodeMechanic.Diagnostics
 dotnet add package CodeMechanic.FileSystem
 dotnet add package CodeMechanic.Embeds
 dotnet add package CodeMechanic.Reflection
-dotnet add package CodeMechanic.Regex
+dotnet add package CodeMechanic.RegularExpressions
 dotnet add package CodeMechanic.RazorHAT
 
 }
@@ -138,7 +138,7 @@ dotnet add package CodeMechanic.Diagnostics
 dotnet add package CodeMechanic.FileSystem
 dotnet add package CodeMechanic.Embeds
 dotnet add package CodeMechanic.Reflection
-dotnet add package CodeMechanic.Regex
+dotnet add package CodeMechanic.RegularExpressions
 
 
 }
@@ -156,7 +156,7 @@ dotnet add package CodeMechanic.Diagnostics
 dotnet add package CodeMechanic.FileSystem
 dotnet add package CodeMechanic.Embeds
 dotnet add package CodeMechanic.Reflection
-dotnet add package CodeMechanic.Regex
+dotnet add package CodeMechanic.RegularExpressions
 
 
 }
