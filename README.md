@@ -26,7 +26,7 @@ Production - https://tpot-links-mkii-production.up.railway.app/
 |    Technology    |                                    Purpose |
 |:----------------:|-------------------------------------------:|
 |       HTMX       |                               AJAX upgrade |
-|      DasyUI      |                         Easy UI Components |
+|      DaisyUI      |                         Easy UI Components |
 |     AlpineJS     |                                   tiny Vue |
 | Insight.Database |                  Dapper and EF replacement |
 |   TailwindCSS    |                                    CSS API |
